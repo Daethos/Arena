@@ -20,11 +20,11 @@ class Weapons {
 }
 // Shield class that pools the stats which affect combat damage mitigation
 class Shields {
-    constructor(name, physRes, magRes, dodge) {
+    constructor(name, physRes, magRes, roll) {
     this.name = name;
     this.physRes = physRes;
     this.magRes = magRes;
-    this.dodge = dodge;
+    this.roll = roll;
     }
 }
 // Might be able to make it so that you can EQUIP items during ACTIONS phase or ICEBOX
@@ -125,12 +125,6 @@ playerHealth.addEventListener('click', function() {
   playHealthBar.updateHealth(playHealth);
 });
 
-// FUNCTION TO UPDATE HEALTH
-// INITIATE-BUTTON.addEventListener('click', function(e){
-// playHealthBar.updateHealth(playHealth);
-// compHealthBar.updateHealth(compHealth);
-// });
-
 // Opponents
 // Opponent ALWAYS ATTACKS ONCE W/ WEAPON1.
 // FUNCTION to choose between ATTACK w/ SPELL or DODGE
@@ -139,22 +133,22 @@ const guts = new Opponents('Guts', 'hunkOfIron', 'godHand', 'wolf');
 const daethos = new Opponents('Daethos', 'soulRend', 'soulRend', 'hush'); // Hidden Boss
 
 // Weapon Possibilities
-const Gladius = new Weapons('Gladius', 'oneHand', 'P', 'pierce', 200, 0);
-const Dagger = new Weapons('Pugio', 'oneHand', 'P', 'pierce', 150, 0); // +10% Ddodge as is
-const Scythe = new Weapons('Scythe', 'oneHand', 'P', 'pierce', 200, 0);
-const Spear = new Weapons('Spear', 'oneHand', 'P', 'pierce', 200, 0); // +Dodge to offset position limitations
-const Katana = new Weapons('Katana', 'oneHand', 'P', 'slash', 200, 0);
-const Halberd = new Weapons('Halberd', 'twoHand', 'P', 'pierce', 300, 0);
-const Claymore = new Weapons('Claymore', 'twoHand', 'P', 'slash', 300, 0);
-const BattleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'slash', 300, 0);
-const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'blunt', 300, 0);
-const mace = new Weapons('Mace', 'oneHand', 'P', 'blunt' , 200, 0);
+const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 200, 0);
+const dagger = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0); // +10% Ddodge as is
+const scythe = new Weapons('Scythe', 'oneHand', 'P', 'P', 200, 0);
+const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 200, 0); // +Dodge to offset position limitations
+const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 200, 0);
+const halberd = new Weapons('Halberd', 'twoHand', 'P', 'P', 300, 0);
+const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
+const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 300, 0);
+const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 300, 0);
+const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 200, 0);
 
 // Spell Possibilities
-const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'fire', 0, 250);
-const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'lightning', 0, 250);
-const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'sorcery', 0, 250);
-const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'frost', 0, 250);
+const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 250);
+const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 250);
+const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'S', 0, 250);
+const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'Fr', 0, 250);
 
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 3); // +Dodge to offset position limitaions
@@ -163,19 +157,19 @@ const largeShield = new Shields('Scutum', 15, 15, 5);
 const greatShield = new Shields('Pavise', 25, 25, 6);
 
 // Opponent Equipment
-const greatSpear = new Weapons('Blood Moon', 'thrust', 'twoHand', 'P', 'pierce', 250, 0); // Dorien Weapon / NOT available for player
-const insanity = new Weapons('Insanity', 'magic', 'oneHand', 'M', 'dark', 100, 150);
-const soulRend = new Weapons('Soul Rend', 'magic', 'oneHand', 'M', 'dark', 150, 150); // Daethos Spell / Also available
-const godHand = new Weapons('God Hand', 'magic', 'oneHand', 'M', 'faith', 150, 100); // Guts Spell / Also available
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'swing', 'twoHand', 'P', 'slash', 250, 0); // Guts Weapon / NOT available for player
+const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 250, 0); // Dorien Weapon / NOT available for player
+const insanity = new Weapons('Insanity', 'oneHand', 'M-P', 'D', 100, 150);
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'M-P', 'S', 150, 150); // Daethos Spell / Also available
+const godHand = new Weapons('God Hand', 'oneHand', 'M-P', 'Fa', 150, 100); // Guts Spell / Also available
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 250, 0); // Guts Weapon / NOT available for player
 
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 20, 20, 25); //
-const knight = new Armors("Knight's Regalia", 'plate-mail', 50, 50, 5); //
-const mage = new Armors("Mage's Regalia", 'leather-cloth', 5, 50, 50); //
-const celt = new Armors("Celtic Regalia", 'leather-mail', 30, 30, 35); //
-const poorKnight = new Armors("Poor Knight's Regalia", "chain-mail", 40, 40, 10); // 
-const viking = new Armors("Viking's Regalia", 'leather-mail', 25, 25, 30); // -10% Frost
+const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); //
+const mage = new Armors("Mage's Robes", 'leather-cloth', 5, 50, 50); //
+const celt = new Armors("Celtic Menagerie", 'leather-mail', 30, 30, 35); //
+const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 40, 10); // 
+const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); // -10% Frost
 const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 75);
@@ -185,7 +179,7 @@ const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 75);
 // Starting Game Elements
 const chooseEl = document.querySelector('#choose');
 const randomEl = document.querySelector('#random');
-const startEl = document.querySelector('#start');
+const confirmEl = document.querySelector('#confirm');
 const duelEl = document.querySelector('#duel');
 
 // Equipment Button Elements
@@ -198,45 +192,6 @@ const hideBtns = document.querySelector('.hide-button');
 const actionsEl = document.querySelector('#actions');
 const actionEls = document.getElementsByClassName('action');
 const initiateEl = document.getElementById('initiate');
-
-const wb1 = document.getElementById('wb1');
-wb1.value = Weapons.gladius;
-const wb2 = document.getElementById('wb2');
-const wb3 = document.getElementById('wb3');
-const wb4 = document.getElementById('wb4');
-const wb5 = document.getElementById('wb5');
-const wb6 = document.getElementById('wb6');
-const wb7 = document.getElementById('wb7');
-const wb8 = document.getElementById('wb8');
-const wb9 = document.getElementById('wb9');
-const wb10 = document.getElementById('wb10');
-const wb11 = document.getElementById('wb11');
-const wb12 = document.getElementById('wb12');
-const wb13 = document.getElementById('wb13');
-
-const sb1 = document.getElementById('sb1');
-const sb2 = document.getElementById('sb2');
-const sb3 = document.getElementById('sb3');
-const sb4 = document.getElementById('sb4');
-
-const ab1 = document.getElementById('ab1');
-const ab2 = document.getElementById('ab2');
-const ab3 = document.getElementById('ab3');
-const ab4 = document.getElementById('ab4');
-const ab5 = document.getElementById('ab5');
-const ab6 = document.getElementById('ab6');
-
-initiateEl.addEventListener('click', () => {
-// This lets me hide everything once I click the initiate button (REWIRE TO CONFIRM BUTTON)
-  chooseEl.style.display = 'none';
-  startEl.style.display = 'none';
-  randomEl.style.display = 'none';
-  weaponBtns.style.display = 'none';
-  armorBtns.style.display = 'none';
-  shieldBtns.style.display = 'none';
-  duelEl.style.display = 'none';
-  computerHealth.style.display = 'block';
-});
 
 // Player Stat Elements
 const statEls = document.getElementsByClassName('stats');
@@ -258,109 +213,12 @@ let playerWeaponChoice = '';
 let playerShieldChoice = '';
 let playerArmorChoice = '';
 
-// attTypeEl.value = playerChoice[0].attackType;
-// physDefEl.value = playerChoice[2].physRes;
-// damTypeEl.value = playerChoice[0].damageType;
-// magDefEl.value = playerChoice[2].magRes;
-// damEl.value = playerChoice[0].damage;
-// dodgeEl.value = playerChoice[2].dodge;
-
-function playerChoose() {
-    //This prompts the selection of Weapons
-    chooseWeapon();
-    // This prompts the selection of Shields    
-    chooseShield();
-    // This prompts the selection of Armor
-    chooseArmor();
-  }
-  
-function chooseWeapon() {
-  weaponBtns.addEventListener('click', function(e) {
-    textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-    console.log(e.target.innerText);
-    playerWeaponChoice = e.target.value;
-    newPlayer = e.target;
-    attTypeEl.innerHTML = Gladius.attackType;
-  });
-    // Chooses the weapons from the WEAPON BUTTONS (2)
-  }
-function chooseShield() {
-    // Chooses the shield from the SHIELD BUTTONS
-    shieldBtns.addEventListener('click', function(e) {
-      textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-      console.log(e.target.innerText);
-      playerShieldChoice = e.target;
-    });
-  }
-function chooseArmor() {
-    // Chooses the armor from the ARMOR BUTTONS
-    armorBtns.addEventListener('click', function(e) {
-      textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-      console.log(e.target.innerText);
-      playerArmorChoice = e.target;
-    });
-  }
-
-  function updatePlayer() {
-    player.weapon = document.getElementById('')
-  }
-
-
-actionsEl.addEventListener('click', function(e) {
-  textBox.value += 'You have selected to ' + e.target.innerText + '!' + '\n';
-  console.log(e.target.innerText);
-  
-});
-
-weaponBtns.addEventListener('click', function(e) {
-  textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-  console.log(e.target.innerText);
-  playerWeaponChoice = e.target.innerText;
-  playerChoice.pop();
-  playerChoice.push(playerWeaponChoice);
-  if (playerWeaponChoice == )
-  player.weapon = `${playerWeaponChoice}`;
-  playerWeaponChoice = player.weapon;
-  console.log(playerChoice);
-  console.log(player);
-  console.log(playerWeaponChoice);
-  // FIGURE OUT HOW TO GET A STRING TO ASSOCIATE WITH SOMETHING
-  // So i have it in a string, I need it to mean the class object
-  // once weapon has run as a constructor, figure out how to send it as an object
-  // Lock in choice button that removes all event listeners to choose other weapons
-  // and solidies that into its own class that slots into the player.weapon
-  // damEl.innerText = Player.playerWeaponChoice[physDam];
-  // attTypeEl.value = newPlayer[0].attackType;
-  // console.log(attTypeEl.value);
-});
-armorBtns.addEventListener('click', function(e) {
-  textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-  console.log(e.target.innerText);
-  playerArmorChoice = e.target.innerText;
-  newPlayer.pop();
-  newPlayer.push(playerArmorChoice);
-  console.log(newPlayer);
-
-});
-shieldBtns.addEventListener('click', function(e) {
-  textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-  console.log(e.target.innerText);
-  playerShieldChoice = e.target.innerText;
-  newPlayer.pop();
-  newPlayer.push(playerShieldChoice);
-  console.log(newPlayer);
-});
+weaponBtns.style.display = 'none';
+armorBtns.style.display = 'none';
+shieldBtns.style.display = 'none';
 
 // ---------------- STATE VARIABLES ----------------------------
 
-// Starting health totals before modified by damage
-// let health = {
-//   player: 1000,
-//   computer: 2000
-// }
-// FIND A WAY TO STORE THE DATA AND ASSIGN IT TO THE PLAYER
-// RE-ASSIGN VALUES FROM WEAPON 
-// Player Class that pools stats of chosen equipment
 let player = {
   weapon: {
     name: '',
@@ -374,7 +232,7 @@ let player = {
     name: '',
     physRes: 0,
     magRes: 0,
-    dodge: 0,
+    roll: 0,
   },
   armor: {
     name: '',
@@ -382,12 +240,33 @@ let player = {
     physRes: 0,
     magRes: 0,
     dodge: 0,
+  },
+  stats: {
+    attackType: '', // player.weapon.attackType,
+    damageType: '', // player.weapon.damageType,
+    damage: 0, // player.weapon.physDam + player.weapon.magDam,
+    physRes: 0, // player.armor.phyRes,
+    magRes: 0, // player.armor.magRes,
+    dodge: 0, // player.armor.dodge
   }
 };
 
-//function iniateButtonWizard() {
-// hideButtonEl IS WHAT GETS HIDDEN
-//}
+initiateEl.addEventListener('click', () => {
+  // This lets me hide everything once I click the initiate button (REWIRE TO CONFIRM BUTTON)
+    chooseEl.style.display = 'none';
+    confirmEl.style.display = 'none';
+    randomEl.style.display = 'none';
+    duelEl.style.display = 'none';
+    computerHealth.style.display = 'block';
+  });
+
+// <------------------------- FUNCTIONS -----------------------------------
+
+//   FUNCTION TO UPDATE HEALTH
+// INITIATE-BUTTON.addEventListener('click', function(e){
+// playHealthBar.updateHealth(playHealth);
+// compHealthBar.updateHealth(compHealth);
+// });
 
 // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
 setInterval (function() {
@@ -461,10 +340,10 @@ function roll() {
 // Plate-Mail = -10% Thrust Damage received, +10% crush damage received
 
 
-// If commit to roll, forego mitigation to gamble and outright dodge attack
-// Attack Points: 4? Attack: 1, Roll: 1 (Dodge) or Posture: 1 (+% of Dodge to Mitigate), Defend: 1
 // Stuff like: If (user.attackType === 'fire', +10% physDam, -10% physRes)
-// If (user.Weapon.attackType === 'frost', +10% physRes, +10% magRes)
+// If (player.weapon.attackType === 'fr'){ 
+//   player., +10% magRes
+// }
 // If (user.Weapon.attackTYpe === 'lightning', +10% magDam, -10% magRes)
 // If ("" === 'sorcery', +10% magDam, -10% phyRes)
 // If ("" === 'divine', +10% magDam, -10% phyDam, +10% magRes, -10% phyRes)
@@ -485,40 +364,227 @@ function roll() {
 //   //Either will have one option at a time for 'ACTION' round, roll, dodge
 //   //Maybe an action object
 //   render(); // Renders the game after choosing everything
-
-// }
-// playerRandom() {
-//   randomWeapon();
-//   randomShield();
-//   randomArmor();
-// }
-// function randomWeapon() {
-//   // FUNCTION to RETURN RANDOM WEAPON for PLAYER.WEAPON
-// }
-// function randomShield() {
-//   // FUNCTION to RETURN RANDOM SHIELD for PLAYER.SHIELD
-// }
-// function randomArmor() {
-//   // FUNCTION to RETURN RANDOM ARMOR for PLAYER.ARMOR
 // }
 
-// function randomEnemy() { 
-//   let enemyArr = [dorien, guts];
-//   return Math.random() < 0.5 ? enemyArr[0]: enemyArr[1];
-// }
-// console.log(randomEnemy());
+// FINISHED - Player Object, Functions to CHOOOSE each EQUIPMENT or RANDOMIZE Selection
+// Tying button values to their class objects and use them to populate the player object
+// WORKING ON - Queueing an ACTION BUTTON and executing ACTION FUNCTION on INITIATE
+// BLOCKERS - FUNCTIONS to MODIFY STATS based on EQUIPMENT
 
-// render() {
+function chooseWeapon() {
+weaponBtns.style.display = 'block';
+weaponBtns.addEventListener('click', function(e) {
+  textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+  console.log(e.target.innerText);
+  playerWeaponChoice = e.target.innerText;
+  playerChoice.pop();
+  playerChoice.push(playerWeaponChoice);
+  if (playerWeaponChoice == 'Gladius') {
+    playerWeaponChoice = gladius;
+  } else if (playerWeaponChoice == 'Dagger') {
+    playerWeaponChoice = dagger;
+  } else if (playerWeaponChoice == 'Scythe') {
+    playerWeaponChoice = scythe;
+  } else if (playerWeaponChoice == 'Spear') {
+    playerWeaponChoice = spear;
+  } else if (playerWeaponChoice == 'Katana') {
+    playerWeaponChoice = katana;
+  } else if (playerWeaponChoice == 'Halberd') {
+    playerWeaponChoice = halberd;
+  } else if (playerWeaponChoice == 'Claymore') {
+    playerWeaponChoice = claymore;
+  } else if (playerWeaponChoice == 'Battle Axe') {
+    playerWeaponChoice = battleAxe;
+  } else if (playerWeaponChoice == 'War Hammer') {
+    playerWeaponChoice = warHammer;
+  } else if (playerWeaponChoice == 'Fireball') {
+    playerWeaponChoice = fireBall;
+  } else if (playerWeaponChoice == 'Lightning Spear') {
+    playerWeaponChoice = lightningSpear;
+  } else if (playerWeaponChoice == 'Snow Ball') {
+    playerWeaponChoice = snowBall;
+  } else if (playerWeaponChoice == 'Magic Missile') {
+    playerWeaponChoice = magicMissile;
+  } else if (playerWeaponChoice == 'Mace') {
+    playerWeaponChoice = mace;
+  } else if (playerWeaponChoice == 'God Hand') {
+    playerWeaponChoice = godHand;
+  } else if (playerWeaponChoice == 'Insanity') {
+    playerWeaponChoice = insanity;
+  }
+  player.weapon = playerWeaponChoice;
+  damEl.innerText = playerWeaponChoice.physDam + playerWeaponChoice.magDam;
+  attTypeEl.innerText = playerWeaponChoice.attackType;
+  damTypeEl.innerText = playerWeaponChoice.damageType;
+  console.log(playerChoice);
+  console.log(player);
+  console.log(playerWeaponChoice);
+  if (confirm('Do you wish to select the ' + player.weapon.name + '?') === true) {
+    weaponBtns.style.display = 'none';
+    chooseShield();
+  }
+});
+  // Chooses the weapons from the WEAPON BUTTONS (2)
+}
+function chooseShield() {
+  shieldBtns.style.display = 'block';
+  // Chooses the shield from the SHIELD BUTTONS
+  shieldBtns.addEventListener('click', function(e) {
+    textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+    console.log(e.target.innerText);
+    playerShieldChoice = e.target.innerText;
+    playerChoice.pop();
+    playerChoice.push(playerShieldChoice);
+    if (playerShieldChoice == 'Parrying Buckler'){
+      playerShieldChoice = smallShield;
+    } else if (playerShieldChoice == "Heater Shield") {
+      playerShieldChoice = mediumShield;
+    } else if (playerShieldChoice == "Scutum") {
+      playerShieldChoice = largeShield;
+    } else if (playerShieldChoice == "Pavise") {
+      playerShieldChoice = greatShield;
+    }
+    player.shield = playerShieldChoice;
+    if (confirm('Do you wish to select the ' + player.shield.name + '?') === true) {
+      shieldBtns.style.display = 'none';
+      chooseArmor();
+    };
+  });
+}
+function chooseArmor() {
+  armorBtns.style.display = 'block';
+  // Chooses the armor from the ARMOR BUTTONS
+  armorBtns.addEventListener('click', function(e) {
+    textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+    console.log(e.target.innerText);
+    playerArmorChoice = e.target.innerText;
+    playerChoice.pop();
+    playerChoice.push(playerArmorChoice);
+    if (playerArmorChoice == 'Celtic Menagerie'){
+      playerArmorChoice = celt;
+    } else if (playerArmorChoice == "Knight's Full Plate") {
+      playerArmorChoice = knight;
+    } else if (playerArmorChoice == "Legionnaire's Regalia") {
+      playerArmorChoice = legionnaire;
+    } else if (playerArmorChoice == "Mage's Robes") {
+      playerArmorChoice = mage;
+    } else if (playerArmorChoice == "Poor Knight's Chainmail") {
+      playerArmorChoice = poorKnight;
+    } else if (playerArmorChoice == "Viking Lamellar") {
+      playerArmorChoice = viking;
+    }
+    player.armor = playerArmorChoice;
+    physDefEl.innerText = playerArmorChoice.physRes;
+    magDefEl.innerText = playerArmorChoice.magRes;
+    dodgeEl.innerText = playerArmorChoice.dodge;
+    console.log(player);
+    if (confirm('Do you wish to select the ' + player.armor.name + '?') === true) {
+      armorBtns.style.display = 'none';
+      render();
+    }
+  });
+}
 
-//   // Sets up the PLAYER stats with FUNCTIONS based on MODIFIERS of WEAPON and ARMOR chosen
-//   // Sets up the PLAYER IMG, WEAPON IMGs, ARMOR IMG, COMPUTER IMG
-//   // Sets up the PLAYER HEALTH, COMPUTER HEALTH
-//   // Sets up the UI
-//     //What updates? Turn count, Health Values
-//   //Either will have one option at a time for 'ACTION' round, roll, dodge
-//   //Maybe an action object
+function updatePlayer() {
+  player.weapon = document.getElementById('')
+}
 
-// }
+
+actionsEl.addEventListener('click', function(e) {
+textBox.value += 'You have selected to ' + e.target.innerText + '!' + '\n';
+console.log(e.target.innerText);
+
+});
+
+weaponBtns.addEventListener('click', function(e) {
+textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+console.log(e.target.innerText);
+});
+armorBtns.addEventListener('click', function(e) {
+textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+console.log(e.target.innerText);
+});
+shieldBtns.addEventListener('click', function(e) {
+textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
+console.log(e.target.innerText);
+});
+chooseEl.addEventListener('click', function(e) {
+chooseWeapon();
+});
+
+  randomEl.addEventListener('click', function(e) {
+  playerRandom();
+});
+
+
+function playerRandom() {
+  randomWeapon();
+}
+let weapons = [gladius, dagger, scythe, spear, katana, halberd, claymore, 
+  battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity];
+let shields = [smallShield, mediumShield, largeShield, greatShield];
+let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
+let ranWeapon;
+let ranShield;
+let ranArmor;
+
+function randomWeapon() {
+  // FUNCTION to RETURN RANDOM WEAPON for PLAYER.WEAPON
+  ranWeapon = Math.floor(Math.random() * weapons.length);
+  player.weapon = weapons[ranWeapon];
+  console.log(player.weapon);
+  damEl.innerText = player.weapon.physDam + player.weapon.magDam;
+  attTypeEl.innerText = player.weapon.attackType;
+  damTypeEl.innerText = player.weapon.damageType;
+  randomShield();
+}
+
+function randomShield() {
+  ranShield = Math.floor(Math.random() * shields.length);
+  player.shield = shields[ranShield];
+  console.log(player.shield);
+  randomArmor();
+  // FUNCTION to RETURN RANDOM SHIELD for PLAYER.SHIELD
+}
+function randomArmor() {
+  // FUNCTION to RETURN RANDOM ARMOR for PLAYER.ARMOR
+  ranArmor = Math.floor(Math.random() * armors.length);
+  player.armor = armors[ranArmor];
+  console.log(player.armor);
+  physDefEl.innerText = player.armor.physRes;
+  magDefEl.innerText = player.armor.magRes;
+  dodgeEl.innerText = player.armor.dodge;
+}
+
+function randomEnemy() { 
+  let enemyArr = [dorien, guts];
+  return Math.random() < 0.5 ? enemyArr[0]: enemyArr[1];
+}
+console.log(randomEnemy());
+
+function playerChoose() {
+  //This prompts the selection of Weapons
+  chooseWeapon(); // Once CONFIRMED via CONFIRM (START)
+  // This prompts the selection of Shields    
+  chooseShield();
+  // This prompts the selection of Armor
+  chooseArmor();
+}
+
+
+function render() {
+  chooseEl.style.display = 'none';
+  confirmEl.style.display = 'none';
+  randomEl.style.display = 'none';
+  duelEl.style.display = 'none';
+  // Sets up the PLAYER stats with FUNCTIONS based on MODIFIERS of WEAPON and ARMOR chosen
+  // Sets up the PLAYER IMG, WEAPON IMGs, ARMOR IMG, COMPUTER IMG
+  // Sets up the PLAYER HEALTH, COMPUTER HEALTH
+  // Sets up the UI
+    //What updates? Turn count, Health Values
+  //Either will have one option at a time for 'ACTION' round, roll, dodge
+  //Maybe an action object
+}
 
 // The 5 sections to identify are
 // // What are you Constants?
@@ -538,14 +604,6 @@ function roll() {
 //     - to MODIFY DAMAGE, DEFENSE, and DODGE when interacting with its own equipment (If (user.Weapon.attackTYpe === 'lightning') {+10% magDam, -10% magRes}))
 //     - modify results multiple interactions between PLAYER and COMPUTER (Attack vs Dodge Rating) (Attack Damage vs Physical Defense)
 //     - adjusts PLAYER and COMPUTER HEALTH to new totals at end of combat round before 
-
-
-// weaponBtn.forEach(weap => {
-//   weap.addEventListener('click', (event) {
-
-//     weap.setAttribute('style', 'background-color: yellow;');
-//   });
-// });
 
 // endGame() {
   // if (computer.health <= 0) { alert('You win!') } else { alert('You lose!')}
