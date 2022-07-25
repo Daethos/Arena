@@ -20,12 +20,12 @@ class Weapons {
 }
 // Shield class that pools the stats which affect combat damage mitigation
 class Shields {
-  constructor(name, physRes, magRes, roll) {
+    constructor(name, physRes, magRes, dodge) {
     this.name = name;
     this.physRes = physRes;
     this.magRes = magRes;
-    this.roll = roll;
-  }
+    this.dodge = dodge;
+    }
 }
 // Might be able to make it so that you can EQUIP items during ACTIONS phase or ICEBOX
 // Armor Class that pools the stats which affect combat damage mitigation
@@ -38,27 +38,6 @@ class Armors {
    this.dodge = dodge; // Chance to EVADE Attack, affects ROLL (DODGE)
  }
 }
-
-// Player Class that pools stats of chosen equipment
-class Player {
-  constructor(name, weapon, shield, armor) {
-    this.name = name;
-    // Need a FUNCTION that populates the WEAPON, SHIELD, and ARMOR and subsequently populates their stats
-    this.Weapons = weapon;
-    this.Shields = shield;
-    this.Armors = armor;
-  }
-  // get newGame() {
-  //   playerChoose() {    
-  //     chooseWeapon();
-  //     chooseShield();
-  //     chooseArmor();
-
-  //     render();
-  //   }
-  // }
-}
-
 
 // COMPUTER OPPONENTS
 class Opponents {
@@ -159,21 +138,17 @@ const dorien = new Opponents('Dorien', 'greatSpear', 'insanity', 'fox');
 const guts = new Opponents('Guts', 'hunkOfIron', 'godHand', 'wolf');
 const daethos = new Opponents('Daethos', 'soulRend', 'soulRend', 'hush'); // Hidden Boss
 
-
-
 // Weapon Possibilities
 const Gladius = new Weapons('Gladius', 'oneHand', 'P', 'pierce', 200, 0);
-const dagger = new Weapons('Pugio', 'oneHand', 'P', 'pierce', 150, 0); // +10% Ddodge as is
-const scythe = new Weapons('Scythe', 'oneHand', 'P', 'pierce', 200, 0);
-const spear = new Weapons('Spear', 'oneHand', 'P', 'pierce', 200, 0); // +Dodge to offset position limitations
-const katana = new Weapons('Katana', 'oneHand', 'P', 'slash', 200, 0);
-const hellberd = new Weapons('Halberd', 'twoHand', 'P', 'pierce', 300, 0);
-const claymore = new Weapons('Claymore', 'twoHand', 'P', 'slash', 300, 0);
-const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'slash', 300, 0);
+const Dagger = new Weapons('Pugio', 'oneHand', 'P', 'pierce', 150, 0); // +10% Ddodge as is
+const Scythe = new Weapons('Scythe', 'oneHand', 'P', 'pierce', 200, 0);
+const Spear = new Weapons('Spear', 'oneHand', 'P', 'pierce', 200, 0); // +Dodge to offset position limitations
+const Katana = new Weapons('Katana', 'oneHand', 'P', 'slash', 200, 0);
+const Halberd = new Weapons('Halberd', 'twoHand', 'P', 'pierce', 300, 0);
+const Claymore = new Weapons('Claymore', 'twoHand', 'P', 'slash', 300, 0);
+const BattleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'slash', 300, 0);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'blunt', 300, 0);
 const mace = new Weapons('Mace', 'oneHand', 'P', 'blunt' , 200, 0);
-
-
 
 // Spell Possibilities
 const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'fire', 0, 250);
@@ -204,16 +179,6 @@ const viking = new Armors("Viking's Regalia", 'leather-mail', 25, 25, 30); // -1
 const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 75);
-
-
-
-// ---------------- STATE VARIABLES ----------------------------
-
-// Starting health totals before modified by damage
-// let health = {
-//   player: 1000,
-//   computer: 2000
-// }
 
 // ----------------- CACHED ELEMENT REFERENCES ---------------------------
 
@@ -314,7 +279,7 @@ function chooseWeapon() {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
     console.log(e.target.innerText);
     playerWeaponChoice = e.target.value;
-    playerChoice = e.target;
+    newPlayer = e.target;
     attTypeEl.innerHTML = Gladius.attackType;
   });
     // Chooses the weapons from the WEAPON BUTTONS (2)
@@ -337,7 +302,7 @@ function chooseArmor() {
   }
 
   function updatePlayer() {
-    Player.weapon = document.getElementById('')
+    player.weapon = document.getElementById('')
   }
 
 
@@ -352,20 +317,73 @@ weaponBtns.addEventListener('click', function(e) {
   console.log(e.target.innerText);
   playerWeaponChoice = e.target.innerText;
   playerChoice.pop();
-  playerChoice.push(Weapons.playerWeaponChoice);
+  playerChoice.push(playerWeaponChoice);
+  if (playerWeaponChoice == )
+  player.weapon = `${playerWeaponChoice}`;
+  playerWeaponChoice = player.weapon;
   console.log(playerChoice);
-  damEl.value = playerChoice.damage
-  // attTypeEl.value = playerChoice[0].attackType;
+  console.log(player);
+  console.log(playerWeaponChoice);
+  // FIGURE OUT HOW TO GET A STRING TO ASSOCIATE WITH SOMETHING
+  // So i have it in a string, I need it to mean the class object
+  // once weapon has run as a constructor, figure out how to send it as an object
+  // Lock in choice button that removes all event listeners to choose other weapons
+  // and solidies that into its own class that slots into the player.weapon
+  // damEl.innerText = Player.playerWeaponChoice[physDam];
+  // attTypeEl.value = newPlayer[0].attackType;
   // console.log(attTypeEl.value);
 });
 armorBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
   console.log(e.target.innerText);
+  playerArmorChoice = e.target.innerText;
+  newPlayer.pop();
+  newPlayer.push(playerArmorChoice);
+  console.log(newPlayer);
+
 });
 shieldBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
   console.log(e.target.innerText);
+  playerShieldChoice = e.target.innerText;
+  newPlayer.pop();
+  newPlayer.push(playerShieldChoice);
+  console.log(newPlayer);
 });
+
+// ---------------- STATE VARIABLES ----------------------------
+
+// Starting health totals before modified by damage
+// let health = {
+//   player: 1000,
+//   computer: 2000
+// }
+// FIND A WAY TO STORE THE DATA AND ASSIGN IT TO THE PLAYER
+// RE-ASSIGN VALUES FROM WEAPON 
+// Player Class that pools stats of chosen equipment
+let player = {
+  weapon: {
+    name: '',
+    grip: '',
+    attackType: '',
+    damageType: '',
+    physDam: 0,
+    magDam: 0,
+  },
+  shield: {
+    name: '',
+    physRes: 0,
+    magRes: 0,
+    dodge: 0,
+  },
+  armor: {
+    name: '',
+    type: '',
+    physRes: 0,
+    magRes: 0,
+    dodge: 0,
+  }
+};
 
 //function iniateButtonWizard() {
 // hideButtonEl IS WHAT GETS HIDDEN
