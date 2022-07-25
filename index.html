@@ -9,8 +9,93 @@
     <script defer src="js/app.js"></script>
 </head>
 <body>
+    <img src="./Img/GladiatorArena.jpg" id="background" alt="arena">
     <h1>The Ascea: MUD Duels</h1>
-    <h2>Duel?</h2>
-    
+    <h2 id="duel">Duel?</h2>
+    <div class="start-buttons">
+        <button id="choose">Choose</button>
+        <button id="random">Random</button>
+        <button id="start">Start</button>
+    </div>
+    <div class="hide-buttons">
+    <div class="weapons"><p>Weapons</p> <br />
+        <button class="weapon" id="wb1">Gladius</button>
+        <button class="weapon" id="wb2">Dagger</button>
+        <button class="weapon" id="wb3">Scythe</button>
+        <button class="weapon" id="wb4">Spear</button><br />
+        <button class="weapon" id="wb5">Katana</button>
+        <button class="weapon" id="wb6">Halberd</button>
+        <button class="weapon" id="wb7">Claymore</button> 
+        <button class="weapon" id="wb8">Battle Axe</button><br />
+        <button class="weapon" id="wb9">War Hammer</button>
+        <button class="weapon" id="wb10">Fireball</button>
+        <button class="weapon" id="wb11">Lightning Spear</button>
+        <button class="weapon" id="wb12">Snow Ball</button><br />
+        <button class="weapon" id="wb13">Magic Missle</button>
+        <button class="weapon" id="wb14">Mace</button>
+        <button class="weapon" id="wb15">God Hand</button>
+        <button class="weapon" id="wb16">Insanity</button>
+    </div>
+
+    <div class="shields"><p>Shields</p> <br />
+        <button class="shield" id="sb1">Parrying Buckler</button>
+        <button class="shield" id="sb2">Heater Shield</button>
+        <button class="shield" id="sb3">Scutum</button>
+        <button class="shield" id="sb4">Pavise</button>
+    </div>
+
+    <div class="armors"><p>Armor</p> <br />
+        <button class="armor" id="ab1">Celtic Menagerie</button>
+        <button class="armor" id="ab2">Knight's Full Suit</button>
+        <button class="armor" id="ab3">Legionnaire's Regalia</button> <br />
+        <button class="armor" id="ab4">Mage's Robes</button>
+        <button class="armor" id="ab5">Poor Knight's Chainmail</button>
+        <button class="armor" id="ab6">Viking Lamellar</button>
+    </div>
+    </div>
+    <div id="comp">
+        <p>Guts</p> 
+        <canvas id="computer-health"></canvas><br />
+        <img src="./Img/Guts-Wolf.png" alt="Computer Image" width="500" height="500">
+           
+    </div>
+
+    <div id="play">
+        <canvas id="player-health"></canvas><br />
+        <h4>Name And Information Screen</h4>
+        <img src="./Img/Dorien.png" alt="Player Image" width="155" height="255">
+            <table id="table">
+                <tr>
+                <th colspan="4">Player Stats</th>
+                </tr>
+                <tr>
+                    <td>Attack Type</td>
+                    <td id="att-type" class="stats"></td>
+                    <td>Physical Defense</td>
+                    <td id ="phys-def" class="stats"></td>
+                </tr>
+                <tr>
+                    <td>Damage Type</td>
+                    <td id="dam-type" class="stats"></td>
+                    <td>Magical Defense</td>
+                    <td id="mag-def" class="stats"></td>
+                </tr>
+                <tr>
+                    <td>Damage</td>
+                    <td id="damage" class="stats"></td>
+                    <td>Dodge</td>
+                    <td id="dodge" class="stats"></td>
+                </tr>
+            </table>
+
+    </div>
+    <section id="actions">
+        <button class="action">Attack</button>
+        <button class="action">Dodge</button>
+        <button class="action">Posture</button>
+        <button class="action">Roll</button>
+        <button id ="initiate" class="action">Initiate</button>
+    </section>
+    <textarea class="text-box" id="console" readonly></textarea>
 </body>
 </html>
