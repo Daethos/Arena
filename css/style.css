@@ -182,7 +182,7 @@ button:focus {
 
 table, tr, td {
     border: 1px solid white;
-    text-align: relative;
+    /* text-align: relative; */
 }
 
 th {
@@ -197,4 +197,12 @@ th {
 #table {
     color: white;
     background-color: black;
+    position: relative;
+}
+#icon-imgs {
+    display: none;
+    grid-template-areas:
+    'a'
+    'a'
+    'a';
 }
