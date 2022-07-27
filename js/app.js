@@ -91,10 +91,8 @@ const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
 let playHealth = 1000; // Starting PLAYER HEALTH
 let compHealth = 2000; // Starting COMPUTER HEALTH
-
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
-
 // Weapon Possibilities
 const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 200, 0);
 const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0); // +10% Ddodge as is
@@ -106,26 +104,22 @@ const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
 const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 300, 0);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 300, 0);
 const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 200, 0);
-
 // Spell Possibilities
 const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 250);
 const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 250);
 const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'S', 0, 250);
 const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'Fr', 0, 250);
-
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 3); // +Dodge to offset position limitaions
 const mediumShield = new Shields('Heater Shield', 10, 10, 4);
 const largeShield = new Shields('Scutum', 15, 15, 5);
 const greatShield = new Shields('Pavise', 25, 25, 6);
-
 // Opponent Equipment
 const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); // Dorien Weapon / NOT available for player
 const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 150, 150);
 const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); // Daethos Spell / Also available
 const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 150); // Guts Spell / Also available
 const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); // Guts Weapon / NOT available for player
-
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 20, 20, 25); //
 const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); //
@@ -136,9 +130,23 @@ const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); // -
 const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 50);
-
+// Opponents Thusfar
+const dorien = {
+  name: 'Prince Dorien Caderyn',
+  weapons: [greatSpear, insanity],
+  armor: fox
+}
+const guts = {
+  name: 'Guts, the Black Swordsman',
+  weapons: [hunkOfIron, godHand],
+  armor: wolf
+}
+const daethos = { // Hidden Boss
+  name: 'Daethos, the One Above All',
+  weapons: [soulRend, soulRend],
+  armor: hush
+}
 // ----------------- CACHED ELEMENT REFERENCES ---------------------------
-
 // Starting Game Elements
 const startEls = document.querySelector('.start-buttons');
 const createEl = document.querySelector('#create');
@@ -194,7 +202,6 @@ shieldBtns.style.display = 'none';
 actionsEl.style.display = 'none';
 
 // ---------------- STATE VARIABLES ----------------------------
-
 let player = {
   weapon: {
     name: '',
@@ -218,31 +225,13 @@ let player = {
     dodge: 0,
   }
 };
-
 let enemy;
-const dorien = {
-  name: 'Prince Dorien Caderyn',
-  weapons: [greatSpear, insanity],
-  armor: fox
-}
-const guts = {
-  name: 'Guts, the Black Swordsman',
-  weapons: [hunkOfIron, godHand],
-  armor: wolf
-}
-const daethos = { // Hidden Boss
-  name: 'Daethos, the One Above All',
-  weapons: [soulRend, soulRend],
-  armor: hush
-}
-
 let playerChoice = [];
 let playerActionChoice = '';
 let playerWeaponChoice = '';
 let playerShieldChoice = '';
 let playerArmorChoice = '';
-let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, 
-  battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity];
+let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity];
 let shields = [smallShield, mediumShield, largeShield, greatShield];
 let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
 let ranWeapon; // For RANDOM WEAPON function
@@ -257,6 +246,8 @@ let actionChoice = []; // Allows me to capture ACTOIN variable for INITIATE
 let playerInput = ''; // To capture action click input
 let physAttDam; // Use these for PLAYER and ENEMY ATTACK Functions
 let magAttDam; // Same as above
+let startChoice = [];
+let confirmChoice = '';
 
 // <------------------------ EVENT LISTENERS ----------------------------------------
 
@@ -368,7 +359,6 @@ function initiate() {
     return;
   }
 }
-
 function playerAttack() {
   let physAttDam = player.weapon.physDam;
   let magAttDam = player.weapon.magDam;
@@ -618,53 +608,6 @@ setInterval (function() {
     areaText += Math.random() + '\n';
     textBox.scrollTop = textBox.scrollHeight;
 }, 250);
-
-let startChoice = [];
-let confirmChoice = '';
-
-function init() {
-  compEl.style.display = 'block';
-  weaponBtns.style.display = 'none';
-  shieldBtns.style.display = 'none';
-  armorBtns.style.display = 'none';
-  actionsEl.style.display = 'none'
-  createEl.style.display = 'inline-block';
-  randomEl.style.display = 'inline-block';
-  confirmEl.style.display = 'none';
-  duelEl.style.display = 'inline-block';
-  backgroundEl.style.display = 'block';
-  diedEl.style.display = 'none';
-  onceMoreEl.style.display = 'none';
-  victoryEl.style.display = 'none';
-
-  createEl.addEventListener('click', function(e) {
-    confirmChoice = e.target.innerText;
-    textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
-    confirmEl.style.display = 'inline-block';  
-    confirmEl.addEventListener('click', start);  
-  });
-
-  randomEl.addEventListener('click', function(e) {
-    confirmChoice = e.target.innerText;
-    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
-    confirmEl.style.display = 'inline-block';
-    confirmEl.addEventListener('click', start); 
-  });
-};
-function start() {
-  textBox.value += 'You have chosen to start the duel. Good luck!' + '\n';
-  createEl.style.display = 'none';
-  randomEl.style.display = 'none';
-  if (confirmChoice == 'Create') {
-    textBox.value += 'You have chosen to CREATE your champion.' + '\n';
-    playerChoose();
-  } else if (confirmChoice == 'Random') {
-    textBox.value += 'You have chosen to RANDOMIZE your champion.' + '\n';
-    playerRandom();
-  } else {
-    return;
-  }
-}
 function chooseWeapon() {
   confirmEl.style.displaay = 'inline';
   weaponBtns.style.display = 'block';
@@ -778,6 +721,47 @@ function chooseArmor() {
       });
   })
 };
+function init() {
+  compEl.style.display = 'none';
+  weaponBtns.style.display = 'none';
+  shieldBtns.style.display = 'none';
+  armorBtns.style.display = 'none';
+  actionsEl.style.display = 'none'
+  createEl.style.display = 'inline-block';
+  randomEl.style.display = 'inline-block';
+  confirmEl.style.display = 'none';
+  duelEl.style.display = 'inline-block';
+  backgroundEl.style.display = 'block';
+  diedEl.style.display = 'none';
+  onceMoreEl.style.display = 'none';
+  victoryEl.style.display = 'none';
+  createEl.addEventListener('click', function(e) {
+    confirmChoice = e.target.innerText;
+    textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
+    confirmEl.style.display = 'inline-block';  
+    confirmEl.addEventListener('click', start);  
+  });
+  randomEl.addEventListener('click', function(e) {
+    confirmChoice = e.target.innerText;
+    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
+    confirmEl.style.display = 'inline-block';
+    confirmEl.addEventListener('click', start); 
+  });
+};
+function start() { //This is called by the confirm button
+  textBox.value += 'You have chosen to start the duel. Good luck!' + '\n';
+  createEl.style.display = 'none';
+  randomEl.style.display = 'none';
+  if (confirmChoice == 'Create') {
+    textBox.value += 'You have chosen to CREATE your champion.' + '\n';
+    playerChoose();
+  } else if (confirmChoice == 'Random') {
+    textBox.value += 'You have chosen to RANDOMIZE your champion.' + '\n';
+    playerRandom();
+  } else {
+    return;
+  }
+}
 function playerRandom() {
   playEl.style.display = 'block';
   randomWeapon();
@@ -823,8 +807,9 @@ function randomEnemy() { // This will go in the RENDER() function I believe
   } else if (Math.floor(Math.random() * 101) > 4) {
     enemy = dorien;
     compImg.src = './Img/Dorien.png';
-    compImg.height = 700;
-    compImg.width = 450;
+    compImg.height = 650;
+    compImg.width = 400;
+    compImg.top = 100;
   } else {
     enemy = daethos;
     compImg.src = './Img/Daethos.png';
