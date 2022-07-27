@@ -68,6 +68,7 @@ class HealthBars {
   updateHealth(val) {
     this.health = val;
     this.w = (this.health / this.maxHealth) * this.maxWidth;
+    this.innerText = val + ' / ' + this.maxHealth;
   }
 }
 // Elements to get the Canvas tag
@@ -97,8 +98,8 @@ const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'gree
 // Weapon Possibilities
 const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 200, 0);
 const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0); // +10% Ddodge as is
-const scythe = new Weapons('Scythe', 'oneHand', 'P', 'P', 200, 0);
-const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 200, 0); // +Dodge to offset position limitations
+const scythe = new Weapons('Scythe', 'twoHand', 'P', 'P', 250, 0);
+const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 150, 0); // +Dodge to offset position limitations
 const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 200, 0);
 const halberd = new Weapons('Halberd', 'twoHand', 'P', 'P', 300, 0);
 const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
@@ -119,11 +120,11 @@ const largeShield = new Shields('Scutum', 15, 15, 5);
 const greatShield = new Shields('Pavise', 25, 25, 6);
 
 // Opponent Equipment
-const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 250, 0); // Dorien Weapon / NOT available for player
-const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 100, 150);
-const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 150, 150); // Daethos Spell / Also available
-const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 100); // Guts Spell / Also available
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 250, 0); // Guts Weapon / NOT available for player
+const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); // Dorien Weapon / NOT available for player
+const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 150, 150);
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); // Daethos Spell / Also available
+const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 150); // Guts Spell / Also available
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); // Guts Weapon / NOT available for player
 
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 20, 20, 25); //
@@ -134,7 +135,7 @@ const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 40, 1
 const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); // -10% Frost
 const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
-const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 75);
+const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 50);
 
 // ----------------- CACHED ELEMENT REFERENCES ---------------------------
 
@@ -220,12 +221,12 @@ let player = {
 
 let enemy;
 const dorien = {
-  name: 'Prince Dorien',
+  name: 'Prince Dorien Caderyn',
   weapons: [greatSpear, insanity],
   armor: fox
 }
 const guts = {
-  name: 'Guts',
+  name: 'Guts, the Black Swordsman',
   weapons: [hunkOfIron, godHand],
   armor: wolf
 }
@@ -309,6 +310,49 @@ playFrame();
 compFrame();
 
 // ----- ATTACK FUNCTIONS ----- \\
+function attack() {
+  textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
+  playerAttack(),
+  playerAttack(),
+  computerAttack();
+};
+function posture() {
+  textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
+  playPhysPos = player.armor.physRes + player.shield.physRes;
+  playMagPos = player.armor.magRes + player.shield.magRes;
+  playerAttack(),
+  computerAttack(),
+  playPhysPos = player.armor.physRes;
+  playMagPos = player.armor.magRes;
+};
+function dodge() {
+  playerDodge = player.armor.dodge;
+  let dodgeAttempt = Math.floor(Math.random() * 101);
+  if (player.weapon.grip == 'oneHand') {
+      playerDodge += 20;
+  } else {
+    playerDodge = playerDodge;
+  }
+  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+    playerDodge += 10;
+  } else {
+    playerDodge = playerDodge;
+  }
+  if ((playerDodge >= dodgeAttempt) === true) {
+    textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
+    playerAttack(); // COMPUTERATTACK FUNCTION SKIPPED MANUALLY 
+  } else {
+    textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
+    computerAttack(),
+    playerAttack();
+  }
+}
+function roll() {
+  textBox.value += "Phew! Risky. Better not try that again." + '\n';
+  playerAttack();
+  // Create a set timeout interval attached to the value of the shield.roll value
+  // ICE out the roll button or some such, perhaps style.display = 'none' until the interval is up?
+};
 function initiate() {
   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
   console.log(playerInput);
@@ -330,11 +374,41 @@ function playerAttack() {
   let magAttDam = player.weapon.magDam;
   let physDamRes = enemy.armor.physRes;
   let magDamRes = enemy.armor.magRes;
-
   if (Math.floor(Math.random() * 101) > 15) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = physAttDam + magAttDam;
+    if (player.weapon.damageType == 'P') {
+      if (enemy.armor.type == 'plate-mail') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type == 'chain-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'S') {
+      if (enemy.armor.type == 'chain-mail') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'B') {
+      if (enemy.armor.type == 'leather-mail') {
+        playDamTot *=  0.9;
+      } else if (enemy.armor.type == 'plate-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.attackType == 'M') {
+      if (enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type = 'leather-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+      playDamTot *= 1.1;
+    }
     console.log(playDamTot);
     compHealth -= playDamTot;
     textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
@@ -342,7 +416,46 @@ function playerAttack() {
   } else if (Math.floor(Math.random() * 101) > 5) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
-    playDamTot = 2 * (physAttDam + magAttDam);
+    if (player.weapon.grip == 'oneHand') {
+      playDamTot = 2 * (physAttDam + magAttDam);
+    }
+    if (player.weapon.grip == 'twoHand') {
+      playDamTot = 2.5 * (physAttDam + magAttDam);
+    }
+    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+      playDamTot = 3 * (physAttDam + magAttDam);
+    }
+    if (player.weapon.damageType == 'P') {
+        if (enemy.armor.type == 'plate-mail') {
+          playDamTot *= 0.9;
+        } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
+          playDamTot *= 1.1;
+        }
+    }
+    if (player.weapon.damageType == 'S') {
+        if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
+          playDamTot *= 0.9;
+        } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
+          playDamTot *= 1.1;
+        }
+    }
+    if (player.weapon.damageType == 'B') {
+      if (enemy.armor.type == 'leather-mail' || enemy.armor.type == 'leather-cloth') {
+        playDamTot *=  0.9;
+      } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.attackType == 'M') {
+      if (enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type = 'leather-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+      playDamTot *= 1.1;
+    }
     console.log(playDamTot);
     compHealth -= playDamTot;
     textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
@@ -351,15 +464,45 @@ function playerAttack() {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = 3 * (physAttDam + magAttDam);
+    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+      playDamTot = 4 * (physAttDam + magAttDam);
+    }
+    if (player.weapon.damageType == 'P') {
+      if (enemy.armor.type == 'plate-mail') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'S') {
+      if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'B') {
+      if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
+        playDamTot *=  0.9;
+      } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.attackType == 'M') {
+      if (enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type == 'plate-mail') {
+        playDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+      playDamTot *= 1.1;
+    }
     console.log(playDamTot);
     compHealth -= playDamTot;
     textBox.value += 'You MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
   }
-  // console.log(playDamTot);
-  // compHealth -= playDamTot;
-  // textBox.value += 'You attack ' + enemy.name + ' for ' + playDamTot + ' damage!' + '\n';
-  // compHealthBar.updateHealth(compHealth);
   if (compHealth <= 0) {
     playWin(); // Define what happens
   }
@@ -379,6 +522,40 @@ function computerAttack() {
     mad = magAttDam * (1 - (playMagPos / 100));
     compDamTot = pad + mad;
     console.log(compDamTot);
+    if (weapon.damageType == 'P') {
+      if (player.armor.type == 'plate-mail') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon.damageType == 'S') {
+      if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon.damageType == 'B') {
+      if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+        compDamTot *=  0.9;
+      } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon.attackType == 'M') {
+      if (player.armor.type == 'leather-cloth') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'plate-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
+      compDamTot *= 1.1;
+    }
+    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa') {
+      compDamTot *= 0.9;
+    }
     playHealth -= compDamTot;
     textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
@@ -393,6 +570,40 @@ function computerAttack() {
     mad = magAttDam * (1 - (playMagPos / 100));
     compDamTot = pad + mad;
     console.log(compDamTot);
+    if (weapon1.damageType == 'P') {
+      if (player.armor.type == 'plate-mail') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon1.damageType == 'S') {
+      if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon1.damageType == 'B') {
+      if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+        compDamTot *=  0.9;
+      } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (weapon2.attackType == 'M') {
+      if (player.armor.type == 'leather-cloth') {
+        compDamTot *= 0.9;
+      } else if (player.armor.type == 'plate-mail') {
+        compDamTot *= 1.1;
+      }
+    }
+    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
+      compDamTot *= 1.1;
+    }
+    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa') {
+      compDamTot *= 0.9;
+    }
     playHealth -= compDamTot;
     textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
@@ -401,64 +612,18 @@ function computerAttack() {
     compWin(); // Define what loses
   }
 }
-// ----- ACTION BUTTON FUNCTIONS ----- \\
-
-function attack() {
-  textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
-  playerAttack(),
-  playerAttack(),
-  computerAttack();
-};
-function posture() {
-  textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
-  playPhysPos = player.armor.physRes + player.shield.physRes;
-  playMagPos = player.armor.magRes + player.shield.magRes;
-  playerAttack(),
-  computerAttack(),
-  playPhysPos = player.armor.physRes;
-  playMagPos = player.armor.magRes;
-};
-function dodge() {
-  playerDodge = player.armor.dodge;
-  let dodgeAttempt = Math.floor(Math.random() * 101);
-  if (player.weapon.grip == 'oneHand') {
-      playerDodge += 10;
-  } else {
-    playerDodge = playerDodge;
-  }
-  if (player.weapon == pugio || player.weapon == spear) {
-    playerDodge += 10;
-  } else {
-    playerDodge = playerDodge;
-  }
-  if ((playerDodge >= dodgeAttempt) === true) {
-    textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
-    playerAttack(); // COMPUTERATTACK FUNCTION SKIPPED MANUALLY 
-  } else {
-    textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
-    computerAttack(),
-    playerAttack();
-  }
-}
-function roll() {
-  textBox.value += "Phew! Risky. Better not try that again." + '\n';
-  playerAttack();
-  // Create a set timeout interval attached to the value of the shield.roll value
-  // ICE out the roll button or some such, perhaps style.display = 'none' until the interval is up?
-};
-
-// This allows me to have an auto-scroll feature once it's filled every 100ms after filling
 setInterval (function() {
+  // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
   // Adding the \n let's me break to a new line as I'll be using moving forward
     areaText += Math.random() + '\n';
     textBox.scrollTop = textBox.scrollHeight;
-}, 100);
+}, 250);
 
 let startChoice = [];
 let confirmChoice = '';
 
 function init() {
-  compEl.style.display = 'none';
+  compEl.style.display = 'block';
   weaponBtns.style.display = 'none';
   shieldBtns.style.display = 'none';
   armorBtns.style.display = 'none';
@@ -652,12 +817,19 @@ function randomArmor() {
   textBox.value += 'You have randomized and received the ' + player.armor.name + '!' + '\n';
 }
 function randomEnemy() { // This will go in the RENDER() function I believe
-  if (Math.random() < 0.49) {
+  if (Math.floor(Math.random() * 101) > 52) {
     enemy = guts;
-  } else if (Math.random() < .98) {
+    compImg.src = './Img/Guts-Wolf.png';
+  } else if (Math.floor(Math.random() * 101) > 4) {
     enemy = dorien;
+    compImg.src = './Img/Dorien.png';
+    compImg.height = 700;
+    compImg.width = 450;
   } else {
     enemy = daethos;
+    compImg.src = './Img/Daethos.png';
+    compImg.width = 450;
+    compImg.height = 700;
   }
   compName.innerText = enemy.name;
   textBox.value += 'Your last opponent is ' + enemy.name + '!' + '\n';
@@ -666,6 +838,7 @@ function randomEnemy() { // This will go in the RENDER() function I believe
 function playWin() {
   textBox.value += 'Congratulations, you have won the Ascea! Would you like to play again?' + '\n';
   createEl.style.display = 'inline-block';
+  actionsEl.style.display = 'none';
   onceMoreEl.style.display = 'inline-block';
   compEl.style.display = 'none';
   victoryEl.style.display = 'block';
@@ -674,8 +847,10 @@ function playWin() {
 function compWin() {
   textBox.value += 'YOU DIED' + '\n'
   onceMoreEl.style.display = 'inline-block';
+  actionsEl.style.display = 'none';
   playEl.style.display = 'none';
   backgroundEl.style.display = 'none';
+  compEl.style.display = 'none';
   diedEl.style.display = 'block';
 }
 onceMoreEl.addEventListener('click', startOver);

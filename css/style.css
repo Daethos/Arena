@@ -50,13 +50,13 @@ p {
 textarea {
     position: absolute;
     display: inline-block;
-    margin: 855px 0 0 635px;
+    margin: 855px 0 0 585px;
     padding: 5px 0 0 0;
     border: 5px solid white;
     background-color: black;
     color: white;
     text-align: center;
-    width: 650px;
+    width: 750px;
     height: 200px;
 }
 
@@ -146,6 +146,7 @@ button:hover {
 
 button:focus {
     background: green;
+    background-color: green;
     --webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
     outline: none;
     transform: scale(1.25);
@@ -171,7 +172,7 @@ button:focus {
     position: absolute;
     display: block;
     margin-top: 800px;
-    margin-left: 630px;
+    margin-left: 580px;
 }
 
 #actions button {
@@ -182,12 +183,12 @@ button:focus {
 }
 
 #actions #initiate {
-    margin-left: 167px;
+    margin-left: 267px;
 }
 
 #play {
     position: absolute;
-    margin: 460px 0 0 135px;
+    margin: 460px 0 0 110px;
     padding: 15px;
     border: 5px solid white;
     text-align: center;
@@ -213,10 +214,11 @@ button:focus {
     position: absolute;
     /* border: 1px solid black; */
     top: 150px;
-    left: 800px;
+    left: 685px;
     margin: 0 auto;
     text-align: center;
     z-index: -1;
+    display: block;
 }
 #computer-health {
     margin-top: -150px;
