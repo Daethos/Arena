@@ -76,16 +76,16 @@ const playerHealth = document.querySelector('#player-health');
 // Grants me access to 'drawing' on the canvas tag
 const playContext = playerHealth.getContext('2d');
 const compContext = computerHealth.getContext('2d');
-const compHW = computerHealth.width = 500;
-const compHH = computerHealth.height = 25;
-const playHW = playerHealth.width = 250;
+const compHW = computerHealth.width = 650;
+const compHH = computerHealth.height = 30;
+const playHW = playerHealth.width = 325;
 const playHH = playerHealth.height = 20;
-const playHBW = 250;
-const playHBH = 15;
+const playHBW = 325;
+const playHBH = 20;
 const hX = playHW / 2 - playHBW / 2;
 const hY = playHH / 2 - playHBH / 2;
-const compHBW = 500;
-const compHBH = 25;
+const compHBW = 650;
+const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
 let playHealth = 1000; // Starting PLAYER HEALTH
@@ -144,6 +144,10 @@ const createEl = document.querySelector('#create');
 const randomEl = document.querySelector('#random');
 const confirmEl = document.querySelector('#confirm');
 const duelEl = document.querySelector('#duel');
+const diedEl = document.querySelector('#died');
+const backgroundEl = document.querySelector('#background');
+const victoryEl = document.querySelector('#victory');
+const onceMoreEl = document.querySelector('#play-again');
 
 // Equipment Button Elements
 const weaponBtns = document.querySelector('.weapons');
@@ -155,7 +159,7 @@ const hideBtns = document.querySelector('.hide-button');
 const actionsEl = document.querySelector('#actions');
 const actionEls = document.getElementsByClassName('action');
 const attackBtn = document.getElementById('attack');
-const dodgeBtn = document.getElementById('dodge');
+const dodgeBtn = document.getElementById('dodge'); // Dodge Button
 const postureBtn = document.getElementById('posture');
 const rollBtn = document.getElementById('roll');
 const initiateEl = document.getElementById('initiate');
@@ -167,12 +171,13 @@ const physDefEl = document.getElementById('phys-def');
 const damTypeEl = document.getElementById('dam-type');
 const magDefEl = document.getElementById('mag-def');
 const damEl = document.getElementById('damage');
-const dodgeEl = document.getElementById('dodge');
+const dodgeEl = document.getElementById('dodge-el'); // Dodge Stat
 
 // Computer Elements
 const compEl = document.querySelector('#comp');
 const compName = document.getElementById('comp-name');
 
+const playEl = document.querySelector('#play');
 const playImg = document.getElementById('play-img'); //This will be in a variable tied to playerRandom() and playerChoose()
 const compImg = document.getElementById('comp-img'); // This will be in a variable tied to randomEnemy() to display the correct Computer
 
@@ -248,26 +253,48 @@ let playMagPos = player.armor.magRes; // For POSTURE Function
 let playDamTot = 0; // For PLAYER ATTACK Function
 let compDamTot = 0; // For COMP ATTACK FUnction
 let actionChoice = []; // Allows me to capture ACTOIN variable for INITIATE
+let playerInput = ''; // To capture action click input
+let physAttDam; // Use these for PLAYER and ENEMY ATTACK Functions
+let magAttDam; // Same as above
 
 // <------------------------ EVENT LISTENERS ----------------------------------------
 
-initiateEl.addEventListener('click', function(e) {
-  textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
-  console.log(e.target.innerText);
+// initiateEl.addEventListener('click', function(e) {
+//   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
+//   console.log(e.target.innerText);
+// });
+attackBtn.addEventListener('click', function(e) {
+  playerInput = e.target.innerText;
+  textBox.value += 'You have chosen to ATTACK ' + enemy.name + '! Are you sure?' + '\n';
+  // playerActionChoice = e.target.innerText;
+  // actionChoice.pop();
+  // actionChoice.push(playerActionChoice);
+  // console.log(actionChoice);
+  initiateEl.style.display = 'inline';
+  initiateEl.addEventListener('click', initiate);
 });
-
 dodgeBtn.addEventListener('click', function(e) {
+  playerInput = e.target.innerText;
   textBox.value += 'You have chosen to DODGE! Are you sure?' + '\n';
-  initiateEl.addEventListener('click', dodge);
+  initiateEl.style.display = 'inline';
+  initiateEl.addEventListener('click', initiate);
 });
-
+postureBtn.addEventListener('click', function(e) {
+  playerInput = e.target.innerText;
+  textBox.value += 'You have chosen to POSTURE with your ' + player.shield.name + '! Are you sure?' + '\n';
+  initiateEl.style.display = 'inline';
+  initiateEl.addEventListener('click', initiate);
+}); 
 rollBtn.addEventListener('click', function(e) {
+  playerInput = e.target.innerText;
   textBox.value += 'Could I offer you this ROLL in these trying times?' + '\n';
-  initiateEl.addEventListener('click', roll);
+  initiateEl.style.display = 'inline';
+  initiateEl.addEventListener('click', initiate);
 });
 
-// <------------------------- FUNCTIONS -----------------------------------
-
+// <------------------------- FUNCTIONS ----------------------------------- \\
+init();
+// ----- HEALTH BAR ANIMATION FUNCTIONS ----- \\
 const playFrame = function() {
   playContext.clearRect(0, 0, playHW, playHH);
   playHealthBar.show(playContext);
@@ -281,6 +308,145 @@ const compFrame = function() {
 playFrame();
 compFrame();
 
+// ----- ATTACK FUNCTIONS ----- \\
+function initiate() {
+  textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
+  console.log(playerInput);
+  if (playerInput == 'Attack') { 
+    attack();
+  } else if (playerInput == 'Dodge') {
+    dodge();
+  } else if (playerInput == 'Posture') {
+    posture();
+  } else if (playerInput == 'Roll') {
+    roll();
+  } else {
+    return;
+  }
+}
+
+function playerAttack() {
+  let physAttDam = player.weapon.physDam;
+  let magAttDam = player.weapon.magDam;
+  let physDamRes = enemy.armor.physRes;
+  let magDamRes = enemy.armor.magRes;
+
+  if (Math.floor(Math.random() * 101) > 15) {
+    physAttDam = physAttDam * (1 - (physDamRes / 100));
+    magAttDam = magAttDam * (1 - (magDamRes / 100));
+    playDamTot = physAttDam + magAttDam;
+    console.log(playDamTot);
+    compHealth -= playDamTot;
+    textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+  } else if (Math.floor(Math.random() * 101) > 5) {
+    physAttDam = physAttDam * (1 - (physDamRes / 100));
+    magAttDam = magAttDam * (1 - (magDamRes / 100));
+    playDamTot = 2 * (physAttDam + magAttDam);
+    console.log(playDamTot);
+    compHealth -= playDamTot;
+    textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+  } else {
+    physAttDam = physAttDam * (1 - (physDamRes / 100));
+    magAttDam = magAttDam * (1 - (magDamRes / 100));
+    playDamTot = 3 * (physAttDam + magAttDam);
+    console.log(playDamTot);
+    compHealth -= playDamTot;
+    textBox.value += 'You MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+  }
+  // console.log(playDamTot);
+  // compHealth -= playDamTot;
+  // textBox.value += 'You attack ' + enemy.name + ' for ' + playDamTot + ' damage!' + '\n';
+  // compHealthBar.updateHealth(compHealth);
+  if (compHealth <= 0) {
+    playWin(); // Define what happens
+  }
+  initiateEl.style.display = 'none';
+}
+function computerAttack() {
+  if (Math.random() > .15) {
+    let weapon;
+    if (Math.random() > .5) {
+      weapon = enemy.weapons[0];
+      } else { 
+        weapon = enemy.weapons[1];
+      }
+    let physAttDam = weapon.physDam;
+    let magAttDam = weapon.magDam;
+    pad = physAttDam * (1 - (playPhysPos / 100));
+    mad = magAttDam * (1 - (playMagPos / 100));
+    compDamTot = pad + mad;
+    console.log(compDamTot);
+    playHealth -= compDamTot;
+    textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' damage!' + '\n';
+    playHealthBar.updateHealth(playHealth);
+  } else {
+    let weapon1;
+    let weapon2;
+    weapon1 = enemy.weapons[0];
+    weapon2 = enemy.weapons[1];
+    let magAttDam = weapon1.magDam + weapon2.magDam;
+    let physAttDam = weapon1.physDam + weapon2.physDam;
+    pad = physAttDam * (1 - (playPhysPos / 100));
+    mad = magAttDam * (1 - (playMagPos / 100));
+    compDamTot = pad + mad;
+    console.log(compDamTot);
+    playHealth -= compDamTot;
+    textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' damage!' + '\n';
+    playHealthBar.updateHealth(playHealth);
+  }
+  if (playHealth <= 0) {
+    compWin(); // Define what loses
+  }
+}
+// ----- ACTION BUTTON FUNCTIONS ----- \\
+
+function attack() {
+  textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
+  playerAttack(),
+  playerAttack(),
+  computerAttack();
+};
+function posture() {
+  textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
+  playPhysPos = player.armor.physRes + player.shield.physRes;
+  playMagPos = player.armor.magRes + player.shield.magRes;
+  playerAttack(),
+  computerAttack(),
+  playPhysPos = player.armor.physRes;
+  playMagPos = player.armor.magRes;
+};
+function dodge() {
+  playerDodge = player.armor.dodge;
+  let dodgeAttempt = Math.floor(Math.random() * 101);
+  if (player.weapon.grip == 'oneHand') {
+      playerDodge += 10;
+  } else {
+    playerDodge = playerDodge;
+  }
+  if (player.weapon == pugio || player.weapon == spear) {
+    playerDodge += 10;
+  } else {
+    playerDodge = playerDodge;
+  }
+  if ((playerDodge >= dodgeAttempt) === true) {
+    textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
+    playerAttack(); // COMPUTERATTACK FUNCTION SKIPPED MANUALLY 
+  } else {
+    textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
+    computerAttack(),
+    playerAttack();
+  }
+}
+function roll() {
+  textBox.value += "Phew! Risky. Better not try that again." + '\n';
+  playerAttack();
+  // Create a set timeout interval attached to the value of the shield.roll value
+  // ICE out the roll button or some such, perhaps style.display = 'none' until the interval is up?
+};
+
 // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
 setInterval (function() {
   // Adding the \n let's me break to a new line as I'll be using moving forward
@@ -288,230 +454,54 @@ setInterval (function() {
     textBox.scrollTop = textBox.scrollHeight;
 }, 100);
 
-// SHIELD TIMEOUT: GOOD IDEA
-function playerAttack() {
-  let attackDamage = player.weapon.physDam + player.weapon.magDam;
-  let physDamRes = enemy.armor.physRes;
-  let magDamRes = enemy.armor.magRes;
-  if (player.weapon.attackType == 'p') {
-    //This will be the computer health update
-    playDamTot = attackDamage * (1 - (physDamRes / 100));
-  } else {
-    playDamTot = attackDamage * (1 - (magDamRes / 100));
-  }
-  console.log(playDamTot);
-  compHealth -= playDamTot;
-  textBox.value += 'You attack ' + enemy.name + ' for ' + playDamTot + ' damage!' + '\n';
-  compHealthBar.updateHealth(compHealth);
-  if (compHealth <= 0) {
-    playWin(); // Define what happens
-  }
-}
-function computerAttack() {
-  if (Math.random() > .15) {
-    let weapon;
-    if (Math.random() > .5) {
-      weapon = enemy.weapons[0];
-    } else { 
-      weapon = enemy.weapons[1];
-    }
-    let attackDamage = weapon.physDam + weapon.magDam;
-  // let physDamRes = player.armor.physRes;
-  // let magDamRes = player.armor.magRes;
-    if (actionChoice == 'posture') {
-      if (weapon.attackType == 'p') {
-      compDamTot = attackDamage * (1 - (playPhysPos / 100));
-    } else {
-      compDamTot = attackDamage * (1 - (playMagPos / 100));
-    }
-  }
-    if (weapon.attackType == 'p') {
-      compDamTot = attackDamage * (1 - (playPhysPos / 100));
-    } else {
-      compDamTot = attackDamage * (1 - (playMagPos / 100));
-    }
-    console.log(compDamTot);
-    playHealth -= compDamTot;
-    textBox.value += enemy.name + ' attacks you for ' + compDamTot + ' damage!' + '\n';
-    playHealthBar.updateHealth(playHealth);
-    if (playHealth <= 0) {
-      compWin(); // Define what loses
-    }
-  } else {
-    let weapon1;
-    let weapon2;
-    weapon1 = enemy.weapons[0];
-    weapon2 = enemy.weapons[1];
-    let magicAttackDamage = weapon1.magDam + weapon2.magDam;
-    let physicalAttackDamage = weapon1.physDam + weapon2.physDam;
-    pad = physicalAttackDamage * (1 - (playPhysPos / 100));
-    mad = magicAttackDamage * (1 - (playMagPos / 100));
-    compDamTot = pad + mad;
-    console.log(compDamTot);
-    playHealth -= compDamTot;
-    textBox.value += enemy.name + ' attacks you for ' + compDamTot + ' damage!' + '\n';
-    playHealthBar.updateHealth(playHealth);
-  }
-}
- 
+let startChoice = [];
+let confirmChoice = '';
 
-function dodge() {
-  playerDodge = player.armor.dodge;
-  let dodgeAttempt = Math.floor(Math.random() * 101);
-  console.log(dodgeAttempt);
-  console.log(playerDodge);
-  if (player.weapon.grip == 'oneHand') {
-      playerDodge += 10;
-      console.log(playerDodge); 
-  }
-  if (player.weapon == pugio) {
-    playerDodge += 10;
-    console.log(playerDodge);
-  }
-  if ((playerDodge > dodgeAttempt) === true) {
-    textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
-    playerAttack();
-    // COMPUTERATTACK FUNCTION SKIPPED
-    } else {
-      textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
-      computerAttack(),
-      playerAttack();
-    // return;
-  }
-}
-
-
-// let computerDodge;
-// function cDodge() {
-//   computerDodge = enemy.armor.dodge;
-//   let dodgeAttempt = Math.floor(Math.random() * 101);
-//   console.log(dodgeAttempt);
-//   console.log(computerDodge);
-//   if (enemy.weapon.grip == 'oneHand') {
-//       computerDodge += 10;
-//       console.log(computerDodge); 
-//   }
-//   if (player.weapon == soulRend) {
-//     playerDodge += 10;
-//     console.log(computerDodge);
-//   }
-//   if ((computerDodge > dodgeAttempt) === true) {
-//     textBox.value += enemy.name + " has dodged your attack!" + '\n';
-//     // COMPUTERATTACK FUNCTION SKIPPED
-//   } else {
-//     textBox.value += enemy.name + " did not dodge your attack!" + '\n';
-//     // return;
-//   }
-// }
-
-function posture() {
-  playPhysPos = player.armor.physRes + player.shield.physRes;
-  playMagPos = player.armor.magRes + player.shield.magRes;
-  return
-}
-// initiateEl.addEventListener('click', function() {
-//   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
-//   playerAttack(),
-//   computerAttack(),
-//   playerAttack(),
-//   computerAttack();
-// });
-// Figure out way to say that they're SURE THEY WANT TO ATTACK ETC... for INITIATE
-// function initiateCombat() {
-  playerActionChoice = '';
-  attackBtn.addEventListener('click', function(e) {
-    textBox.value += 'You have chosen to ATTACK ' + enemy.name + '! Are you sure?' + '\n';
-    playerActionChoice = e.target.innerText;
-    actionChoice.pop();
-    actionChoice.push(playerActionChoice);
-    console.log(actionChoice);
-    initiateEl.addEventListener('click', attack);
-  });
-    function attack() {
-      textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
-      playerAttack(),
-      playerAttack(),
-      computerAttack();
-    };
-  postureBtn.addEventListener('click', function(e) {
-    textBox.value += 'You have chosen to POSTURE with your ' + player.shield.name + '! Are you sure?' + '\n';
-    initiateEl.addEventListener('click', posture);
-  });
-    function posture() {
-      textBox.value += "You have chosen to POSTURE! You're an ABSOLUTE UNIT!" + '\n';
-      playerAttack(),
-      computerAttack(),
-      playPhysPos = player.armor.physRes;
-      playMagPos = player.armor.magRes;
-    }; 
-
-//     function initiate(playerChoice) {
-// if (playerChoice == “Attack”) { textBox.innerText = “Attack message” }
-
-    function roll() {
-      textBox.value += "Phew! Risky. Better not use that again." + '\n';
-      playerAttack();
-  };
-
-init(); 
-createEl.style.display = 'inline-block';
-confirmEl.style.display = 'inline-block';
-randomEl.style.display = 'inline-block';
-duelEl.style.display = 'inline-block';
-let startChoice;
-let confirmChoice;
 function init() {
   compEl.style.display = 'none';
   weaponBtns.style.display = 'none';
   shieldBtns.style.display = 'none';
   armorBtns.style.display = 'none';
   actionsEl.style.display = 'none'
-  startEls.style.display = 'block';
+  createEl.style.display = 'inline-block';
+  randomEl.style.display = 'inline-block';
+  confirmEl.style.display = 'none';
+  duelEl.style.display = 'inline-block';
+  backgroundEl.style.display = 'block';
+  diedEl.style.display = 'none';
+  onceMoreEl.style.display = 'none';
+  victoryEl.style.display = 'none';
+
   createEl.addEventListener('click', function(e) {
-    startChoice = e.target.innerText;
-    confirmChoice = startChoice;
-    console.log(startChoice);
+    confirmChoice = e.target.innerText;
     textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
-    confirmEl.addEventListener('click', function() {
-        textBox.value += 'You have chosen to CREATE your champion. Good luck!' + '\n';
-        playerChoose();
-    });
+    confirmEl.style.display = 'inline-block';  
+    confirmEl.addEventListener('click', start);  
   });
-    randomEl.addEventListener('click', function(e) {
-      startChoice = e.target.innerText;
-      confirmChoice = startChoice;
-      console.log(startChoice);
-      confirmEl.addEventListener('click', function() {
-        textBox.value += 'You have chosen to RANDOMIZE your champion. Good luck!' + '\n';
-        playerRandom();
-      });
+
+  randomEl.addEventListener('click', function(e) {
+    confirmChoice = e.target.innerText;
+    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
+    confirmEl.style.display = 'inline-block';
+    confirmEl.addEventListener('click', start); 
   });
-} 
-
-function playWin() {
-  textBox.value += 'Congratulations, you have won the Ascea! Would you like to play again?' + '\n';
-  createEl.style.display = 'inline-block';
-  confirmEl.style.display = 'inline-block';
-  randomEl.style.display = 'inline-block';
-  init();// Have a new button that asks if you wish to play again
+};
+function start() {
+  textBox.value += 'You have chosen to start the duel. Good luck!' + '\n';
+  createEl.style.display = 'none';
+  randomEl.style.display = 'none';
+  if (confirmChoice == 'Create') {
+    textBox.value += 'You have chosen to CREATE your champion.' + '\n';
+    playerChoose();
+  } else if (confirmChoice == 'Random') {
+    textBox.value += 'You have chosen to RANDOMIZE your champion.' + '\n';
+    playerRandom();
+  } else {
+    return;
+  }
 }
-function compWin() {
-  textBox.value += 'YOU DIED' + '\n'
-  createEl.style.display = 'inline-block';
-  confirmEl.style.display = 'inline-block';
-  randomEl.style.display = 'inline-block';
-  init();
-}
-
-// FINISHED - my INIT FUNCTION that lets me CREATE or RANDOMIZE a CHAMPION
-// WORKING ON - Queueing an ACTION BUTTON and executing ACTION FUNCTION on INITIATE based on
-// What has been SELECTED to INITIATE - CURRENT BLOCKER but insight from fixing the INIT FUNCTION
-// and hope the implement that into the ACTION QUEUE function
-// BLOCKERS - FUNCTIONS to MODIFY STATS based on EQUIPMENT
-
 function chooseWeapon() {
   confirmEl.style.displaay = 'inline';
-  // duelEl.style.display = 'none';
   weaponBtns.style.display = 'block';
   weaponBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
@@ -563,7 +553,6 @@ function chooseWeapon() {
     chooseShield();
   });
 });
-  // Chooses the weapons from the WEAPON BUTTONS (2)
 }
 function chooseShield() {
   weaponBtns.style.display = 'none';
@@ -623,17 +612,16 @@ function chooseArmor() {
       render();
       });
   })
-  };
+};
 function playerRandom() {
+  playEl.style.display = 'block';
   randomWeapon();
   randomShield();
   randomArmor();
   render();
 }
 function playerChoose() { //This prompts the selection of Weapons
-  weaponBtns.style.display = 'none';
-  shieldBtns.style.display = 'none';
-  armorBtns.style.display = 'none';
+  playEl.style.display = 'block';
   chooseWeapon();
 }
 function randomWeapon() {
@@ -675,6 +663,26 @@ function randomEnemy() { // This will go in the RENDER() function I believe
   textBox.value += 'Your last opponent is ' + enemy.name + '!' + '\n';
   console.log(enemy);
 }
+function playWin() {
+  textBox.value += 'Congratulations, you have won the Ascea! Would you like to play again?' + '\n';
+  createEl.style.display = 'inline-block';
+  onceMoreEl.style.display = 'inline-block';
+  compEl.style.display = 'none';
+  victoryEl.style.display = 'block';
+  // Have a new button that asks if you wish to play again
+}
+function compWin() {
+  textBox.value += 'YOU DIED' + '\n'
+  onceMoreEl.style.display = 'inline-block';
+  playEl.style.display = 'none';
+  backgroundEl.style.display = 'none';
+  diedEl.style.display = 'block';
+}
+onceMoreEl.addEventListener('click', startOver);
+function startOver() {
+  init();
+}
+
 function render() {
   createEl.style.display = 'none';
   confirmEl.style.display = 'none';
@@ -682,14 +690,15 @@ function render() {
   duelEl.style.display = 'none';
   armorBtns.style.display = 'none';
   actionsEl.style.display = 'inline';
-  // Sets up the PLAYER stats with FUNCTIONS based on MODIFIERS of WEAPON and ARMOR chosen
-  // Sets up the PLAYER IMG, WEAPON IMGs, ARMOR IMG, COMPUTER IMG
-  // Sets up the PLAYER HEALTH, COMPUTER HEALTH
+  initiateEl.style.display = 'none';
   randomEnemy();
   compEl.style.display = 'block';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  // initiateCombat();
+  playHealth = 1000;
+  compHealth = 2000;
+  playHealthBar.updateHealth(playHealth);
+  compHealthBar.updateHealth(compHealth);
 }
 
 // The 5 sections to identify are

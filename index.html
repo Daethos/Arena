@@ -10,12 +10,17 @@
 </head>
 <body>
     <img src="./Img/GladiatorArena.jpg" id="background" alt="arena">
+    <img src="./Img/Dark_Souls_You_Died.jpg" id="died" alt="You Died">
+    <img src="./Img/Victory.jpg" id="victory" alt="Victory Achieved">
     <h1>The Ascea: MUD Duels</h1>
     <h2 id="duel">Duel?</h2>
     <div id="start" class="start-buttons">
         <button id="create">Create</button>
         <button id="random">Random</button>
         <button id="confirm">Confirm</button>
+    </div>
+    <div id="again">
+        <button id="play-again">Once More?</button>
     </div>
     <div class="hide-buttons">
     <div class="weapons"><p>Weapons</p> <br />
@@ -62,7 +67,7 @@
 
     <div id="play">
         <canvas id="player-health"></canvas><br />
-        <h4>Name And Information Screen</h4>
+        <h4></h4>
         <img src="./Img/Dorien.png" id="play-img" alt="Player Image" width="155" height="255">
         <div id="icon-imgs">
             <img src="" alt="Weap" width="25" height="25">
@@ -89,7 +94,7 @@
                     <td>Damage</td>
                     <td id="damage" class="stats"></td>
                     <td>Dodge</td>
-                    <td id="dodge" class="stats"></td>
+                    <td id="dodge-el" class="stats"></td>
                 </tr>
             </table>
 

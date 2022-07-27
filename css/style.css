@@ -29,12 +29,12 @@ h1 {
 h2 {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 300px;
+    margin-top: 250px;
     text-align: center;
-    font-size: 148px;
+    font-size: 192px;
     font-weight: bold;
-    color: white;
-    -webkit-text-stroke: 3px black;
+    color: black;
+    -webkit-text-stroke: 3px white;
     z-index: 3;
 }
 
@@ -70,8 +70,30 @@ textarea {
     opacity: 0.75;
 }
 
+#died {
+    position: fixed;
+    margin-top: -7px;
+    margin-left: -7px;
+    height: 1080px;
+    max-width: 1920px;
+    z-index: -3;
+    display: none;
+}
+
+#victory {
+    position: fixed;
+    margin-top: 405px;
+    margin-left: -7px;
+    height: 270px;
+    max-width: 1920px;
+    z-index: -4;
+    display: none;
+}
+
 button {
-    border: 1.5px solid black;
+    border: 1.5px solid white;
+    background-color: black;
+    color: white;
     text-align: center;
     padding: 10px 25px;
     margin: 5px;
@@ -83,14 +105,23 @@ button {
 .start-buttons {
     position: relative;
     margin: 0 auto;
-    top: -175px;
+    top: -200px;
     padding: 5px;
+    font-size: 32px;
 }
 
-.start-buttons button {
-    font-size: 32px;
+.start-buttons > button {
+    font-size: 36px;
     background-color: black;
     color: white;
+    border: 2px solid white;
+}
+
+#play-again {
+    position: relative;
+    left: 835px;
+    bottom: 250px;
+    font-size: 36px;
     border: 2px solid white;
 }
 
@@ -104,9 +135,9 @@ button {
     /* border: 1px solid black; */
 }
 
-button.innerText {
+/* button.innerText {
     font-family: 'Cinzel', serif, Helvetica;
-}
+} */
 
 button:hover {
     color: white;
@@ -117,13 +148,13 @@ button:focus {
     background: green;
     --webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
     outline: none;
-    transform: scale(1.15);
+    transform: scale(1.25);
     font-size: 16px;
     font-weight: bold;
 }
 
 .start-buttons > button:hover {
-    background-color: black;
+    background-color: green;
 }
 
 .weapons > button:hover {
@@ -156,23 +187,25 @@ button:focus {
 
 #play {
     position: absolute;
-    margin: 510px 0 0 250px;
+    margin: 460px 0 0 135px;
     padding: 15px;
-    border: 3px solid white;
+    border: 5px solid white;
     text-align: center;
-    background-color: black;
+    background-color: rgba(0, 0, 0, .25);
 }
 
 #play img {
     margin-bottom: 35px;
     margin-right: 120px;
     border: 1.5px solid white;
+    background-color: black;
     padding: 0;
 }
 #play h4 {
     color: white;
     width: 250px;
     align-items: center;
+    text-align: center;
     margin: 0 0 35px 0;
 }
 
@@ -189,9 +222,9 @@ button:focus {
     margin-top: -150px;
 }
 #comp-name {
-    font-size: 40px;
+    font-size: 48px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     -webkit-text-stroke: 2px white;
     padding: 0;
 }
@@ -205,9 +238,14 @@ th {
     text-align: center;
     font-size: 18px;
 }
-
+td {
+    height: 55px;
+    min-height: 55px;
+}
 .stats {
     padding: 15px;
+    width: 55px;
+    min-width: 55px;
 }
 
 #table {
