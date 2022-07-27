@@ -256,6 +256,16 @@ initiateEl.addEventListener('click', function(e) {
   console.log(e.target.innerText);
 });
 
+dodgeBtn.addEventListener('click', function(e) {
+  textBox.value += 'You have chosen to DODGE! Are you sure?' + '\n';
+  initiateEl.addEventListener('click', dodge);
+});
+
+rollBtn.addEventListener('click', function(e) {
+  textBox.value += 'Could I offer you this ROLL in these trying times?' + '\n';
+  initiateEl.addEventListener('click', roll);
+});
+
 // <------------------------- FUNCTIONS -----------------------------------
 
 const playFrame = function() {
@@ -298,35 +308,52 @@ function playerAttack() {
   }
 }
 function computerAttack() {
-  let weapon;
-  if (Math.random() > .5) {
-    weapon = enemy.weapons[0];
-  } else { 
-    weapon = enemy.weapons[1];
-  }
-  let attackDamage = weapon.physDam + weapon.magDam;
+  if (Math.random() > .15) {
+    let weapon;
+    if (Math.random() > .5) {
+      weapon = enemy.weapons[0];
+    } else { 
+      weapon = enemy.weapons[1];
+    }
+    let attackDamage = weapon.physDam + weapon.magDam;
   // let physDamRes = player.armor.physRes;
   // let magDamRes = player.armor.magRes;
-  if (actionChoice == 'posture') {
+    if (actionChoice == 'posture') {
+      if (weapon.attackType == 'p') {
+      compDamTot = attackDamage * (1 - (playPhysPos / 100));
+    } else {
+      compDamTot = attackDamage * (1 - (playMagPos / 100));
+    }
+  }
     if (weapon.attackType == 'p') {
-    compDamTot = attackDamage * (1 - (playPhysPos / 100));
+      compDamTot = attackDamage * (1 - (playPhysPos / 100));
+    } else {
+      compDamTot = attackDamage * (1 - (playMagPos / 100));
+    }
+    console.log(compDamTot);
+    playHealth -= compDamTot;
+    textBox.value += enemy.name + ' attacks you for ' + compDamTot + ' damage!' + '\n';
+    playHealthBar.updateHealth(playHealth);
+    if (playHealth <= 0) {
+      compWin(); // Define what loses
+    }
   } else {
-    compDamTot = attackDamage * (1 - (playMagPos / 100));
+    let weapon1;
+    let weapon2;
+    weapon1 = enemy.weapons[0];
+    weapon2 = enemy.weapons[1];
+    let magicAttackDamage = weapon1.magDam + weapon2.magDam;
+    let physicalAttackDamage = weapon1.physDam + weapon2.physDam;
+    pad = physicalAttackDamage * (1 - (playPhysPos / 100));
+    mad = magicAttackDamage * (1 - (playMagPos / 100));
+    compDamTot = pad + mad;
+    console.log(compDamTot);
+    playHealth -= compDamTot;
+    textBox.value += enemy.name + ' attacks you for ' + compDamTot + ' damage!' + '\n';
+    playHealthBar.updateHealth(playHealth);
   }
 }
-  if (weapon.attackType == 'p') {
-    compDamTot = attackDamage * (1 - (playPhysPos / 100));
-  } else {
-    compDamTot = attackDamage * (1 - (playMagPos / 100));
-  }
-  console.log(compDamTot);
-  playHealth -= compDamTot;
-  textBox.value += enemy.name + ' attacks you for ' + compDamTot + ' damage!' + '\n';
-  playHealthBar.updateHealth(playHealth);
-  if (playHealth <= 0) {
-    compWin(); // Define what loses
-  }
-} 
+ 
 
 function dodge() {
   playerDodge = player.armor.dodge;
@@ -343,30 +370,52 @@ function dodge() {
   }
   if ((playerDodge > dodgeAttempt) === true) {
     textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
+    playerAttack();
     // COMPUTERATTACK FUNCTION SKIPPED
-  } else {
-    textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
+    } else {
+      textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
+      computerAttack(),
+      playerAttack();
     // return;
   }
-  // PHYSICAL / MAGICAL DEFENSE * .25.
-  // FUNCTION to COMPARE MATH.RANDOM() to (DODGE / 100)
-  // if PLAYER DODGE > MATH.RANDOM(), COMPUTER ATTACK DAMAGE = 0;
-  // ELSE (MAY NOT HAVE TO EXPRESS AN ELSE, NOT SURE)
 }
+
+
+// let computerDodge;
+// function cDodge() {
+//   computerDodge = enemy.armor.dodge;
+//   let dodgeAttempt = Math.floor(Math.random() * 101);
+//   console.log(dodgeAttempt);
+//   console.log(computerDodge);
+//   if (enemy.weapon.grip == 'oneHand') {
+//       computerDodge += 10;
+//       console.log(computerDodge); 
+//   }
+//   if (player.weapon == soulRend) {
+//     playerDodge += 10;
+//     console.log(computerDodge);
+//   }
+//   if ((computerDodge > dodgeAttempt) === true) {
+//     textBox.value += enemy.name + " has dodged your attack!" + '\n';
+//     // COMPUTERATTACK FUNCTION SKIPPED
+//   } else {
+//     textBox.value += enemy.name + " did not dodge your attack!" + '\n';
+//     // return;
+//   }
+// }
+
 function posture() {
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
-  // Add SHIELD attribute to PLAYER STATS that COMBAT ROUND. Because of this, SHIELD has NO DODGE
-  // So SHIELD adds PHYSICAL DAMAGE, PHYSICAL DEFENSE, and MAGICAL DEFENSE
+  return
 }
-initiateEl.addEventListener('click', function() {
-  textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
-  playerAttack(),
-  computerAttack(),
-  playerAttack(),
-  computerAttack(),
-  unoMas();
-});
+// initiateEl.addEventListener('click', function() {
+//   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
+//   playerAttack(),
+//   computerAttack(),
+//   playerAttack(),
+//   computerAttack();
+// });
 // Figure out way to say that they're SURE THEY WANT TO ATTACK ETC... for INITIATE
 // function initiateCombat() {
   playerActionChoice = '';
@@ -376,60 +425,33 @@ initiateEl.addEventListener('click', function() {
     actionChoice.pop();
     actionChoice.push(playerActionChoice);
     console.log(actionChoice);
-    initiateEl.addEventListener('click', function() {
+    initiateEl.addEventListener('click', attack);
+  });
+    function attack() {
       textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
       playerAttack(),
-      computerAttack(),
       playerAttack(),
-      computerAttack(),
-      unoMas();
-    });
-  }); 
+      computerAttack();
+    };
   postureBtn.addEventListener('click', function(e) {
     textBox.value += 'You have chosen to POSTURE with your ' + player.shield.name + '! Are you sure?' + '\n';
-    playerActionChoice = e.target.innerText;
-    actionChoice.pop();
-    actionChoice.push(playerActionChoice);
-    initiateEl.addEventListener('click', function() {
+    initiateEl.addEventListener('click', posture);
+  });
+    function posture() {
       textBox.value += "You have chosen to POSTURE! You're an ABSOLUTE UNIT!" + '\n';
       playerAttack(),
-      posture(),
-      computerAttack(),
       computerAttack(),
       playPhysPos = player.armor.physRes;
       playMagPos = player.armor.magRes;
-      unoMas();
-    }); 
-  }); 
-  dodgeBtn.addEventListener('click', function(e) {
-    textBox.value += 'You have chosen to DODGE! Are you sure?' + '\n';
-    playerActionChoice = e.target.innerText;
-    actionChoice.pop();
-    actionChoice.push(playerActionChoice);
-    initiateEl.addEventListener('click', function() {
-      textBox.value += "You have chosen to DODGE! When ducking, dipping, and diving isn't enough!" + '\n';
-      dodge(),
-      computerAttack(),
-      playerAttack(),
-      computerAttack(),
-      unoMas();
-    });
-  });
-  rollBtn.addEventListener('click', function(e) {
-    textBox.value += 'Could I offer you this ROLL in these trying times?' + '\n';
-    playerActionChoice = e.target.innerText;
-    actionChoice.pop();
-    actionChoice.push(playerActionChoice);
-    initiateEl.addEventListener('click', function() {
+    }; 
+
+//     function initiate(playerChoice) {
+// if (playerChoice == “Attack”) { textBox.innerText = “Attack message” }
+
+    function roll() {
       textBox.value += "Phew! Risky. Better not use that again." + '\n';
-      playerAttack(),
-      unoMas();
-    });
-  });
-// }
-function unoMas() {
-  initiateCombat();
-}
+      playerAttack();
+  };
 
 init(); 
 createEl.style.display = 'inline-block';
@@ -471,19 +493,14 @@ function playWin() {
   createEl.style.display = 'inline-block';
   confirmEl.style.display = 'inline-block';
   randomEl.style.display = 'inline-block';
-  // Have a new button that asks if you wish to play again
-  init();
+  init();// Have a new button that asks if you wish to play again
 }
-
-
 function compWin() {
   textBox.value += 'YOU DIED' + '\n'
   createEl.style.display = 'inline-block';
   confirmEl.style.display = 'inline-block';
   randomEl.style.display = 'inline-block';
-  // Have a new button that asks if you wish to play again
   init();
-  
 }
 
 // FINISHED - my INIT FUNCTION that lets me CREATE or RANDOMIZE a CHAMPION
@@ -672,7 +689,7 @@ function render() {
   compEl.style.display = 'block';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  initiateCombat();
+  // initiateCombat();
 }
 
 // The 5 sections to identify are
