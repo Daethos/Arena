@@ -236,7 +236,7 @@ let playerWeaponChoice = '';
 let playerShieldChoice = '';
 let playerArmorChoice = '';
 let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity, daiKatana, earthquake];
-let shields = [smallShield, mediumShield, largeShield, greatShield, healTome];
+let shields = [smallShield, mediumShield, largeShield, greatShield];
 let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
 let ranWeapon; // For RANDOM WEAPON function
 let ranShield; // For RANDOM SHIELD Function
@@ -699,8 +699,6 @@ function chooseShield() {
       playerShieldChoice = largeShield;
     } else if (playerShieldChoice == "Pavise") {
       playerShieldChoice = greatShield;
-    } else if (playerShieldChoice == 'Heal Tome') {
-      playerShieldChoice == healTome;
     }
     player.shield = playerShieldChoice;
     confirmEl.addEventListener('click', function(e) {
