@@ -71,11 +71,20 @@
         <canvas id="player-health"></canvas><br />
         <h4></h4>
         <img src="./Img/Dorien.png" id="play-img" alt="Player Image" width="155" height="255">
-        <div id="icon-imgs">
-            <img src="" alt="Weap" width="25" height="25">
-            <img src="" alt="Shield" width="25" height="25">
-            <img src="" alt="Armor" width="25" height="25">
-        </div>
+        <div class="icon-imgs">
+            <div class="weap-div">
+                <img src="./Img/gladius.png" id="weap-img" class="equip-icons" alt="Weap" width="48" height="48">
+                <span class="tooltip" id="weap-tt">Weapon</span>
+            </div>
+            <div class="shield-div">
+                <img src="./Img/heater-shield.png" id="shield-img" class="equip-icons" alt="Shield" width="48" height="48">
+                <span class="tooltip" id="shield-tt">Shield</span>
+            </div>
+            <div class="armor-div">
+                <img src="./Img/knight-armor.png" id="armor-img" class="equip-icons" alt="Armor" width="48" height="48">
+                <span class="tooltip" id="armor-tt">Armor</span>
+            </div>
+        </div><br />
             <table id="table">
                 <tr>
                 <th colspan="4">Player Stats</th>

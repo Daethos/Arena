@@ -186,6 +186,14 @@ const magDefEl = document.getElementById('mag-def');
 const damEl = document.getElementById('damage');
 const dodgeEl = document.getElementById('dodge-el'); // Dodge Stat
 
+//Player Tooltip Elements
+const weapTT = document.querySelector('#weap-tt');
+const shieldTT = document.querySelector('#shield-tt');
+const armorTT = document.querySelector('#armor-tt');
+const weapImg = document.querySelector('#weap-img');
+const shieldImg = document.querySelector('#shield-img');
+const armorImg = document.querySelector('#armor-img');
+
 // Computer Elements
 const compEl = document.querySelector('#comp');
 const compName = document.getElementById('comp-name');
@@ -634,40 +642,58 @@ function chooseWeapon() {
   playerWeaponChoice = e.target.innerText;
   if (playerWeaponChoice == 'Gladius') {
     playerWeaponChoice = gladius;
+    weapImg.src = './Img/gladius.png';
   } else if (playerWeaponChoice == 'Pugio') {
     playerWeaponChoice = pugio;
+    weapImg.src = './Img/pugio.png';
   } else if (playerWeaponChoice == 'Scythe') {
     playerWeaponChoice = scythe;
+    weapImg.src = './Img/scythe.png';
   } else if (playerWeaponChoice == 'Spear') {
     playerWeaponChoice = spear;
+    weapImg.src = './Img/spear.png';
   } else if (playerWeaponChoice == 'Katana') {
     playerWeaponChoice = katana;
+    weapImg.src = './Img/katana.png';
   } else if (playerWeaponChoice == 'Halberd') {
     playerWeaponChoice = halberd;
+    weapImg.src = './Img/halberd.png';
   } else if (playerWeaponChoice == 'Claymore') {
     playerWeaponChoice = claymore;
+    weapImg.src = './Img/claymore.png';
   } else if (playerWeaponChoice == 'Battle Axe') {
     playerWeaponChoice = battleAxe;
+    weapImg.src = './Img/battleaxe.png';
   } else if (playerWeaponChoice == 'War Hammer') {
     playerWeaponChoice = warHammer;
+    weapImg.src = './Img/warhammer.png';
   } else if (playerWeaponChoice == 'Fireball') {
     playerWeaponChoice = fireBall;
+    weapImg.src = './Img/fire.png';
   } else if (playerWeaponChoice == 'Lightning Spear') {
     playerWeaponChoice = lightningSpear;
+    weapImg.src = './Img/lightning-spear.png';
   } else if (playerWeaponChoice == 'Snow Ball') {
     playerWeaponChoice = snowBall;
+    weapImg.src = './Img/frost.png';
   } else if (playerWeaponChoice == 'Magic Missile') {
     playerWeaponChoice = magicMissile;
+    weapImg.src = './Img/sorcery.png';
   } else if (playerWeaponChoice == 'Mace') {
     playerWeaponChoice = mace;
+    weapImg.src = './Img/mace.png';
   } else if (playerWeaponChoice == 'God Hand') {
     playerWeaponChoice = godHand;
+    weapImg.src = './Img/faith.png';
   } else if (playerWeaponChoice == 'Insanity') {
     playerWeaponChoice = insanity;
+    weapImg.src = './Img/dark.png';
   } else if (playerWeaponChoice == 'Dai-Katana') {
     playerWeaponChoice = daiKatana;
+    weapImg.src = './Img/dai-katana.png';
   } else if (playerWeaponChoice == 'Earthquake') {
     playerWeaponChoice = earthquake;
+    weapImg.src = './Img/earth.png';
   }
   player.weapon = playerWeaponChoice;
   damEl.innerText = playerWeaponChoice.physDam + playerWeaponChoice.magDam;
@@ -686,12 +712,16 @@ function chooseShield() {
     playerShieldChoice = e.target.innerText;
     if (playerShieldChoice == 'Parrying Buckler'){
       playerShieldChoice = smallShield;
+      shieldImg.src = './Img/buckler.png';
     } else if (playerShieldChoice == "Heater Shield") {
       playerShieldChoice = mediumShield;
+      shieldImg.src = './Img/heater-shield.png';
     } else if (playerShieldChoice == "Scutum") {
       playerShieldChoice = largeShield;
+      shieldImg.src = './Img/scutum.png';
     } else if (playerShieldChoice == "Pavise") {
       playerShieldChoice = greatShield;
+      shieldImg.src = './Img/pavise.png';
     }
     player.shield = playerShieldChoice;
     confirmEl.addEventListener('click', function(e) {
@@ -707,16 +737,22 @@ function chooseArmor() {
     playerArmorChoice = e.target.innerText;
     if (playerArmorChoice == 'Celtic Menagerie'){
       playerArmorChoice = celt;
+      armorImg.src = './Img/celt-armor.png';
     } else if (playerArmorChoice == "Knight's Full Plate") {
       playerArmorChoice = knight;
+      armorImg.src = './Img/knight-armor.png';
     } else if (playerArmorChoice == "Legionnaire's Regalia") {
       playerArmorChoice = legionnaire;
+      armorImg.src = './Img/legion-armor.png';
     } else if (playerArmorChoice == "Mage's Robes") {
       playerArmorChoice = mage;
+      armorImg.src = './Img/robes.png';
     } else if (playerArmorChoice == "Poor Knight's Chainmail") {
       playerArmorChoice = poorKnight;
+      armorImg.src = './Img/chain-armor.png';
     } else if (playerArmorChoice == "Viking Lamellar") {
       playerArmorChoice = viking;
+      armorImg.src = './Img/viking-armor.png';
     }
     player.armor = playerArmorChoice;
     physDefEl.innerText = playerArmorChoice.physRes;
@@ -743,11 +779,57 @@ function randomWeapon() {
   attTypeEl.innerText = player.weapon.attackType;
   damTypeEl.innerText = player.weapon.damageType;
   textBox.value += 'You have randomized and received the ' + player.weapon.name + '!' + '\n';
+  if (player.weapon == gladius) {
+    weapImg.src = './Img/gladius.png';
+  } else if (player.weapon == pugio) {
+    weapImg.src = './Img/pugio.png';
+  } else if (player.weapon == scythe) {
+    weapImg.src = './Img/scythe.png';
+  } else if (player.weapon == spear) {
+    weapImg.src = './Img/spear.png';
+  } else if (player.weapon == katana) {
+    weapImg.src = './Img/katana.png';
+  } else if (player.weapon == halberd) {
+    weapImg.src = './Img/halberd.png';
+  } else if (player.weapon == claymore) {
+    weapImg.src = './Img/claymore.png';
+  } else if (player.weapon == battleAxe) {
+    weapImg.src = './Img/battleaxe.png';
+  } else if (player.weapon == warHammer) {
+    weapImg.src = './Img/warhammer.png';
+  } else if (player.weapon == fireBall) {
+    weapImg.src = './Img/fire.png';
+  } else if (player.weapon == lightningSpear) {
+    weapImg.src = './Img/lightning-spear.png';
+  } else if (player.weapon == snowBall) {
+    weapImg.src = './Img/frost.png';
+  } else if (player.weapon == magicMissile) {
+    weapImg.src = './Img/sorcery.png';
+  } else if (player.weapon == mace) {
+    weapImg.src = './Img/mace.png';
+  } else if (player.weapon == godHand) {
+    weapImg.src = './Img/faith.png';
+  } else if (player.weapon == insanity) {
+    weapImg.src = './Img/dark.png';
+  } else if (player.weapon == daiKatana) {
+    weapImg.src = './Img/dai-katana.png';
+  } else if (player.weapon == earthquake) {
+    weapImg.src = './Img/earth.png';
+  }
 }
 function randomShield() {
   ranShield = Math.floor(Math.random() * shields.length);
   player.shield = shields[ranShield];
   textBox.value += 'You have randomized and received the ' + player.shield.name + '!' + '\n';
+  if (player.shield == smallShield){
+    shieldImg.src = './Img/buckler.png';
+  } else if (player.shield == mediumShield) {
+    shieldImg.src = './Img/heater-shield.png';
+  } else if (player.shield == largeShield) {
+    shieldImg.src = './Img/scutum.png';
+  } else if (player.shield == greatShield) {
+    shieldImg.src = './Img/pavise.png';
+  }
 }
 function randomArmor() {
   ranArmor = Math.floor(Math.random() * armors.length);
@@ -756,6 +838,19 @@ function randomArmor() {
   magDefEl.innerText = player.armor.magRes;
   dodgeEl.innerText = player.armor.dodge;
   textBox.value += 'You have randomized and received the ' + player.armor.name + '!' + '\n';
+  if (player.armor == celt){
+    armorImg.src = './Img/celt-armor.png';
+  } else if (player.armor == knight) {
+    armorImg.src = './Img/knight-armor.png';
+  } else if (player.armor == legionnaire) {
+    armorImg.src = './Img/legion-armor.png';
+  } else if (player.armor == mage) {
+    armorImg.src = './Img/robes.png';
+  } else if (player.armor == poorKnight) {
+    armorImg.src = './Img/chain-armor.png';
+  } else if (player.armor == viking) {
+    armorImg.src = './Img/viking-armor.png';
+  }
 }
 function randomEnemy() { // This will go in the RENDER() function I believe
   if (Math.floor(Math.random() * 101) > 52) {
@@ -850,6 +945,12 @@ function render() {
   initiateEl.style.display = 'none';
   randomEnemy();
   compEl.style.display = 'block';
+  weapTT.innerText = player.weapon.name + '\n' + 'Attack Type: ' + player.weapon.attackType + '\n' +  'Damage Type: ' + player.weapon.damageType +
+  '\n' + 'Damage: ' + (player.weapon.magDam + player.weapon.physDam);
+  shieldTT.innerText = player.shield.name + '\n' + 'Physical Defense: ' + player.shield.physRes + '\n' + 'Magical Defense: ' + player.shield.magRes +
+  '\n' + 'Roll Timer: ' + (player.shield.roll * 10) +'s';
+  armorTT.innerText = player.armor.name + '\n' + 'Physical Defense: ' + player.armor.physRes + '\n' + 'Magical Defense: ' + player.armor.magRes +
+  '\n' + 'Dodge: ' + player.armor.dodge + '%';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
   playHealth = 1000;
