@@ -95,31 +95,35 @@ const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'gree
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
 // Weapon Possibilities
 const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 200, 0);
-const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0); // +10% Ddodge as is
+const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0);
 const scythe = new Weapons('Scythe', 'twoHand', 'P', 'P', 250, 0);
-const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 150, 0); // +Dodge to offset position limitations
+const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 150, 0); 
 const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 200, 0);
 const halberd = new Weapons('Halberd', 'twoHand', 'P', 'P', 300, 0);
 const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
 const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 300, 0);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 300, 0);
 const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 200, 0);
+const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 300, 0); // Flagged new
 // Spell Possibilities
 const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 250);
 const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 250);
 const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'S', 0, 250);
 const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'Fr', 0, 250);
+const earthquake = new Weapons('Earthquake', 'oneHand', 'M', 'E', 0, 250); // Earth Spell
 // Shield Possibilties
-const smallShield = new Shields('Parrying Buckler', 5, 5, 3); // +Dodge to offset position limitaions
-const mediumShield = new Shields('Heater Shield', 10, 10, 4);
-const largeShield = new Shields('Scutum', 15, 15, 5);
-const greatShield = new Shields('Pavise', 25, 25, 6);
+const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); // +10 Dodge
+const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); // +5 Dodge
+const largeShield = new Shields('Scutum', 20, 20, 3.5);
+const greatShield = new Shields('Pavise', 25, 25, 4.5);
+const healTome = new Shields('Heal', 0, 0, 2); // In POSTURE Function, if shield == healTome, playHealth +200?
 // Opponent Equipment
 const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); // Dorien Weapon / NOT available for player
 const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 150, 150);
 const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); // Daethos Spell / Also available
 const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 150); // Guts Spell / Also available
 const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); // Guts Weapon / NOT available for player
+const handCannon = new Weapons('Hand Cannon', 'oneHand', 'P', 'B', 300, 0);
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 20, 20, 25); //
 const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); //
@@ -138,7 +142,7 @@ const dorien = {
 }
 const guts = {
   name: 'Guts, the Black Swordsman',
-  weapons: [hunkOfIron, godHand],
+  weapons: [hunkOfIron, handCannon],
   armor: wolf
 }
 const daethos = { // Hidden Boss
@@ -231,8 +235,8 @@ let playerActionChoice = '';
 let playerWeaponChoice = '';
 let playerShieldChoice = '';
 let playerArmorChoice = '';
-let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity];
-let shields = [smallShield, mediumShield, largeShield, greatShield];
+let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity, daiKatana, earthquake];
+let shields = [smallShield, mediumShield, largeShield, greatShield, healTome];
 let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
 let ranWeapon; // For RANDOM WEAPON function
 let ranShield; // For RANDOM SHIELD Function
@@ -248,6 +252,7 @@ let physAttDam; // Use these for PLAYER and ENEMY ATTACK Functions
 let magAttDam; // Same as above
 let startChoice = [];
 let confirmChoice = '';
+let rollTimer; // Allows me to set the roll timer based on plaayer shield
 
 // <------------------------ EVENT LISTENERS ----------------------------------------
 
@@ -286,7 +291,7 @@ rollBtn.addEventListener('click', function(e) {
 
 // <------------------------- FUNCTIONS ----------------------------------- \\
 init();
-// ----- HEALTH BAR ANIMATION FUNCTIONS ----- \\
+// ----- Game State Functions ----- \\
 const playFrame = function() {
   playContext.clearRect(0, 0, playHW, playHH);
   playHealthBar.show(playContext);
@@ -299,6 +304,11 @@ const compFrame = function() {
 }
 playFrame();
 compFrame();
+setInterval (function() {
+  // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
+    areaText += Math.random() + '\n';
+    textBox.scrollTop = textBox.scrollHeight;
+}, 250);
 
 // ----- ATTACK FUNCTIONS ----- \\
 function attack() {
@@ -311,6 +321,11 @@ function posture() {
   textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
+  // if (player.shield == healTome) {
+  //   playHealth += 150;
+  //   textBox.value += 'You used your ' + player.shield.name + ' to recover 150 health!' + '\n';
+  //   playHealthBar.updateHealth(playHealth);
+  // }
   playerAttack(),
   computerAttack(),
   playPhysPos = player.armor.physRes;
@@ -321,13 +336,15 @@ function dodge() {
   let dodgeAttempt = Math.floor(Math.random() * 101);
   if (player.weapon.grip == 'oneHand') {
       playerDodge += 20;
-  } else {
-    playerDodge = playerDodge;
-  }
+  } 
   if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
     playerDodge += 10;
-  } else {
-    playerDodge = playerDodge;
+  } 
+  if (player.shield == smallShield) {
+    playerDodge += 10;
+  }
+  if (player.shield == mediumShield) {
+    playerDodge += 5;
   }
   if ((playerDodge >= dodgeAttempt) === true) {
     textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
@@ -340,10 +357,14 @@ function dodge() {
 }
 function roll() {
   textBox.value += "Phew! Risky. Better not try that again." + '\n';
+  rollTimer = 10000 * player.shield.roll;
+  setTimeout(hideRoll, rollTimer);
+  rollBtn.style.display = 'none';
   playerAttack();
-  // Create a set timeout interval attached to the value of the shield.roll value
-  // ICE out the roll button or some such, perhaps style.display = 'none' until the interval is up?
 };
+function hideRoll() { // Hide the ROLL BUTTON for a set period of time based on the PLAYER SHIELD
+  rollBtn.style.display = 'inline-block';
+}
 function initiate() {
   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
   console.log(playerInput);
@@ -602,12 +623,6 @@ function computerAttack() {
     compWin(); // Define what loses
   }
 }
-setInterval (function() {
-  // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
-  // Adding the \n let's me break to a new line as I'll be using moving forward
-    areaText += Math.random() + '\n';
-    textBox.scrollTop = textBox.scrollHeight;
-}, 250);
 function chooseWeapon() {
   confirmEl.style.displaay = 'inline';
   weaponBtns.style.display = 'block';
@@ -649,6 +664,10 @@ function chooseWeapon() {
     playerWeaponChoice = godHand;
   } else if (playerWeaponChoice == 'Insanity') {
     playerWeaponChoice = insanity;
+  } else if (playerWeaponChoice == 'Dai-Katana') {
+    playerWeaponChoice = daiKatana;
+  } else if (playerWeaponChoice == 'Earthquake') {
+    playerWeaponChoice = earthquake;
   }
   player.weapon = playerWeaponChoice;
   damEl.innerText = playerWeaponChoice.physDam + playerWeaponChoice.magDam;
@@ -680,6 +699,8 @@ function chooseShield() {
       playerShieldChoice = largeShield;
     } else if (playerShieldChoice == "Pavise") {
       playerShieldChoice = greatShield;
+    } else if (playerShieldChoice == 'Heal Tome') {
+      playerShieldChoice == healTome;
     }
     player.shield = playerShieldChoice;
     confirmEl.addEventListener('click', function(e) {
@@ -777,7 +798,6 @@ function randomWeapon() {
   // FUNCTION to RETURN RANDOM WEAPON for PLAYER.WEAPON
   ranWeapon = Math.floor(Math.random() * weapons.length);
   player.weapon = weapons[ranWeapon];
-  console.log(player.weapon);
   damEl.innerText = player.weapon.physDam + player.weapon.magDam;
   attTypeEl.innerText = player.weapon.attackType;
   damTypeEl.innerText = player.weapon.damageType;
@@ -786,7 +806,6 @@ function randomWeapon() {
 function randomShield() {
   ranShield = Math.floor(Math.random() * shields.length);
   player.shield = shields[ranShield];
-  console.log(player.shield);
   textBox.value += 'You have randomized and received the ' + player.shield.name + '!' + '\n';
   // FUNCTION to RETURN RANDOM SHIELD for PLAYER.SHIELD
 }
@@ -794,7 +813,6 @@ function randomArmor() {
   // FUNCTION to RETURN RANDOM ARMOR for PLAYER.ARMOR
   ranArmor = Math.floor(Math.random() * armors.length);
   player.armor = armors[ranArmor];
-  console.log(player.armor);
   physDefEl.innerText = player.armor.physRes;
   magDefEl.innerText = player.armor.magRes;
   dodgeEl.innerText = player.armor.dodge;
