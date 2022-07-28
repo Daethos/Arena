@@ -131,31 +131,21 @@ button {
     text-align: center;
     font-size: 36px;
     left: 685px;
-    bottom: 200px;
-    /* border: 1px solid black; */
+    bottom: 450px;
 }
-
-/* button.innerText {
-    font-family: 'Cinzel', serif, Helvetica;
-} */
 
 button:hover {
     color: white;
-    transform: scale(1.25);
+    transform: scale(1.1);
 }
 
 button:focus {
-    background: green;
+    /* background: green; */
     background-color: green;
-    --webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
     outline: none;
-    transform: scale(1.25);
-    font-size: 16px;
-    font-weight: bold;
 }
 
 .start-buttons > button:hover {
-    transform: scale(1.1);
     background-color: green;
 }
 
@@ -181,6 +171,9 @@ button:focus {
     background-color: black;
     border: 1px solid white;
     font-family: 'Cinzel';
+}
+#actions button:focus {
+    background-color: green;
 }
 
 #actions #initiate {

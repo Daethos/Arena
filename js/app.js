@@ -255,18 +255,9 @@ let confirmChoice = '';
 let rollTimer; // Allows me to set the roll timer based on plaayer shield
 
 // <------------------------ EVENT LISTENERS ----------------------------------------
-
-// initiateEl.addEventListener('click', function(e) {
-//   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
-//   console.log(e.target.innerText);
-// });
 attackBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + '! Are you sure?' + '\n';
-  // playerActionChoice = e.target.innerText;
-  // actionChoice.pop();
-  // actionChoice.push(playerActionChoice);
-  // console.log(actionChoice);
   initiateEl.style.display = 'inline';
   initiateEl.addEventListener('click', initiate);
 });
@@ -288,10 +279,12 @@ rollBtn.addEventListener('click', function(e) {
   initiateEl.style.display = 'inline';
   initiateEl.addEventListener('click', initiate);
 });
-
+onceMoreEl.addEventListener('click', startOver);
+function startOver() {
+  init();
+}
 // <------------------------- FUNCTIONS ----------------------------------- \\
 init();
-// ----- Game State Functions ----- \\
 const playFrame = function() {
   playContext.clearRect(0, 0, playHW, playHH);
   playHealthBar.show(playContext);
@@ -304,13 +297,21 @@ const compFrame = function() {
 }
 playFrame();
 compFrame();
-setInterval (function() {
-  // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
+setInterval (function() { // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
     areaText += Math.random() + '\n';
     textBox.scrollTop = textBox.scrollHeight;
 }, 250);
-
-// ----- ATTACK FUNCTIONS ----- \\
+let compAttackTimer;
+function compTimer() { // Workaround of potential ROLL TIMER exploit
+  if (!compAttackTimer) {
+    compAttackTimer = setInterval(computerAttack, 30000);
+  }
+}
+function stopCompTimer() { // Stops interval when game ends
+  clearInterval(compAttackTimer);
+  compAttackTimer = null;
+}
+// ---------- ATTACK FUNCTIONS ---------- \\
 function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
   playerAttack(),
@@ -321,11 +322,6 @@ function posture() {
   textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
-  // if (player.shield == healTome) {
-  //   playHealth += 150;
-  //   textBox.value += 'You used your ' + player.shield.name + ' to recover 150 health!' + '\n';
-  //   playHealthBar.updateHealth(playHealth);
-  // }
   playerAttack(),
   computerAttack(),
   playPhysPos = player.armor.physRes;
@@ -337,7 +333,7 @@ function dodge() {
   if (player.weapon.grip == 'oneHand') {
       playerDodge += 20;
   } 
-  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == katana) {
     playerDodge += 10;
   } 
   if (player.shield == smallShield) {
@@ -355,7 +351,7 @@ function dodge() {
     playerAttack();
   }
 }
-function roll() {
+function roll() { // ROLL is a free attack ala DARK SOULS. Hides option to roll again based on fake stamina aka shield roll value
   textBox.value += "Phew! Risky. Better not try that again." + '\n';
   rollTimer = 10000 * player.shield.roll;
   setTimeout(hideRoll, rollTimer);
@@ -515,6 +511,7 @@ function playerAttack() {
     compHealthBar.updateHealth(compHealth);
   }
   if (compHealth <= 0) {
+    stopCompTimer();
     playWin(); // Define what happens
   }
   initiateEl.style.display = 'none';
@@ -564,7 +561,7 @@ function computerAttack() {
     if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
       compDamTot *= 1.1;
     }
-    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa') {
+    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
       compDamTot *= 0.9;
     }
     playHealth -= compDamTot;
@@ -612,7 +609,7 @@ function computerAttack() {
     if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
       compDamTot *= 1.1;
     }
-    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa') {
+    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
       compDamTot *= 0.9;
     }
     playHealth -= compDamTot;
@@ -620,18 +617,21 @@ function computerAttack() {
     playHealthBar.updateHealth(playHealth);
   }
   if (playHealth <= 0) {
+    stopCompTimer();
     compWin(); // Define what loses
   }
+}
+// ---------------------------- STARTING GAME FUNCTIONS --------------------------------- \\
+function playerChoose() { //This prompts the selection of Weapons
+  playEl.style.display = 'block';
+  chooseWeapon();
 }
 function chooseWeapon() {
   confirmEl.style.displaay = 'inline';
   weaponBtns.style.display = 'block';
   weaponBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-  console.log(e.target.innerText);
   playerWeaponChoice = e.target.innerText;
-  playerChoice.pop();
-  playerChoice.push(playerWeaponChoice);
   if (playerWeaponChoice == 'Gladius') {
     playerWeaponChoice = gladius;
   } else if (playerWeaponChoice == 'Pugio') {
@@ -673,9 +673,6 @@ function chooseWeapon() {
   damEl.innerText = playerWeaponChoice.physDam + playerWeaponChoice.magDam;
   attTypeEl.innerText = playerWeaponChoice.attackType;
   damTypeEl.innerText = playerWeaponChoice.damageType;
-  console.log(playerChoice);
-  console.log(player);
-  console.log(playerWeaponChoice);
   confirmEl.addEventListener('click', function(e) {
     chooseShield();
   });
@@ -684,13 +681,9 @@ function chooseWeapon() {
 function chooseShield() {
   weaponBtns.style.display = 'none';
   shieldBtns.style.display = 'block';
-  // Chooses the shield from the SHIELD BUTTONS
   shieldBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-    console.log(e.target.innerText);
     playerShieldChoice = e.target.innerText;
-    playerChoice.pop();
-    playerChoice.push(playerShieldChoice);
     if (playerShieldChoice == 'Parrying Buckler'){
       playerShieldChoice = smallShield;
     } else if (playerShieldChoice == "Heater Shield") {
@@ -709,13 +702,9 @@ function chooseShield() {
 function chooseArmor() {
   shieldBtns.style.display = 'none';
   armorBtns.style.display = 'block';
-  // Chooses the armor from the ARMOR BUTTONS
   armorBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
-    console.log(e.target.innerText);
     playerArmorChoice = e.target.innerText;
-    playerChoice.pop();
-    playerChoice.push(playerArmorChoice);
     if (playerArmorChoice == 'Celtic Menagerie'){
       playerArmorChoice = celt;
     } else if (playerArmorChoice == "Knight's Full Plate") {
@@ -740,6 +729,57 @@ function chooseArmor() {
       });
   })
 };
+function playerRandom() {
+  playEl.style.display = 'block';
+  randomWeapon();
+  randomShield();
+  randomArmor();
+  render();
+}
+function randomWeapon() {
+  ranWeapon = Math.floor(Math.random() * weapons.length);
+  player.weapon = weapons[ranWeapon];
+  damEl.innerText = player.weapon.physDam + player.weapon.magDam;
+  attTypeEl.innerText = player.weapon.attackType;
+  damTypeEl.innerText = player.weapon.damageType;
+  textBox.value += 'You have randomized and received the ' + player.weapon.name + '!' + '\n';
+}
+function randomShield() {
+  ranShield = Math.floor(Math.random() * shields.length);
+  player.shield = shields[ranShield];
+  textBox.value += 'You have randomized and received the ' + player.shield.name + '!' + '\n';
+}
+function randomArmor() {
+  ranArmor = Math.floor(Math.random() * armors.length);
+  player.armor = armors[ranArmor];
+  physDefEl.innerText = player.armor.physRes;
+  magDefEl.innerText = player.armor.magRes;
+  dodgeEl.innerText = player.armor.dodge;
+  textBox.value += 'You have randomized and received the ' + player.armor.name + '!' + '\n';
+}
+function randomEnemy() { // This will go in the RENDER() function I believe
+  if (Math.floor(Math.random() * 101) > 52) {
+    enemy = guts;
+    compImg.src = './Img/Guts-Wolf.png';
+    compImg.height = 500;
+    compImg.width = 500;
+  } else if (Math.floor(Math.random() * 101) > 4) {
+    enemy = dorien;
+    compImg.src = './Img/Dorien.png';
+    compImg.height = 650;
+    compImg.width = 400;
+    compImg.top = 100;
+  } else {
+    enemy = daethos;
+    compImg.src = './Img/Daethos.png';
+    compImg.width = 425;
+    compImg.height = 650;
+    compImg.opacity = 0.75;
+  }
+  compName.innerText = enemy.name;
+  textBox.value += 'Your last opponent is ' + enemy.name + '!' + '\n';
+  console.log(enemy);
+}
 function init() {
   compEl.style.display = 'none';
   weaponBtns.style.display = 'none';
@@ -781,61 +821,6 @@ function start() { //This is called by the confirm button
     return;
   }
 }
-function playerRandom() {
-  playEl.style.display = 'block';
-  randomWeapon();
-  randomShield();
-  randomArmor();
-  render();
-}
-function playerChoose() { //This prompts the selection of Weapons
-  playEl.style.display = 'block';
-  chooseWeapon();
-}
-function randomWeapon() {
-  // FUNCTION to RETURN RANDOM WEAPON for PLAYER.WEAPON
-  ranWeapon = Math.floor(Math.random() * weapons.length);
-  player.weapon = weapons[ranWeapon];
-  damEl.innerText = player.weapon.physDam + player.weapon.magDam;
-  attTypeEl.innerText = player.weapon.attackType;
-  damTypeEl.innerText = player.weapon.damageType;
-  textBox.value += 'You have randomized and received the ' + player.weapon.name + '!' + '\n';
-}
-function randomShield() {
-  ranShield = Math.floor(Math.random() * shields.length);
-  player.shield = shields[ranShield];
-  textBox.value += 'You have randomized and received the ' + player.shield.name + '!' + '\n';
-  // FUNCTION to RETURN RANDOM SHIELD for PLAYER.SHIELD
-}
-function randomArmor() {
-  // FUNCTION to RETURN RANDOM ARMOR for PLAYER.ARMOR
-  ranArmor = Math.floor(Math.random() * armors.length);
-  player.armor = armors[ranArmor];
-  physDefEl.innerText = player.armor.physRes;
-  magDefEl.innerText = player.armor.magRes;
-  dodgeEl.innerText = player.armor.dodge;
-  textBox.value += 'You have randomized and received the ' + player.armor.name + '!' + '\n';
-}
-function randomEnemy() { // This will go in the RENDER() function I believe
-  if (Math.floor(Math.random() * 101) > 52) {
-    enemy = guts;
-    compImg.src = './Img/Guts-Wolf.png';
-  } else if (Math.floor(Math.random() * 101) > 4) {
-    enemy = dorien;
-    compImg.src = './Img/Dorien.png';
-    compImg.height = 650;
-    compImg.width = 400;
-    compImg.top = 100;
-  } else {
-    enemy = daethos;
-    compImg.src = './Img/Daethos.png';
-    compImg.width = 450;
-    compImg.height = 700;
-  }
-  compName.innerText = enemy.name;
-  textBox.value += 'Your last opponent is ' + enemy.name + '!' + '\n';
-  console.log(enemy);
-}
 function playWin() {
   textBox.value += 'Congratulations, you have won the Ascea! Would you like to play again?' + '\n';
   createEl.style.display = 'inline-block';
@@ -843,7 +828,7 @@ function playWin() {
   onceMoreEl.style.display = 'inline-block';
   compEl.style.display = 'none';
   victoryEl.style.display = 'block';
-  // Have a new button that asks if you wish to play again
+  stopCompTimer();
 }
 function compWin() {
   textBox.value += 'YOU DIED' + '\n'
@@ -853,12 +838,8 @@ function compWin() {
   backgroundEl.style.display = 'none';
   compEl.style.display = 'none';
   diedEl.style.display = 'block';
+  stopCompTimer();
 }
-onceMoreEl.addEventListener('click', startOver);
-function startOver() {
-  init();
-}
-
 function render() {
   createEl.style.display = 'none';
   confirmEl.style.display = 'none';
@@ -875,23 +856,5 @@ function render() {
   compHealth = 2000;
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
+  compTimer();
 }
-
-// The 5 sections to identify are
-// // what are your event listeners ?
-//     - EVENT LISTENERS at the beginning of the game when RENDERING (If someone unfamiliar wishes to assemble a new duel it can randomly allocate equipment, otherwise they'll be prompted to select their WEAPONS and ARMOR), one for START GAME
-//     - EVENT LISTENERS to store ACTIONS QUEUED and display choices selected to 'confirm' before INITIATE
-//     - EVENT LISTENERS to INITIATE combat round, running functions to compare ACTIONS between PLAYER and COMPUTER
-// // what functions do you need ?
-//     - FUNCTIONS to: augment PLAYER stats with EQUIPMENT Selection, 
-//     - to MODIFY DAMAGE, DEFENSE, and DODGE when interacting with its own equipment (If (user.Weapon.attackTYpe === 'lightning') {+10% magDam, -10% magRes}))
-//     - modify results multiple interactions between PLAYER and COMPUTER (Attack vs Dodge Rating) (Attack Damage vs Physical Defense)
-//     - adjusts PLAYER and COMPUTER HEALTH to new totals at end of combat round before 
-
-// endGame() {
-  // if (computer.health <= 0) { alert('You win!') } else { alert('You lose!')}
-  // with two buttons that either reset the game or select other opponent somehow
-// }
-
-// // Preset list of actions, EVENT LISTENERS, SET TIMEOUT disables ACTION BUTTONS
-// // OF PLAYER
