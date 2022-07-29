@@ -1,13 +1,4 @@
-// MUD Arena against Opponent (Computer)
-// TOP THE TOP -- IDEAS TO WORKSHOP AND IMPLEMENT IF YOU HAVE THE TIME
-// Might be able to make it so that you can EQUIP items during ACTIONS phase or ICEBOX
-// Make a confirm function that starts the game and hides the hide-buttons
-
-// -------------------- CONSTANTS ---------------------------------
-
-// Weapon Class that pools the stats which affect combat damage
-
-/* Do I need to make each button in HTML ONCLICK to call a function? */
+// ----------------------------------- CONSTANTS ------------------------------------ \\
 class Weapons {
   constructor(name, grip, attackType, damageType, physDam, magDam) {
       this.name = name;
@@ -18,7 +9,6 @@ class Weapons {
       this.magDam = magDam; // Magical Damage NUMBER
   }
 }
-// Shield class that pools the stats which affect combat damage mitigation
 class Shields {
     constructor(name, physRes, magRes, roll) {
     this.name = name;
@@ -27,8 +17,6 @@ class Shields {
     this.roll = roll;
     }
 }
-// Might be able to make it so that you can EQUIP items during ACTIONS phase or ICEBOX
-// Armor Class that pools the stats which affect combat damage mitigation
 class Armors {
  constructor(name, type, physRes, magRes, dodge) {
    this.name = name; //Name of the equipment
@@ -38,7 +26,6 @@ class Armors {
    this.dodge = dodge; // Chance to EVADE Attack, affects ROLL (DODGE)
  }
 }
-// Health Bar to structure and dynamicially adjust health bars during combat
 class HealthBars {
   constructor(x, y, w, h, maxHealth, color) {
     // Grants me working with static and length/width and variable length/widith
@@ -71,10 +58,8 @@ class HealthBars {
     this.innerText = val + ' / ' + this.maxHealth;
   }
 }
-// Elements to get the Canvas tag
 const computerHealth = document.querySelector('#computer-health');
 const playerHealth = document.querySelector('#player-health');
-// Grants me access to 'drawing' on the canvas tag
 const playContext = playerHealth.getContext('2d');
 const compContext = computerHealth.getContext('2d');
 const compHW = computerHealth.width = 650;
@@ -89,8 +74,8 @@ const compHBW = 650;
 const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
-let playHealth = 1000; // Starting PLAYER HEALTH
-let compHealth = 2000; // Starting COMPUTER HEALTH
+let playHealth = 1500; 
+let compHealth = 2500; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
 // Weapon Possibilities
@@ -104,40 +89,39 @@ const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
 const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 300, 0);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 300, 0);
 const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 200, 0);
-const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 300, 0); // Flagged new
+const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 300, 0); 
 // Spell Possibilities
 const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 250);
 const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 250);
 const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'S', 0, 250);
 const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'Fr', 0, 250);
-const earthquake = new Weapons('Earthquake', 'oneHand', 'M', 'E', 0, 250); // Earth Spell
+const earthquake = new Weapons('Earthquake', 'oneHand', 'M', 'E', 0, 250); 
+const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 150); 
+const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 150, 150);
 // Shield Possibilties
-const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); // +10 Dodge
-const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); // +5 Dodge
+const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); 
+const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); 
 const largeShield = new Shields('Scutum', 20, 20, 3.5);
 const greatShield = new Shields('Pavise', 25, 25, 4.5);
-const healTome = new Shields('Heal', 0, 0, 2); // In POSTURE Function, if shield == healTome, playHealth +200?
 // Opponent Equipment
-const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); // Dorien Weapon / NOT available for player
-const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 150, 150);
-const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); // Daethos Spell / Also available
-const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 150); // Guts Spell / Also available
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); // Guts Weapon / NOT available for player
+const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); 
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); 
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); 
 const handCannon = new Weapons('Hand Cannon', 'oneHand', 'P', 'B', 300, 0);
-// Armor Possibilities
-const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 20, 20, 25); //
-const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); //
-const mage = new Armors("Mage's Robes", 'leather-cloth', 5, 50, 50); //
-const celt = new Armors("Celtic Menagerie", 'leather-mail', 30, 30, 35); //
-const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 40, 10); // 
-const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); // -10% Frost
 const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 50);
-// Opponents Thusfar
+// Armor Possibilities
+const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 30, 30, 25); 
+const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); 
+const mage = new Armors("Mage's Robes", 'leather-cloth', 10, 50, 40); 
+const celt = new Armors("Celtic Menagerie", 'leather-mail', 20, 20, 35); 
+const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 40, 15); 
+const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); 
+// ---------------------------- Opponents --------------------------------- \\
 const dorien = {
   name: 'Prince Dorien Caderyn',
-  weapons: [greatSpear, insanity],
+  weapons: [greatSpear, soulRend],
   armor: fox
 }
 const guts = {
@@ -150,8 +134,7 @@ const daethos = { // Hidden Boss
   weapons: [soulRend, soulRend],
   armor: hush
 }
-// ----------------- CACHED ELEMENT REFERENCES ---------------------------
-// Starting Game Elements
+// ---------------------------- CACHED ELEMENT REFERENCES --------------------------------- \\
 const startEls = document.querySelector('.start-buttons');
 const createEl = document.querySelector('#create');
 const randomEl = document.querySelector('#random');
@@ -161,58 +144,42 @@ const diedEl = document.querySelector('#died');
 const backgroundEl = document.querySelector('#background');
 const victoryEl = document.querySelector('#victory');
 const onceMoreEl = document.querySelector('#play-again');
-
-// Equipment Button Elements
 const weaponBtns = document.querySelector('.weapons');
 const armorBtns = document.querySelector('.armors');
 const shieldBtns = document.querySelector('.shields');
 const hideBtns = document.querySelector('.hide-button');
-
-// Action Button Elements
 const actionsEl = document.querySelector('#actions');
 const actionEls = document.getElementsByClassName('action');
 const attackBtn = document.getElementById('attack');
-const dodgeBtn = document.getElementById('dodge'); // Dodge Button
+const dodgeBtn = document.getElementById('dodge'); 
 const postureBtn = document.getElementById('posture');
 const rollBtn = document.getElementById('roll');
 const initiateEl = document.getElementById('initiate');
-
-// Player Stat Elements
 const statEls = document.getElementsByClassName('stats');
 const attTypeEl = document.getElementById('att-type');
 const physDefEl = document.getElementById('phys-def');
 const damTypeEl = document.getElementById('dam-type');
 const magDefEl = document.getElementById('mag-def');
 const damEl = document.getElementById('damage');
-const dodgeEl = document.getElementById('dodge-el'); // Dodge Stat
-
-//Player Tooltip Elements
+const dodgeEl = document.getElementById('dodge-el');
 const weapTT = document.querySelector('#weap-tt');
 const shieldTT = document.querySelector('#shield-tt');
 const armorTT = document.querySelector('#armor-tt');
 const weapImg = document.querySelector('#weap-img');
 const shieldImg = document.querySelector('#shield-img');
 const armorImg = document.querySelector('#armor-img');
-
-// Computer Elements
 const compEl = document.querySelector('#comp');
 const compName = document.getElementById('comp-name');
-
 const playEl = document.querySelector('#play');
-const playImg = document.getElementById('play-img'); //This will be in a variable tied to playerRandom() and playerChoose()
-const compImg = document.getElementById('comp-img'); // This will be in a variable tied to randomEnemy() to display the correct Computer
-
-// The secret sauce for the console box. As of 7.22 6p this is my produest achievement
-// Pulling variables from textarea in order to properly manipulate and populate it
+const playImg = document.getElementById('play-img');
+const compImg = document.getElementById('comp-img'); 
 let textBoxArea = document.querySelector('.text-box');
 const textBox = document.getElementById('console');
 let areaText = textBox.value;
-
 weaponBtns.style.display = 'none';
 armorBtns.style.display = 'none';
 shieldBtns.style.display = 'none';
 actionsEl.style.display = 'none';
-
 // ---------------- STATE VARIABLES ----------------------------
 let player = {
   weapon: {
@@ -246,23 +213,22 @@ let playerArmorChoice = '';
 let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity, daiKatana, earthquake];
 let shields = [smallShield, mediumShield, largeShield, greatShield];
 let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
-let ranWeapon; // For RANDOM WEAPON function
-let ranShield; // For RANDOM SHIELD Function
-let ranArmor; // For RANDOM ARMOR Function
-let playerDodge; // For DODGE Function
-let playPhysPos = player.armor.physRes; // For POSTURE Function
-let playMagPos = player.armor.magRes; // For POSTURE Function
-let playDamTot = 0; // For PLAYER ATTACK Function
-let compDamTot = 0; // For COMP ATTACK FUnction
-let actionChoice = []; // Allows me to capture ACTOIN variable for INITIATE
-let playerInput = ''; // To capture action click input
-let physAttDam; // Use these for PLAYER and ENEMY ATTACK Functions
-let magAttDam; // Same as above
+let ranWeapon; 
+let ranShield; 
+let ranArmor; 
+let playerDodge; 
+let playPhysPos = player.armor.physRes; 
+let playMagPos = player.armor.magRes; 
+let playDamTot = 0; 
+let compDamTot = 0; 
+let actionChoice = []; 
+let playerInput = '';
+let physAttDam;
+let magAttDam;
 let startChoice = [];
 let confirmChoice = '';
-let rollTimer; // Allows me to set the roll timer based on plaayer shield
-
-// <------------------------ EVENT LISTENERS ----------------------------------------
+let rollTimer;
+// <------------------------------- EVENT LISTENERS ---------------------------------------- \\
 attackBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + '! Are you sure?' + '\n';
@@ -291,7 +257,7 @@ onceMoreEl.addEventListener('click', startOver);
 function startOver() {
   init();
 }
-// <------------------------- FUNCTIONS ----------------------------------- \\
+// <------------------------------------- FUNCTIONS --------------------------------------- \\
 init();
 const playFrame = function() {
   playContext.clearRect(0, 0, playHW, playHH);
@@ -319,7 +285,6 @@ function stopCompTimer() { // Stops interval when game ends
   clearInterval(compAttackTimer);
   compAttackTimer = null;
 }
-// ---------- ATTACK FUNCTIONS ---------- \\
 function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
   playerAttack(),
@@ -352,21 +317,21 @@ function dodge() {
   }
   if ((playerDodge >= dodgeAttempt) === true) {
     textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
-    playerAttack(); // COMPUTERATTACK FUNCTION SKIPPED MANUALLY 
+    playerAttack();
   } else {
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
     computerAttack(),
     playerAttack();
   }
 }
-function roll() { // ROLL is a free attack ala DARK SOULS. Hides option to roll again based on fake stamina aka shield roll value
+function roll() {
   textBox.value += "Phew! Risky. Better not try that again." + '\n';
   rollTimer = 10000 * player.shield.roll;
   setTimeout(hideRoll, rollTimer);
   rollBtn.style.display = 'none';
   playerAttack();
 };
-function hideRoll() { // Hide the ROLL BUTTON for a set period of time based on the PLAYER SHIELD
+function hideRoll() {
   rollBtn.style.display = 'inline-block';
 }
 function initiate() {
@@ -520,7 +485,7 @@ function playerAttack() {
   }
   if (compHealth <= 0) {
     stopCompTimer();
-    playWin(); // Define what happens
+    playWin();
   }
   initiateEl.style.display = 'none';
 }
@@ -630,7 +595,7 @@ function computerAttack() {
   }
 }
 // ---------------------------- STARTING GAME FUNCTIONS --------------------------------- \\
-function playerChoose() { //This prompts the selection of Weapons
+function playerChoose() {
   playEl.style.display = 'block';
   chooseWeapon();
 }
@@ -852,7 +817,7 @@ function randomArmor() {
     armorImg.src = './Img/viking-armor.png';
   }
 }
-function randomEnemy() { // This will go in the RENDER() function I believe
+function randomEnemy() { 
   if (Math.floor(Math.random() * 101) > 52) {
     enemy = guts;
     compImg.src = './Img/Guts-Wolf.png';
