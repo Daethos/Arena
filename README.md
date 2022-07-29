@@ -13,7 +13,7 @@
 [Wikipedia Link]: https://en.wikipedia.org/wiki/MUD
 <br/><br/>
 
-# Screenshots(s) of the game
+# Screenshot(s) of How to Begin
 ## At the starting of the game, you'll be given a choice of how you wish to enter the duel.
 ![Game Start](https://i.imgur.com/oZ7SvCH.png)
 ## If you wish to create your character via selection, choosing weapons, shields, and armor:

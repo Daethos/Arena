@@ -135,19 +135,23 @@ const daethos = { // Hidden Boss
   armor: hush
 }
 // ---------------------------- CACHED ELEMENT REFERENCES --------------------------------- \\
+// Starting Game Buttons
 const startEls = document.querySelector('.start-buttons');
 const createEl = document.querySelector('#create');
 const randomEl = document.querySelector('#random');
 const confirmEl = document.querySelector('#confirm');
+// Starting-Ending Game Elements
 const duelEl = document.querySelector('#duel');
 const diedEl = document.querySelector('#died');
 const backgroundEl = document.querySelector('#background');
 const victoryEl = document.querySelector('#victory');
 const onceMoreEl = document.querySelector('#play-again');
+// Equpment Button Elements
 const weaponBtns = document.querySelector('.weapons');
 const armorBtns = document.querySelector('.armors');
 const shieldBtns = document.querySelector('.shields');
 const hideBtns = document.querySelector('.hide-button');
+// Action Button Elements
 const actionsEl = document.querySelector('#actions');
 const actionEls = document.getElementsByClassName('action');
 const attackBtn = document.getElementById('attack');
@@ -155,6 +159,7 @@ const dodgeBtn = document.getElementById('dodge');
 const postureBtn = document.getElementById('posture');
 const rollBtn = document.getElementById('roll');
 const initiateEl = document.getElementById('initiate');
+// Player Elements
 const statEls = document.getElementsByClassName('stats');
 const attTypeEl = document.getElementById('att-type');
 const physDefEl = document.getElementById('phys-def');
@@ -168,18 +173,15 @@ const armorTT = document.querySelector('#armor-tt');
 const weapImg = document.querySelector('#weap-img');
 const shieldImg = document.querySelector('#shield-img');
 const armorImg = document.querySelector('#armor-img');
-const compEl = document.querySelector('#comp');
-const compName = document.getElementById('comp-name');
 const playEl = document.querySelector('#play');
 const playImg = document.getElementById('play-img');
+// Computer Elements
+const compEl = document.querySelector('#comp');
+const compName = document.getElementById('comp-name');
 const compImg = document.getElementById('comp-img'); 
+// Delicious Textbox Elements
 let textBoxArea = document.querySelector('.text-box');
 const textBox = document.getElementById('console');
-let areaText = textBox.value;
-weaponBtns.style.display = 'none';
-armorBtns.style.display = 'none';
-shieldBtns.style.display = 'none';
-actionsEl.style.display = 'none';
 // ---------------- STATE VARIABLES ----------------------------
 let player = {
   weapon: {
@@ -204,6 +206,8 @@ let player = {
     dodge: 0,
   }
 };
+let areaText = textBox.value;
+// Beginning Game Variables
 let enemy;
 let playerChoice = [];
 let playerActionChoice = '';
@@ -216,6 +220,9 @@ let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
 let ranWeapon; 
 let ranShield; 
 let ranArmor; 
+let startChoice = [];
+let confirmChoice = '';
+// Combat Game Variables
 let playerDodge; 
 let playPhysPos = player.armor.physRes; 
 let playMagPos = player.armor.magRes; 
@@ -225,9 +232,14 @@ let actionChoice = [];
 let playerInput = '';
 let physAttDam;
 let magAttDam;
-let startChoice = [];
-let confirmChoice = '';
 let rollTimer;
+let compAttackTimer;
+let playAttackTimer;
+// Starting Display Variables
+weaponBtns.style.display = 'none';
+armorBtns.style.display = 'none';
+shieldBtns.style.display = 'none';
+actionsEl.style.display = 'none';
 // <------------------------------- EVENT LISTENERS ---------------------------------------- \\
 attackBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
@@ -275,8 +287,6 @@ setInterval (function() {
     areaText += Math.random() + '\n';
     textBox.scrollTop = textBox.scrollHeight;
 }, 250);
-let compAttackTimer;
-let playAttackTimer;
 function compTimer() { 
   if (!compAttackTimer) {
     compAttackTimer = setInterval(computerAttack, 30000);
@@ -291,16 +301,16 @@ function stopCompTimer() {
 }
 function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
-  playerAttack(),
-  playerAttack(),
+  playerAttack();
+  playerAttack();
   computerAttack();
 };
 function posture() {
   textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
-  playerAttack(),
-  computerAttack(),
+  playerAttack();
+  computerAttack();
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
 }
@@ -324,7 +334,7 @@ function dodge() {
     playerAttack();
   } else {
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
-    computerAttack(),
+    computerAttack();
     playerAttack();
   }
 }
