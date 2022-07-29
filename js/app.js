@@ -74,22 +74,22 @@ const compHBW = 650;
 const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
-let playHealth = 1500; 
-let compHealth = 2500; 
+let playHealth = 2500; 
+let compHealth = 3750; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
 // Weapon Possibilities
-const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 200, 0);
-const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 150, 0);
-const scythe = new Weapons('Scythe', 'twoHand', 'P', 'P', 250, 0);
-const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 150, 0); 
-const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 200, 0);
+const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 225, 0);
+const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 175, 0);
+const scythe = new Weapons('Scythe', 'twoHand', 'P', 'P', 265, 0);
+const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 175, 0); 
+const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 225, 0);
 const halberd = new Weapons('Halberd', 'twoHand', 'P', 'P', 300, 0);
 const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 300, 0);
 const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 300, 0);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 300, 0);
-const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 200, 0);
-const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 300, 0); 
+const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 225, 0);
+const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 200, 100); 
 // Spell Possibilities
 const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 250);
 const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 250);
@@ -104,20 +104,20 @@ const mediumShield = new Shields('Heater Shield', 10, 10, 2.5);
 const largeShield = new Shields('Scutum', 20, 20, 3.5);
 const greatShield = new Shields('Pavise', 25, 25, 4.5);
 // Opponent Equipment
-const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 300, 0); 
+const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 200, 200); 
 const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); 
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 300, 0); 
-const handCannon = new Weapons('Hand Cannon', 'oneHand', 'P', 'B', 300, 0);
-const wolf = new Armors('Wolf Armor', 'plate-mail', 50, 50, 25);
-const fox = new Armors('Fatal Fox', 'plate-mail', 50, 50, 25);
-const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 75, 75, 50);
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 350, 0); 
+const handCannon = new Weapons('Hand Cannon', 'oneHand', 'P', 'B', 300, 50);
+const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 25);
+const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 25);
+const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 50);
 // Armor Possibilities
-const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 30, 30, 25); 
-const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 50, 5); 
-const mage = new Armors("Mage's Robes", 'leather-cloth', 10, 50, 40); 
-const celt = new Armors("Celtic Menagerie", 'leather-mail', 20, 20, 35); 
-const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 40, 15); 
-const viking = new Armors("Viking's Lamellar", 'leather-mail', 25, 25, 30); 
+const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 35, 35, 35); 
+const knight = new Armors("Knight's Full Plate", 'plate-mail', 55, 45, 5); 
+const mage = new Armors("Mage's Robes", 'leather-cloth', 15, 45, 45); 
+const celt = new Armors("Celtic Menagerie", 'leather-mail', 25, 45, 35); 
+const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 55, 35, 15); 
+const viking = new Armors("Viking's Lamellar", 'leather-mail', 45, 25, 35); 
 // ---------------------------- Opponents --------------------------------- \\
 const dorien = {
   name: 'Prince Dorien Caderyn',
@@ -271,19 +271,23 @@ const compFrame = function() {
 }
 playFrame();
 compFrame();
-setInterval (function() { // This allows me to have an auto-scroll feature once it's filled every 100ms after filling
+setInterval (function() { 
     areaText += Math.random() + '\n';
     textBox.scrollTop = textBox.scrollHeight;
 }, 250);
 let compAttackTimer;
-function compTimer() { // Workaround of potential ROLL TIMER exploit
+let playAttackTimer;
+function compTimer() { 
   if (!compAttackTimer) {
     compAttackTimer = setInterval(computerAttack, 30000);
+    playAttackTimer = setInterval(playerAttack, 30000);
   }
 }
-function stopCompTimer() { // Stops interval when game ends
+function stopCompTimer() { 
   clearInterval(compAttackTimer);
   compAttackTimer = null;
+  clearInterval(playAttackTimer);
+  playAttackTimer = null;
 }
 function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
@@ -299,7 +303,7 @@ function posture() {
   computerAttack(),
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-};
+}
 function dodge() {
   playerDodge = player.armor.dodge;
   let dodgeAttempt = Math.floor(Math.random() * 101);
@@ -330,7 +334,7 @@ function roll() {
   setTimeout(hideRoll, rollTimer);
   rollBtn.style.display = 'none';
   playerAttack();
-};
+}
 function hideRoll() {
   rollBtn.style.display = 'inline-block';
 }
@@ -387,15 +391,16 @@ function playerAttack() {
       }
     }
     if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
-      playDamTot *= 1.1;
+      playDamTot *= 1.15;
     }
     console.log(playDamTot);
-    compHealth -= playDamTot;
+    compHealth -= Math.floor(playDamTot);
     textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
   } else if (Math.floor(Math.random() * 101) > 5) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
+    playDamTot = physAttDam + magAttDam;
     if (player.weapon.grip == 'oneHand') {
       playDamTot = 2 * (physAttDam + magAttDam);
     }
@@ -434,18 +439,24 @@ function playerAttack() {
       }
     }
     if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
-      playDamTot *= 1.1;
+      playDamTot *= 1.15;
     }
     console.log(playDamTot);
-    compHealth -= playDamTot;
+    compHealth -= Math.floor(playDamTot);
     textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
   } else {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
-    playDamTot = 3 * (physAttDam + magAttDam);
-    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+    playDamTot = physAttDam + magAttDam;
+    if (player.weapon.grip == 'oneHand') {
+      playDamTot = 3 * (physAttDam + magAttDam);
+    }
+    if (player.weapon.grip == 'twoHand') {
       playDamTot = 4 * (physAttDam + magAttDam);
+    }
+    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
+      playDamTot = 5 * (physAttDam + magAttDam);
     }
     if (player.weapon.damageType == 'P') {
       if (enemy.armor.type == 'plate-mail') {
@@ -476,15 +487,14 @@ function playerAttack() {
       }
     }
     if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
-      playDamTot *= 1.1;
+      playDamTot *= 1.15;
     }
     console.log(playDamTot);
-    compHealth -= playDamTot;
+    compHealth -= Math.floor(playDamTot);
     textBox.value += 'You MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
   }
   if (compHealth <= 0) {
-    stopCompTimer();
     playWin();
   }
   initiateEl.style.display = 'none';
@@ -502,7 +512,6 @@ function computerAttack() {
     pad = physAttDam * (1 - (playPhysPos / 100));
     mad = magAttDam * (1 - (playMagPos / 100));
     compDamTot = pad + mad;
-    console.log(compDamTot);
     if (weapon.damageType == 'P') {
       if (player.armor.type == 'plate-mail') {
         compDamTot *= 0.9;
@@ -535,9 +544,9 @@ function computerAttack() {
       compDamTot *= 1.1;
     }
     if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
-      compDamTot *= 0.9;
+      compDamTot *= 0.85;
     }
-    playHealth -= compDamTot;
+    playHealth -= Math.floor(compDamTot);
     textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
   } else {
@@ -550,7 +559,6 @@ function computerAttack() {
     pad = physAttDam * (1 - (playPhysPos / 100));
     mad = magAttDam * (1 - (playMagPos / 100));
     compDamTot = pad + mad;
-    console.log(compDamTot);
     if (weapon1.damageType == 'P') {
       if (player.armor.type == 'plate-mail') {
         compDamTot *= 0.9;
@@ -583,15 +591,14 @@ function computerAttack() {
       compDamTot *= 1.1;
     }
     if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
-      compDamTot *= 0.9;
+      compDamTot *= 0.85;
     }
-    playHealth -= compDamTot;
+    playHealth -= Math.floor(compDamTot);
     textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
   }
   if (playHealth <= 0) {
-    stopCompTimer();
-    compWin(); // Define what loses
+    compWin();
   }
 }
 // ---------------------------- STARTING GAME FUNCTIONS --------------------------------- \\
@@ -867,7 +874,7 @@ function init() {
     confirmEl.addEventListener('click', start); 
   });
 };
-function start() { //This is called by the confirm button
+function start() {
   textBox.value += 'You have chosen to start the duel. Good luck!' + '\n';
   createEl.style.display = 'none';
   randomEl.style.display = 'none';
@@ -918,8 +925,8 @@ function render() {
   '\n' + 'Dodge: ' + player.armor.dodge + '%';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  playHealth = 1000;
-  compHealth = 2000;
+  playHealth = 2500;
+  compHealth = 3750;
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
   compTimer();
