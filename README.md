@@ -3,9 +3,9 @@
 ## Ahh, the The Ascea not a single tournament has ever afforded the opportunity to increase relations with people who are your neighbors you had never met, nor barter for objects of desire, or perhaps necessities you hadn’t known were available. It is for many reasons known as what mends this world from frothing into war and splitting once more into a greater and terrible _Sundering_.
 <br/><br/>
 
->### Okay, actually this is an homage to hobby-made action rpgs called **MUDs**, or Multi-User Dungeon, whom out eternal [reference][Wikipedia Link] canonically states to <br/><br/>
->#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"...combine elements of role-playing games, hack and slash, interactive fiction..., " and "with players choosing classes in order to gain specific skills or powers." <br/><br/>
->### Chilling. And this game attempts to celebrate with as many amusing facets as once were had with an emphasis on **combat**. You are set to choose your selection of weapon, shield, and armor or have it chosen for you, dueling against your final opponent of much higher renown, seen as the favorite. This unfortunately will be to the death, _not that there's anything wrong with that_, so I do recommend experimenting with different gear sets to see what complements each other.
+>### Okay, actually this is an homage to hobby-made action rpgs called **MUDs**, or Multi-User Dungeons, whom out eternal [reference][Wikipedia Link] canonically states to <br/><br/>
+>#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"...combine elements of role-playing games, hack and slash, interactive fiction..., " and who can forget this, "with players choosing classes in order to gain specific skills or powers." <br/><br/>
+>### Chilling. And this game attempts to celebrate these inspirations with as many amusing facets as once were had with an emphasis on **combat**. You are set to choose your selection of weapon, shield, and armor or have it chosen for you, dueling against your final opponent of much higher renown, seen as the favorite. This unfortunately will be to the death, _not that there's anything wrong with that_, so I do recommend experimenting with different gear sets to see what complements each other.
 <br/><br/>  
 
 ## Now that we've gotten that pageantry out in the open, welcome to the last duel of the Ascea! The _grand melee_ of the Ascean festival ends when eight contestants remain in honor of the eight great provinces. Combat is halted and weapons are cast anew before resuming, occuring once more when down to the last duel--**and here you are**.
@@ -16,7 +16,7 @@
 # Screenshot(s) of How to Begin
 ## At the starting of the game, you'll be given a choice of how you wish to enter the duel.
 ![Game Start](https://i.imgur.com/oZ7SvCH.png)
-## If you wish to create your character via selection, choosing weapons, shields, and armor:
+## If you wish to create your character via selection, you will be prompted with choosing weapons, shields, and armor:
 ![armor](https://i.imgur.com/ULodTUl.png)
 ## From here, combat will begin, presenting your last opponent of the tournament:
 ![begin](https://i.imgur.com/KBvDBgP.png)<br/><br/>
@@ -35,10 +35,10 @@
 
 # Technologies Used
 
-## HTML, CSS, and Javascript. Google Fonts.
+## HTML, CSS, and Javascript. Google Fonts and Whimsical. The unending love of dark fantasy through D&D, Berserk, and Soulsborne.
 <br/><br/>
 
-# Getting Started
+# Getting Started In The Past
 
 ## [The Ascea: Last Duel][Another Place] has an easy foundation for guiding you through its steps.
 ##  In the beginning the game asks if you wish to create or randomize a character, choosing random immediately brings you to combat with your opponent. Be ready! Creating a character guides you through three steps:
@@ -70,7 +70,7 @@
 [another place]: https://daethos.github.io/Arena
 <br/><br/>
 
-# Next Steps
+# Iceboxing
 ### * Adding image icons for equipment upon selection with tooltips
 ### * Icon images embedded in the tooltips themselves
 ### * Audio, while I've played many a game with zero sound like this, that is more resembles the still image rendering era of muds emerging out of strictly text-based, audio isn't a far stretch and is the next major addition I'll be working on.
