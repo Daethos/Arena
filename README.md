@@ -1,4 +1,4 @@
-# The Ascea: Last Duel
+# [The Ascea: Last Duel][Another Place]
 
 ## Ahh, the The Ascea not a single tournament has ever afforded the opportunity to increase relations with people who are your neighbors you had never met, nor barter for objects of desire, or perhaps necessities you hadn’t known were available. It is for many reasons known as what mends this world from frothing into war and splitting once more into a greater and terrible _Sundering_.
 <br/><br/>
