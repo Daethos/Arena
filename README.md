@@ -64,7 +64,9 @@
     Roll - A free attack, use absolutely every time you can good lord.
 ## And with that I say you have a good idea of what's in store for yourself, and there's no need to bore you with inane detail yet to be discovered (and more to added)! 
 
+## [And to see how it all started][Reference]
 
+[Reference]: https://whimsical.com/arena-mud-GY53QDag7xrgsQrVEXUKfK
 [another place]: https://daethos.github.io/Arena
 <br/><br/>
 
