@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Ascea: Last Duel</title>
     <link defer rel="stylesheet" href="css/style.css" />
     <script defer src="js/app.js"></script>
 </head>
@@ -14,16 +14,16 @@
     <img src="./Img/Victory.jpg" id="victory" alt="Victory Achieved">
     <h1>The Ascea: Last Duel</h1>
     <h2 id="duel">Duel?</h2>
-    <div id="start" class="start-buttons">
-        <button id="create">Create</button>
-        <button id="random">Random</button>
-        <button id="confirm">Confirm</button>
+    <div id="start">
+        <button id="create" class="start-buttons">Create</button>
+        <button id="random" class="start-buttons">Random</button>
+        <button id="confirm" class="start-buttons">Confirm</button>
     </div>
     <div id="again">
         <button id="play-again">Once More?</button>
     </div>
     <div class="hide-buttons">
-    <div class="weapons"><p>Weapons</p> <br />
+    <div class="weapons"><h3>Weapons</h3>
         <button class="weapon" id="wb1">Gladius</button>
         <button class="weapon" id="wb2">Pugio</button>
         <button class="weapon" id="wb3">Scythe</button>
@@ -33,25 +33,28 @@
         <button class="weapon" id="wb7">Claymore</button> 
         <button class="weapon" id="wb8">Battle Axe</button><br />
         <button class="weapon" id="wb9">War Hammer</button>
-        <button class="weapon" id="wb10">Fireball</button>
+        <button class="weapon" id="wb10">Lava Spit</button>
         <button class="weapon" id="wb11">Lightning Spear</button>
-        <button class="weapon" id="wb12">Snow Ball</button><br />
+        <button class="weapon" id="wb12">Arctic Bolt</button><br />
         <button class="weapon" id="wb13">Magic Missile</button>
         <button class="weapon" id="wb14">Mace</button>
-        <button class="weapon" id="wb15">God Hand</button>
+        <button class="weapon" id="wb15">Hand of God</button>
         <button class="weapon" id="wb16">Insanity</button><br />
         <button class="weapon" id="wb17">Dai-Katana</button>
-        <button class="weapon" id="wb18">Earthquake</button>
+        <button class="weapon" id="wb18">Oak Crush</button>
+        <button class="weapon" id="wb19">God Hand</button>
+        <button class="weapon" id="wb20">Whirlwind</button><br />
+        <button class="weapon" id="wb21">Wind Fury</button>
     </div>
 
-    <div class="shields"><p>Shields</p> <br />
+    <div class="shields"><h3>Shields</h3>
         <button class="shield" id="sb1">Parrying Buckler</button>
         <button class="shield" id="sb2">Heater Shield</button>
         <button class="shield" id="sb3">Scutum</button>
         <button class="shield" id="sb4">Pavise</button>
     </div>
 
-    <div class="armors"><p>Armor</p> <br />
+    <div class="armors"><h3>Armor</h3>
         <button class="armor" id="ab1">Celtic Menagerie</button>
         <button class="armor" id="ab2">Knight's Full Plate</button>
         <button class="armor" id="ab3">Legionnaire's Regalia</button> <br />
@@ -63,60 +66,57 @@
     <div id="comp">
         <p id="comp-name">Prince Dorien</p> 
         <canvas id="computer-health"></canvas><br />
-        <img src="./Img/Guts-Wolf.png" id="comp-img" alt="Computer Image" width="500" height="500">
+        <img src="./Img/Guts-Wolf.png" id="comp-img" alt="Computer Image">
            
     </div>
 
     <div id="play">
         <canvas id="player-health"></canvas><br />
-        <h4></h4>
-        <img src="./Img/Elite Knight.png" id="play-img" alt="Player Image" width="155" height="255">
+        <img src="./Img/Elite Knight.png" id="play-img" alt="Player Image">
         <div class="icon-imgs">
             <div class="weap-div">
-                <img src="./Img/gladius.png" id="weap-img" class="equip-icons" alt="Weap" width="48" height="48">
+                <img src="./Img/gladius.png" id="weap-img" class="equip-icons" alt="Weap">
                 <span class="tooltip" id="weap-tt">Weapon</span>
             </div>
             <div class="shield-div">
-                <img src="./Img/heater-shield.png" id="shield-img" class="equip-icons" alt="Shield" width="48" height="48">
+                <img src="./Img/heater-shield.png" id="shield-img" class="equip-icons" alt="Shield">
                 <span class="tooltip" id="shield-tt">Shield</span>
             </div>
             <div class="armor-div">
-                <img src="./Img/knight-armor.png" id="armor-img" class="equip-icons" alt="Armor" width="48" height="48">
+                <img src="./Img/knight-armor.png" id="armor-img" class="equip-icons" alt="Armor">
                 <span class="tooltip" id="armor-tt">Armor</span>
             </div>
-        </div><br />
+        </div>
+        <div class="table">
             <table id="table">
                 <tr>
                 <th colspan="4">Player Stats</th>
                 </tr>
                 <tr>
-                    <td>Attack Type</td>
+                    <td> Weapon Attack Type</td>
                     <td id="att-type" class="stats"></td>
                     <td>Physical Defense</td>
                     <td id ="phys-def" class="stats"></td>
                 </tr>
                 <tr>
-                    <td>Damage Type</td>
+                    <td>Weapon Damage Type</td>
                     <td id="dam-type" class="stats"></td>
                     <td>Magical Defense</td>
                     <td id="mag-def" class="stats"></td>
                 </tr>
                 <tr>
-                    <td>Damage</td>
+                    <td>Weapon Damage</td>
                     <td id="damage" class="stats"></td>
-                    <td>Dodge</td>
+                    <td>Dodge<br /> Chance</td>
                     <td id="dodge-el" class="stats"></td>
                 </tr>
             </table>
+        </div>
 
     </div>
-    <section id="actions">
-        <button id="attack" class="action">Attack</button>
-        <button id="dodge" class="action">Dodge</button>
-        <button id="posture" class="action">Posture</button>
-        <button id="roll" class="action">Roll</button>
-        <button id ="initiate" class="action">Initiate</button>
-    </section>
+    <div id="actions">
+        <button id="attack" class="action">Attack</button><button id="dodge" class="action">Dodge</button><button id="posture" class="action">Posture</button><button id="roll" class="action">Roll</button><button id ="initiate" class="action">Initiate</button>
+    </div>
     <textarea class="text-box" id="console" readonly></textarea>
 </body>
 </html>

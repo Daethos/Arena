@@ -1,12 +1,13 @@
 // ----------------------------------- CONSTANTS ------------------------------------ \\
 class Weapons {
-  constructor(name, grip, attackType, damageType, physDam, magDam) {
+  constructor(name, grip, attackType, damageType, physDam, magDam, crit) {
       this.name = name;
       this.grip = grip; // One-Hand, Two-Hand
       this.attackType = attackType; // This evaluates against
       this.damageType = damageType; // This evaluates against magical resistance
       this.physDam = physDam; // Physical Damage NUMBER
       this.magDam = magDam; // Magical Damage NUMBER
+      this.crit = crit; // crit chance
   }
 }
 class Shields {
@@ -74,54 +75,59 @@ const compHBW = 650;
 const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
-let playHealth = 2500; 
-let compHealth = 4000; 
+let playHealth = 3000; 
+let compHealth = 5000; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
 // Weapon Possibilities
-const gladius = new Weapons('Gladius', 'oneHand', 'P', 'P', 250, 0);
-const pugio = new Weapons('Pugio', 'oneHand', 'P', 'P', 200, 0);
-const scythe = new Weapons('Scythe', 'twoHand', 'P', 'P', 275, 0);
-const spear = new Weapons('Spear', 'oneHand', 'P', 'P', 200, 0); 
-const katana = new Weapons('Katana', 'oneHand', 'P', 'S', 250, 0);
-const halberd = new Weapons('Halberd', 'twoHand', 'P', 'P', 325, 0);
-const claymore = new Weapons('Claymore', 'twoHand', 'P', 'S', 325, 0);
-const battleAxe = new Weapons('Battle Axe', 'twoHand', 'P', 'S', 325, 0);
-const warHammer = new Weapons('War Hammer', 'twoHand', 'P', 'B', 325, 0);
-const mace = new Weapons('Mace', 'oneHand', 'P', 'B' , 250, 0);
-const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'P', 'S', 200, 125); 
+const gladius = new Weapons('Gladius', 'oneHand', 'Physical', 'Pierce', 250, 0, 10);
+const pugio = new Weapons('Pugio', 'oneHand', 'Physical', 'Pierce', 200, 0, 15);
+const scythe = new Weapons('Scythe', 'oneHand', 'Physical', 'Pierce', 200, 0, 15);
+const spear = new Weapons('Spear', 'oneHand', 'Physical', 'Pierce', 200, 0, 15); 
+const katana = new Weapons('Katana', 'oneHand', 'Physical', 'Slash', 250, 0, 10);
+const halberd = new Weapons('Halberd', 'twoHand', 'Physical', 'Pierce', 325, 0, 0);
+const claymore = new Weapons('Claymore', 'twoHand', 'Physical', 'Slash', 325, 0, 0);
+const battleAxe = new Weapons('Battle Axe', 'twoHand', 'Physical', 'Slash', 350, 0, 0);
+const warHammer = new Weapons('War Hammer', 'twoHand', 'Physical', 'Blunt', 350, 0, 0);
+const mace = new Weapons('Mace', 'oneHand', 'Physical', 'Blunt' , 250, 0, 10);
+const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'Physical', 'Slash', 200, 100, 5); 
+const godHand = new Weapons('God Hand', 'oneHand', 'Physical', 'Blunt', 200, 0, 15);
+const whirlWind = new Weapons('Whirlwind', 'twoHand', 'Physical', 'Slash', 125, 125, 15);
 // Spell Possibilities
-const fireBall = new Weapons('Fireball', 'oneHand', 'M', 'Fi', 0, 275);
-const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'M', 'L', 0, 275);
-const magicMissile = new Weapons('Magic Missle', 'oneHand', 'M', 'S', 0, 275);
-const snowBall = new Weapons('Snow Ball', 'oneHand', 'M', 'Fr', 0, 275);
-const earthquake = new Weapons('Earthquake', 'oneHand', 'M', 'E', 0, 275); 
-const godHand = new Weapons('God Hand', 'oneHand', 'M', 'Fa', 150, 175); 
-const insanity = new Weapons('Insanity', 'oneHand', 'M', 'D', 175, 150);
+const lavaSpit = new Weapons('Lava Spit', 'oneHand', 'Magic', 'Fire', 0, 250, 10);
+const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'Magic', 'Lightning', 0, 250, 10);
+const magicMissile = new Weapons('Magic Missle', 'oneHand', 'Magic', 'Sorcery', 0, 200, 15);
+const arcticBolt = new Weapons('Arctic Bolt', 'oneHand', 'Magic', 'Frost', 0, 250, 10);
+const oakCrush = new Weapons('Oak Crush', 'oneHand', 'Magic', 'Earth', 0, 275, 10); 
+const handOfGod = new Weapons('Hand of God', 'oneHand', 'Magic', 'Faith', 150, 175, 5); 
+const insanity = new Weapons('Insanity', 'oneHand', 'Magic', 'Spooky', 175, 150, 5);
+const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', 'Wind', 0, 200, 15);
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); 
 const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); 
 const largeShield = new Shields('Scutum', 20, 20, 3.5);
 const greatShield = new Shields('Pavise', 25, 25, 4.5);
 // Opponent Equipment
-const greatSpear = new Weapons('Blood Moon', 'twoHand', 'P', 'P', 200, 200); 
-const soulRend = new Weapons('Soul Rend', 'oneHand', 'M', 'S', 200, 200); 
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'P', 'S', 350, 0); 
-const handCannon = new Weapons('Hand Cannon', 'oneHand', 'P', 'B', 300, 50);
+const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', 'Pierce', 250, 150, 15); 
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', 'Spooky', 150, 250, 5);
+const mindBlast = new Weapons('Mind Blast', 'oneHand', 'Magic', 'Shadow', 0, 500, 25);
+const swDeath = new Weapons('Shadow Word: Death', 'oneHand', 'Magic', 'Shadow', 0, 500, 25); 
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'Physical', 'Slash', 350, 0, 5); 
+const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 300, 50, 10);
 const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 25);
 const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 25);
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 50);
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 35, 35, 35); 
 const knight = new Armors("Knight's Full Plate", 'plate-mail', 55, 45, 5); 
-const mage = new Armors("Mage's Robes", 'leather-cloth', 15, 45, 45); 
-const celt = new Armors("Celtic Menagerie", 'leather-mail', 25, 45, 35); 
+const mage = new Armors("Mage's Robes", 'leather-cloth', 15, 55, 35); 
+const celt = new Armors("Celtic Menagerie", 'leather-mail', 30, 45, 30); 
 const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 55, 35, 15); 
-const viking = new Armors("Viking's Lamellar", 'leather-mail', 45, 25, 35); 
+const viking = new Armors("Viking's Lamellar", 'leather-mail', 45, 30, 30); 
 // ---------------------------- Opponents --------------------------------- \\
 const dorien = {
   name: 'Prince Dorien Caderyn',
-  weapons: [greatSpear, soulRend],
+  weapons: [bloodMoon, soulRend],
   armor: fox
 }
 const guts = {
@@ -131,7 +137,7 @@ const guts = {
 }
 const daethos = { // Hidden Boss
   name: 'Daethos, the One Above All',
-  weapons: [soulRend, soulRend],
+  weapons: [mindBlast, swDeath],
   armor: hush
 }
 // ---------------------------- CACHED ELEMENT REFERENCES --------------------------------- \\
@@ -191,6 +197,7 @@ let player = {
     damageType: '',
     physDam: 0,
     magDam: 0,
+    crit: 0,
   },
   shield: {
     name: '',
@@ -214,7 +221,8 @@ let playerActionChoice = '';
 let playerWeaponChoice = '';
 let playerShieldChoice = '';
 let playerArmorChoice = '';
-let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, fireBall, lightningSpear, snowBall, magicMissile, mace, godHand, insanity, daiKatana, earthquake];
+let weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, lavaSpit, lightningSpear, arcticBolt, magicMissile, mace, godHand, insanity, 
+  daiKatana, windFury, oakCrush, handOfGod, whirlWind];
 let shields = [smallShield, mediumShield, largeShield, greatShield];
 let armors = [celt, knight, legionnaire, mage, poorKnight, viking];
 let ranWeapon; 
@@ -236,33 +244,33 @@ let rollTimer;
 let compAttackTimer;
 let playAttackTimer;
 // Starting Display Variables
-weaponBtns.style.display = 'none';
-armorBtns.style.display = 'none';
-shieldBtns.style.display = 'none';
-actionsEl.style.display = 'none';
+// weaponBtns.style.display = 'none';
+// armorBtns.style.display = 'none';
+// shieldBtns.style.display = 'none';
+// actionsEl.style.display = 'none';
 // <------------------------------- EVENT LISTENERS ---------------------------------------- \\
 attackBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + '! Are you sure?' + '\n';
-  initiateEl.style.display = 'inline';
+  initiateEl.style.display = 'inline-block';
   initiateEl.addEventListener('click', initiate);
 });
 dodgeBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'You have chosen to DODGE! Are you sure?' + '\n';
-  initiateEl.style.display = 'inline';
+  initiateEl.style.display = 'inline-block';
   initiateEl.addEventListener('click', initiate);
 });
 postureBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'You have chosen to POSTURE with your ' + player.shield.name + '! Are you sure?' + '\n';
-  initiateEl.style.display = 'inline';
+  initiateEl.style.display = 'inline-block';
   initiateEl.addEventListener('click', initiate);
 }); 
 rollBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
   textBox.value += 'Could I offer you this ROLL in these trying times?' + '\n';
-  initiateEl.style.display = 'inline';
+  initiateEl.style.display = 'inline-block';
   initiateEl.addEventListener('click', initiate);
 });
 onceMoreEl.addEventListener('click', startOver);
@@ -283,14 +291,29 @@ const compFrame = function() {
 }
 playFrame();
 compFrame();
-setInterval (function() { 
-    areaText += Math.random() + '\n';
-    textBox.scrollTop = textBox.scrollHeight;
-}, 250);
+let startScroll;
+let stopScroll;
+function textBoxScroll() {
+  if (!startScroll) {
+  startScroll = setInterval(textScroll, 500);
+  return
+  }
+}
+function textScroll() {
+  areaText += Math.random() + '\n';
+  textBox.scrollTop = textBox.scrollHeight;
+  return
+}
+function stopTextScroll() {
+  clearInterval(startScroll);
+  startScroll = null;
+  return
+}
 function compTimer() { 
   if (!compAttackTimer) {
     compAttackTimer = setInterval(computerAttack, 30000);
     playAttackTimer = setInterval(playerAttack, 30000);
+    return
   }
 }
 function stopCompTimer() { 
@@ -298,12 +321,37 @@ function stopCompTimer() {
   compAttackTimer = null;
   clearInterval(playAttackTimer);
   playAttackTimer = null;
+  return
+}
+function roll() {
+  textBox.value += "Phew! Risky. Better not try that again." + '\n';
+  hideRoll();
+  playerAttack();
+  return
+}
+function hideRoll() {
+  clearTimeout(rollTimer);
+  rollTimer = null;
+  if (rollTimer == null) {
+    rollBtn.style.display = 'none';
+    rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
+  }
+  return
+}
+function noRoll() {
+  rollBtn.style.display = 'inline-block';
+  return
+}
+function showRoll() {
+  clearTimeout(rollTimer);
+  rollTimer = null;
 }
 function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
   playerAttack();
   playerAttack();
   computerAttack();
+  return
 };
 function posture() {
   textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
@@ -313,251 +361,433 @@ function posture() {
   computerAttack();
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
+  return
 }
 function dodge() {
   playerDodge = player.armor.dodge;
   let dodgeAttempt = Math.floor(Math.random() * 101);
   if (player.weapon.grip == 'oneHand') {
-      playerDodge += 20;
+      playerDodge += 5;
   } 
-  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == katana) {
-    playerDodge += 10;
+  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == katana || player.weapon == godHand || player.weapon == windFury) {
+    playerDodge += 5;
   } 
   if (player.shield == smallShield) {
-    playerDodge += 10;
-  }
-  if (player.shield == mediumShield) {
     playerDodge += 5;
   }
-  if ((playerDodge >= dodgeAttempt) === true) {
+  if (player.shield == mediumShield) {
+    playerDodge += 3;
+  }
+  if (Math.floor(Math.random() * 101 < playerDodge))  {
     textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
     playerAttack();
+    return
   } else {
+    if (Math.floor(Math.random() * 101) > playerDodge) {
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
     computerAttack();
     playerAttack();
+    return
+    } else {
+      let weapon;
+    if (Math.floor(Math.random() * 101) > 50) {
+      weapon = enemy.weapons[0];
+      } else { 
+        weapon = enemy.weapons[1];
+      }
+        let physAttDam = weapon.physDam;
+        let magAttDam = weapon.magDam;
+        pad = physAttDam * (1 - (playPhysPos / 100));
+        mad = magAttDam * (1 - (playMagPos / 100));
+        compDamTot = pad + mad;
+        if (weapon.damageType == 'Pierce') {
+           if (player.armor.type == 'plate-mail') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+        if (weapon.damageType == 'Slash') {
+          if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+        if (weapon.damageType == 'Blunt') {
+          if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+            compDamTot *=  0.9;
+          } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
+            compDamTot *= 1.1;
+          }
+        }
+        if (weapon.attackType == 'Magic') {
+           if (player.armor.type == 'leather-cloth') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'plate-mail') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+      if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
+        compDamTot *= 1.1;
+      }
+      if (player.weapon.damageType == 'Frost' || player.weapon.damageType == 'Earth') {
+        compDamTot *= 0.85;
+      }
+      if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
+        compDamTot *= 0.9
+      }
+      compDamTot *= (1 - ((playerDodge + player.shield.physRes) / 100));
+      Math.floor(compDamTot);
+      playHealth -= compDamTot;
+      textBox.value += 'You nearly dodge yet ' + enemy.name + ' strikes you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage! (Glancing Blow)' + '\n';
+      playHealthBar.updateHealth(playHealth);
+      playerAttack();
+    }
   }
-}
-function roll() {
-  textBox.value += "Phew! Risky. Better not try that again." + '\n';
-  rollTimer = 10000 * player.shield.roll;
-  setTimeout(hideRoll, rollTimer);
-  rollBtn.style.display = 'none';
-  playerAttack();
-}
-function hideRoll() {
-  rollBtn.style.display = 'inline-block';
 }
 function initiate() {
   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
   console.log(playerInput);
   if (playerInput == 'Attack') { 
     attack();
+    return
   } else if (playerInput == 'Dodge') {
     dodge();
+    return
   } else if (playerInput == 'Posture') {
     posture();
+    return
   } else if (playerInput == 'Roll') {
     roll();
+    return
   } else {
-    return;
+    return
   }
 }
+
 function playerAttack() {
+
   let physAttDam = player.weapon.physDam;
   let magAttDam = player.weapon.magDam;
   let physDamRes = enemy.armor.physRes;
   let magDamRes = enemy.armor.magRes;
-  if (Math.floor(Math.random() * 101) > 15) {
+
+  if (player.weapon == windFury || player.weapon == magicMissile) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += 'A DEVASTATING Windfury has procced!' + '\n';
+      playerAttack();
+      playerAttack();
+    }
+  }
+
+  if (player.weapon == godHand || player.weapon == whirlWind) {
+    if (Math.floor(Math.random() * 101) > 90) {
+      textBox.value += 'They that Sow the Wind, Shall Reap the Whirlwind' + '\n';
+      playerAttack();
+      playerAttack();
+      playerAttack();
+    }
+  }
+
+  if ((Math.floor(Math.random() * 101) - player.weapon.crit) > 10) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = physAttDam + magAttDam;
-    if (player.weapon.damageType == 'P') {
+
+    if (player.weapon.damageType == 'Pierce') {
       if (enemy.armor.type == 'plate-mail') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type == 'chain-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'S') {
+    if (player.weapon.damageType == 'Slash') {
       if (enemy.armor.type == 'chain-mail') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type == 'leather-cloth') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'B') {
+    if (player.weapon.damageType == 'Blunt') {
       if (enemy.armor.type == 'leather-mail') {
         playDamTot *=  0.9;
       } else if (enemy.armor.type == 'plate-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.attackType == 'M') {
+    if (player.weapon.attackType == 'Magic') {
       if (enemy.armor.type == 'leather-cloth') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type = 'leather-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
       playDamTot *= 1.15;
+    }
+    if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
+      playDamTot *= 1.1;
     }
     console.log(playDamTot);
     compHealth -= Math.floor(playDamTot);
     textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
-  } else if (Math.floor(Math.random() * 101) > 5) {
+
+  } else if ((Math.floor(Math.random() * 101) - player.weapon.crit) > 5) {
+
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
+    if (player.armor == mage) {
+      magAttDam *= 1.1;
+    }
     playDamTot = physAttDam + magAttDam;
+
     if (player.weapon.grip == 'oneHand') {
       playDamTot = 2 * (physAttDam + magAttDam);
     }
     if (player.weapon.grip == 'twoHand') {
       playDamTot = 2.5 * (physAttDam + magAttDam);
     }
-    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
-      playDamTot = 3 * (physAttDam + magAttDam);
+    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == godHand || player.weapon == windFury) {
+      playDamTot = 3.5 * (physAttDam + magAttDam);
     }
-    if (player.weapon.damageType == 'P') {
+    if (player.weapon.damageType == 'Pierce') {
         if (enemy.armor.type == 'plate-mail') {
           playDamTot *= 0.9;
         } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
           playDamTot *= 1.1;
         }
     }
-    if (player.weapon.damageType == 'S') {
+    if (player.weapon.damageType == 'Slash') {
         if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
           playDamTot *= 0.9;
         } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
           playDamTot *= 1.1;
         }
     }
-    if (player.weapon.damageType == 'B') {
+    if (player.weapon.damageType == 'Blunt') {
       if (enemy.armor.type == 'leather-mail' || enemy.armor.type == 'leather-cloth') {
         playDamTot *=  0.9;
       } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.attackType == 'M') {
+    if (player.weapon.attackType == 'Magic') {
       if (enemy.armor.type == 'leather-cloth') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type = 'leather-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
       playDamTot *= 1.15;
     }
+    if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
+      playDamTot *= 1.1;
+    }
+
+    Math.floor(playDamTot);
     console.log(playDamTot);
-    compHealth -= Math.floor(playDamTot);
-    textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    compHealth -= playDamTot;
+    textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
+
   } else {
+
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = physAttDam + magAttDam;
-    if (player.weapon.grip == 'oneHand') {
-      playDamTot = 3 * (physAttDam + magAttDam);
-    }
-    if (player.weapon.grip == 'twoHand') {
-      playDamTot = 4 * (physAttDam + magAttDam);
-    }
-    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
-      playDamTot = 5 * (physAttDam + magAttDam);
-    }
-    if (player.weapon.damageType == 'P') {
+
+    if (player.weapon.damageType == 'Pierce') {
       if (enemy.armor.type == 'plate-mail') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'S') {
+    if (player.weapon.damageType == 'Slash') {
       if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'B') {
+    if (player.weapon.damageType == 'Blunt') {
       if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
         playDamTot *=  0.9;
       } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.attackType == 'M') {
+    if (player.weapon.attackType == 'Magic') {
       if (enemy.armor.type == 'leather-cloth') {
         playDamTot *= 0.9;
       } else if (enemy.armor.type == 'plate-mail') {
         playDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'D' || player.weapon.damageType == 'L') {
+
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Lightning' || player.weapon.damageType == 'Sorcery') {
       playDamTot *= 1.15;
     }
+    if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
+      playDamTot *= 1.1;
+    }
+    if (player.weapon.grip == 'oneHand') {
+      playDamTot *= 1.1;
+    }
+    if (player.weapon.grip == 'twoHand') {
+      playDamTot *= 1.25;
+    }
     console.log(playDamTot);
-    compHealth -= Math.floor(playDamTot);
-    textBox.value += 'You MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    Math.floor(playDamTot);
+    compHealth -= playDamTot;
+    textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
+    compHealth -= playDamTot;
+    textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+    compHealth -= playDamTot;
+    textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+    textBox.value += 'You attempt to flurry into further strikes!' + '\n';
+    playerAttack();
   }
   if (compHealth <= 0) {
     playWin();
+    return
   }
   initiateEl.style.display = 'none';
+  return
 }
+
 function computerAttack() {
-  if (Math.random() > .15) {
+  if ((Math.floor(Math.random() * 101) - (enemy.weapons[0].crit + enemy.weapons[1].crit) > 10)) {
     let weapon;
-    if (Math.random() > .5) {
+    if (Math.floor(Math.random() * 101) > 50) {
       weapon = enemy.weapons[0];
       } else { 
         weapon = enemy.weapons[1];
       }
-    let physAttDam = weapon.physDam;
-    let magAttDam = weapon.magDam;
-    pad = physAttDam * (1 - (playPhysPos / 100));
-    mad = magAttDam * (1 - (playMagPos / 100));
-    compDamTot = pad + mad;
-    if (weapon.damageType == 'P') {
-      if (player.armor.type == 'plate-mail') {
-        compDamTot *= 0.9;
-      } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+        let physAttDam = weapon.physDam;
+        let magAttDam = weapon.magDam;
+        pad = physAttDam * (1 - (playPhysPos / 100));
+        mad = magAttDam * (1 - (playMagPos / 100));
+        compDamTot = pad + mad;
+        if (weapon.damageType == 'Pierce') {
+           if (player.armor.type == 'plate-mail') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+        if (weapon.damageType == 'Slash') {
+          if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+        if (weapon.damageType == 'Blunt') {
+          if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+            compDamTot *=  0.9;
+          } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
+            compDamTot *= 1.1;
+          }
+        }
+        if (weapon.attackType == 'Magic') {
+           if (player.armor.type == 'leather-cloth') {
+            compDamTot *= 0.9;
+          } else if (player.armor.type == 'plate-mail') {
+            compDamTot *= 1.1;
+          } else {
+            compDamTot;
+          }
+        }
+      if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
         compDamTot *= 1.1;
       }
-    }
-    if (weapon.damageType == 'S') {
-      if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
-        compDamTot *= 0.9;
-      } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
-        compDamTot *= 1.1;
+      if (player.weapon.damageType == 'Frost' || player.weapon.damageType == 'Earth') {
+        compDamTot *= 0.85;
       }
-    }
-    if (weapon.damageType == 'B') {
-      if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
-        compDamTot *=  0.9;
-      } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
-        compDamTot *= 1.1;
+      if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
+        compDamTot *= 0.9
       }
-    }
-    if (weapon.attackType == 'M') {
-      if (player.armor.type == 'leather-cloth') {
-        compDamTot *= 0.9;
-      } else if (player.armor.type == 'plate-mail') {
-        compDamTot *= 1.1;
+      playHealth -= Math.floor(compDamTot);
+      textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
+  
+ } else if ((Math.floor(Math.random() * 101) - (enemy.weapons[0].crit + enemy.weapons[1].crit) > 5)) {
+
+    let weapon;
+    if (Math.floor(Math.random() * 101) > 50) {
+      weapon = enemy.weapons[0];
+      } else { 
+        weapon = enemy.weapons[1];
       }
-    }
-    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
+        let physAttDam = weapon.physDam;
+        let magAttDam = weapon.magDam;
+        pad = physAttDam * (1 - (playPhysPos / 100));
+        mad = magAttDam * (1 - (playMagPos / 100));
+        compDamTot = 2 * (pad + mad);
+
+      if (weapon.damageType == 'Pierce') {
+        if (player.armor.type == 'plate-mail') {
+          compDamTot *= 0.9;
+        } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+          compDamTot *= 1.1;
+        } else {
+          compDamTot;
+        }
+      }
+      if (weapon.damageType == 'Slash') {
+        if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
+          compDamTot *= 0.9;
+        } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
+          compDamTot *= 1.1;
+        } else {
+          compDamTot;
+        }
+      }
+      if (weapon.damageType == 'Blunt') {
+        if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
+          compDamTot *=  0.9;
+        } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
+          compDamTot *= 1.1;
+        }
+      }
+
+      if (weapon.attackType == 'Magic') {
+          if (player.armor.type == 'leather-cloth') {
+          compDamTot *= 0.9;
+        } else if (player.armor.type == 'plate-mail') {
+          compDamTot *= 1.1;
+        } else {
+          compDamTot;
+        }
+      }
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
       compDamTot *= 1.1;
     }
-    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
+    if (player.weapon.damageType == 'Frost' || player.weapon.damageType == 'Earth') {
       compDamTot *= 0.85;
     }
+    if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
+      compDamTot *= 0.9
+    }
     playHealth -= Math.floor(compDamTot);
-    textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' damage!' + '\n';
+    textBox.value += enemy.name + ' CRITICALLY STRIKES you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
   } else {
     let weapon1;
@@ -569,42 +799,45 @@ function computerAttack() {
     pad = physAttDam * (1 - (playPhysPos / 100));
     mad = magAttDam * (1 - (playMagPos / 100));
     compDamTot = pad + mad;
-    if (weapon1.damageType == 'P') {
+
+    if (weapon1.damageType == 'Pierce') {
       if (player.armor.type == 'plate-mail') {
         compDamTot *= 0.9;
       } else if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
         compDamTot *= 1.1;
       }
     }
-    if (weapon1.damageType == 'S') {
+    if (weapon1.damageType == 'Slash') {
       if (player.armor.type == 'chain-mail' || player.armor.type == 'plate-mail') {
         compDamTot *= 0.9;
       } else if (player.armor.type == 'leather-cloth' || player.armor.type == 'leather-mail') {
         compDamTot *= 1.1;
       }
     }
-    if (weapon1.damageType == 'B') {
+    if (weapon1.damageType == 'Blunt') {
       if (player.armor.type == 'chain-mail' || player.armor.type == 'leather-cloth') {
         compDamTot *=  0.9;
       } else if (player.armor.type == 'plate-mail' || player.armor.type == 'leather-mail') {
         compDamTot *= 1.1;
       }
     }
-    if (weapon2.attackType == 'M') {
+    if (weapon2.attackType == 'Magic') {
       if (player.armor.type == 'leather-cloth') {
         compDamTot *= 0.9;
       } else if (player.armor.type == 'plate-mail') {
         compDamTot *= 1.1;
       }
     }
-    if (player.weapon.damageType == 'Fi' || player.weapon.damageType == 'Sor' || player.weapon.damageType == 'L') {
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
       compDamTot *= 1.1;
     }
-    if (player.weapon.damageType == 'Fr' || player.weapon.damageType == 'D' || player.weapon.damageType == 'Fa' || player.weapon.damageType == 'E') {
-      compDamTot *= 0.85;
+    if (player.weapon.damageType == 'Frost' || player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Earth') {
+      compDamTot *= 0.9;
     }
-    playHealth -= Math.floor(compDamTot);
-    textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' damage!' + '\n';
+    compDamTot *= 1.5;
+    Math.floor(compDamTot);
+    playHealth -= compDamTot;
+    textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' ' + weapon1.damageType + ' and ' + weapon2.damageType + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
   }
   if (playHealth <= 0) {
@@ -613,12 +846,12 @@ function computerAttack() {
 }
 // ---------------------------- STARTING GAME FUNCTIONS --------------------------------- \\
 function playerChoose() {
-  playEl.style.display = 'block';
+  playEl.style.display = 'inline-block';
   chooseWeapon();
 }
 function chooseWeapon() {
-  confirmEl.style.displaay = 'inline';
-  weaponBtns.style.display = 'block';
+  confirmEl.style.displaay = 'inline-block';
+  weaponBtns.style.display = 'inline-block';
   weaponBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
   playerWeaponChoice = e.target.innerText;
@@ -649,14 +882,14 @@ function chooseWeapon() {
   } else if (playerWeaponChoice == 'War Hammer') {
     playerWeaponChoice = warHammer;
     weapImg.src = './Img/warhammer.png';
-  } else if (playerWeaponChoice == 'Fireball') {
-    playerWeaponChoice = fireBall;
+  } else if (playerWeaponChoice == 'Lava Spit') {
+    playerWeaponChoice = lavaSpit;
     weapImg.src = './Img/fire.png';
   } else if (playerWeaponChoice == 'Lightning Spear') {
     playerWeaponChoice = lightningSpear;
     weapImg.src = './Img/lightning-spear.png';
-  } else if (playerWeaponChoice == 'Snow Ball') {
-    playerWeaponChoice = snowBall;
+  } else if (playerWeaponChoice == 'Arctic Bolt') {
+    playerWeaponChoice = arcticBolt;
     weapImg.src = './Img/frost.png';
   } else if (playerWeaponChoice == 'Magic Missile') {
     playerWeaponChoice = magicMissile;
@@ -664,8 +897,8 @@ function chooseWeapon() {
   } else if (playerWeaponChoice == 'Mace') {
     playerWeaponChoice = mace;
     weapImg.src = './Img/mace.png';
-  } else if (playerWeaponChoice == 'God Hand') {
-    playerWeaponChoice = godHand;
+  } else if (playerWeaponChoice == 'Hand of God') {
+    playerWeaponChoice = handOfGod;
     weapImg.src = './Img/faith.png';
   } else if (playerWeaponChoice == 'Insanity') {
     playerWeaponChoice = insanity;
@@ -673,9 +906,18 @@ function chooseWeapon() {
   } else if (playerWeaponChoice == 'Dai-Katana') {
     playerWeaponChoice = daiKatana;
     weapImg.src = './Img/dai-katana.png';
-  } else if (playerWeaponChoice == 'Earthquake') {
-    playerWeaponChoice = earthquake;
+  } else if (playerWeaponChoice == 'Oak Crush') {
+    playerWeaponChoice = oakCrush;
     weapImg.src = './Img/earth.png';
+  } else if (playerWeaponChoice == 'Wind Fury') {
+    playerWeaponChoice = windFury;
+    weapImg.src = './Img/windfury.png';
+  } else if (playerWeaponChoice == 'God Hand') {
+    playerWeaponChoice = godHand;
+    weapImg.src = './Img/godHand.png';
+  } else if (playerWeaponChoice == 'Whirlwind') {
+    playerWeaponChoice = whirlWind;
+    weapImg.src = './Img/whirlwind.png';
   }
   player.weapon = playerWeaponChoice;
   damEl.innerText = playerWeaponChoice.physDam + playerWeaponChoice.magDam;
@@ -688,7 +930,7 @@ function chooseWeapon() {
 }
 function chooseShield() {
   weaponBtns.style.display = 'none';
-  shieldBtns.style.display = 'block';
+  shieldBtns.style.display = 'inline-block';
   shieldBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
     playerShieldChoice = e.target.innerText;
@@ -713,7 +955,7 @@ function chooseShield() {
 }
 function chooseArmor() {
   shieldBtns.style.display = 'none';
-  armorBtns.style.display = 'block';
+  armorBtns.style.display = 'inline-block';
   armorBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
     playerArmorChoice = e.target.innerText;
@@ -748,7 +990,7 @@ function chooseArmor() {
   })
 };
 function playerRandom() {
-  playEl.style.display = 'block';
+  playEl.style.display = 'inline-block';
   randomWeapon();
   randomShield();
   randomArmor();
@@ -779,24 +1021,30 @@ function randomWeapon() {
     weapImg.src = './Img/battleaxe.png';
   } else if (player.weapon == warHammer) {
     weapImg.src = './Img/warhammer.png';
-  } else if (player.weapon == fireBall) {
+  } else if (player.weapon == lavaSpit) {
     weapImg.src = './Img/fire.png';
   } else if (player.weapon == lightningSpear) {
     weapImg.src = './Img/lightning-spear.png';
-  } else if (player.weapon == snowBall) {
+  } else if (player.weapon == arcticBolt) {
     weapImg.src = './Img/frost.png';
   } else if (player.weapon == magicMissile) {
     weapImg.src = './Img/sorcery.png';
   } else if (player.weapon == mace) {
     weapImg.src = './Img/mace.png';
-  } else if (player.weapon == godHand) {
+  } else if (player.weapon == handOfGod) {
     weapImg.src = './Img/faith.png';
   } else if (player.weapon == insanity) {
     weapImg.src = './Img/dark.png';
   } else if (player.weapon == daiKatana) {
     weapImg.src = './Img/dai-katana.png';
-  } else if (player.weapon == earthquake) {
+  } else if (player.weapon == oakCrush) {
     weapImg.src = './Img/earth.png';
+  } else if (player.weapon == windFury) {
+    weapImg.src = './Img/windfury.png';
+  } else if (player.weapon == godHand) {
+    weapImg.src = './Img/godHand.png';
+  } else if (player.weapon == whirlWind) {
+    weapImg.src = './Img/whirlwind.png';
   }
 }
 function randomShield() {
@@ -843,8 +1091,8 @@ function randomEnemy() {
   } else if (Math.floor(Math.random() * 101) > 4) {
     enemy = dorien;
     compImg.src = './Img/Dorien.png';
-    compImg.height = 650;
-    compImg.width = 400;
+    // compImg.height = 650;
+    // compImg.width = 200;
     compImg.top = 100;
   } else {
     enemy = daethos;
@@ -858,19 +1106,52 @@ function randomEnemy() {
   console.log(enemy);
 }
 function init() {
+
+enemy;
+playerChoice = [];
+playerActionChoice = '';
+playerWeaponChoice = '';
+playerShieldChoice = '';
+playerArmorChoice = '';
+weapons = [gladius, pugio, scythe, spear, katana, halberd, claymore, battleAxe, warHammer, lavaSpit, lightningSpear, arcticBolt, magicMissile, mace, godHand, insanity, 
+  daiKatana, windFury, oakCrush, handOfGod, whirlWind];
+shields = [smallShield, mediumShield, largeShield, greatShield];
+armors = [celt, knight, legionnaire, mage, poorKnight, viking];
+ranWeapon; 
+ranShield; 
+ranArmor; 
+startChoice = [];
+confirmChoice = '';
+// Combat Game Variables
+playerDodge; 
+playPhysPos = player.armor.physRes; 
+playMagPos = player.armor.magRes; 
+playDamTot = 0; 
+compDamTot = 0; 
+actionChoice = []; 
+playerInput = '';
+physAttDam;
+magAttDam;
+rollTimer = null;
+compAttackTimer;
+playAttackTimer;
+
+  playHealth = 3000;
+  initiateEl.style.display = 'none';
+  confirmEl.style.display = 'none';
   compEl.style.display = 'none';
   weaponBtns.style.display = 'none';
   shieldBtns.style.display = 'none';
   armorBtns.style.display = 'none';
-  actionsEl.style.display = 'none'
+  actionsEl.style.display = 'none';
   createEl.style.display = 'inline-block';
   randomEl.style.display = 'inline-block';
-  confirmEl.style.display = 'none';
   duelEl.style.display = 'inline-block';
-  backgroundEl.style.display = 'block';
+  backgroundEl.style.display = 'inline-block';
   diedEl.style.display = 'none';
-  onceMoreEl.style.display = 'none';
+  initiateEl.style.display = 'none';
   victoryEl.style.display = 'none';
+  onceMoreEl.style.display = 'none';
   createEl.addEventListener('click', function(e) {
     confirmChoice = e.target.innerText;
     textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
@@ -900,12 +1181,13 @@ function start() {
 }
 function playWin() {
   textBox.value += 'Congratulations, you have won the Ascea! Would you like to play again?' + '\n';
-  createEl.style.display = 'inline-block';
   actionsEl.style.display = 'none';
   onceMoreEl.style.display = 'inline-block';
   compEl.style.display = 'none';
-  victoryEl.style.display = 'block';
+  victoryEl.style.display = 'inline-block';
   stopCompTimer();
+  stopTextScroll();
+  showRoll();
 }
 function compWin() {
   textBox.value += 'YOU DIED' + '\n'
@@ -914,8 +1196,10 @@ function compWin() {
   playEl.style.display = 'none';
   backgroundEl.style.display = 'none';
   compEl.style.display = 'none';
-  diedEl.style.display = 'block';
+  diedEl.style.display = 'inline-block';
   stopCompTimer();
+  stopTextScroll();
+  showRoll();
 }
 function render() {
   createEl.style.display = 'none';
@@ -923,20 +1207,20 @@ function render() {
   randomEl.style.display = 'none';
   duelEl.style.display = 'none';
   armorBtns.style.display = 'none';
-  actionsEl.style.display = 'inline';
+  actionsEl.style.display = 'inline-block';
   initiateEl.style.display = 'none';
   randomEnemy();
-  compEl.style.display = 'block';
+  textBoxScroll();
+  compEl.style.display = 'inline-block';
   weapTT.innerText = player.weapon.name + '\n' + 'Attack Type: ' + player.weapon.attackType + '\n' +  'Damage Type: ' + player.weapon.damageType +
-  '\n' + 'Damage: ' + (player.weapon.magDam + player.weapon.physDam);
+  '\n' + 'Damage: ' + (player.weapon.magDam + player.weapon.physDam) + '\n' + 'Crit Chance: ' + player.weapon.crit + '%';
   shieldTT.innerText = player.shield.name + '\n' + 'Physical Defense: ' + player.shield.physRes + '\n' + 'Magical Defense: ' + player.shield.magRes +
   '\n' + 'Roll Timer: ' + (player.shield.roll * 10) +'s';
   armorTT.innerText = player.armor.name + '\n' + 'Physical Defense: ' + player.armor.physRes + '\n' + 'Magical Defense: ' + player.armor.magRes +
   '\n' + 'Dodge: ' + player.armor.dodge + '%';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  playHealth = 2500;
-  compHealth = 4000;
+  compHealth = 5000;
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
   compTimer();
