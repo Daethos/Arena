@@ -348,7 +348,7 @@ td {
     text-align: center;
     height: 14.5vh;
     width: 26vh;
-    margin-top: -2vh;
+    margin-top: -3vh;
     z-index: 1;
     overflow: auto;
 }
@@ -363,7 +363,7 @@ td {
     position: relative;
     display: inline-block;
     margin-top: -25vh; 
-    margin-left: 21.5vh;
+    margin-left: 22.5vh;
     font-size: 0;
     z-index: 5;
     padding: 0;
@@ -376,8 +376,8 @@ td {
     width: 4.25vh;
     height: 4.5vh;
     margin-left: -12vh;
-    margin-top: -1vh;
-    top: -3vh;
+    margin-top: -2vh;
+    top: -7vh;
     z-index: 5;
     border: .5vh solid white;
 }
@@ -417,9 +417,9 @@ td {
 
 }
 
-@media (max-height: 40vh), screen and (orientation: landscape) {
+@media (max-height: 35vh), screen and (orientation: landscape) {
     body {
-        height: 40vh;
+        height: 35vh;
     }
 }
 @media (max-width: 56.25vh), screen and (orientation: landscape) {
