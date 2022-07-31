@@ -8,7 +8,7 @@ body {
     display: grid;
     grid-template-columns: 20vh 20vh 20vh 20vh 20vh 20vh 20vh 20vh;
     grid-template-rows: 11.25vh 11.25vh 11.25vh 11.25vh 11.25vh 11.25vh 11.25vh 11.25vh;
-    position: relative;
+    position: fixed;
     /* border: 0.5vh solid black; */
     height: 90vh;
     max-width: 160vh;
@@ -21,6 +21,7 @@ canvas {
     border: 2px solid black;
 }
 #player-health {
+    margin-top: 1vh;
     height: 1.8vh;
     width: 25.390625vh;
 }
@@ -144,7 +145,7 @@ button {
     grid-column-start:4;
     grid-column-end: 6;
     grid-row-start: 3;
-    width: 45vh;
+    width: 55vh;
     margin-top: 5vh;
 }
 .start-buttons {
@@ -258,7 +259,7 @@ button:focus {
     align-items: center;;
     margin-bottom: -15vh;
     margin-left: -9.8125vh;
-    padding: 1.25vh;
+    padding: 0;
     border: 0.45vh solid white;
     text-align: center;
     background-color: rgba(0, 0, 0, .25);
@@ -326,23 +327,18 @@ th {
     font-size: 1.40625vh;
 }
 td {
+    position: relative;
     height: 4vh;
-    min-height: 4vh;
     width: 6.15vh;
-    min-width: 6.15vh;
     border: 0.15vh solid white;
     padding: 0.75vh 0;
 }
 
 .stats {
     width: 6vh;
-    min-width: 6vh;
 }
 
 #table {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 8;
     color: white;
     background-color: black;
     border: 0.15vh solid white;
@@ -352,8 +348,9 @@ td {
     text-align: center;
     height: 14.5vh;
     width: 26vh;
-    margin-top: 1vh;
-    z-index: 3;
+    margin-top: -2vh;
+    z-index: 1;
+    overflow: auto;
 }
 
 .stats {
@@ -364,20 +361,25 @@ td {
 
 .icon-imgs {
     position: relative;
-    display: block;
+    display: inline-block;
     margin-top: -25vh; 
     margin-left: 21.5vh;
     font-size: 0;
-    z-index: 3;
+    z-index: 5;
+    padding: 0;
+    /* border: 1vh solid white; */
 }
 .equip-icons {
-    padding: 0;
+
     position: relative;
-    display: block;
-    width: 3.75vh;
-    height: 4vh;
-    margin-left: -4vh;
-    margin-top: 2.75vh;
+    display: inline-block;
+    width: 4.25vh;
+    height: 4.5vh;
+    margin-left: -12vh;
+    margin-top: -1vh;
+    top: -3vh;
+    z-index: 5;
+    border: .5vh solid white;
 }
 .tooltip {
     visibility: hidden;
@@ -386,11 +388,14 @@ td {
     text-align: center;
     border-radius: 0.5vh;
     position: relative;
-    display: block;
+    display: inline-block;
     width: 15.625vh;
+    /* height: 1vh; */
     z-index: 5;
-    font-size: 1.25vh;
-    margin: -4vh 0 2vh 2vh;
+    font-size: 1vh;
+    margin-top: -10vh; 
+    margin-bottom: 5vh;
+    margin-left: 2vh;
     /* border: 0.15vh solid white; */
     overflow: hidden;
 }
@@ -410,4 +415,15 @@ td {
     cursor: pointer;
     border-radius: 1vh;
 
+}
+
+@media (max-height: 40vh), screen and (orientation: landscape) {
+    body {
+        height: 40vh;
+    }
+}
+@media (max-width: 56.25vh), screen and (orientation: landscape) {
+    body {
+        width: 56.25vh;
+    }
 }

@@ -92,16 +92,16 @@ const warHammer = new Weapons('War Hammer', 'twoHand', 'Physical', 'Blunt', 350,
 const mace = new Weapons('Mace', 'oneHand', 'Physical', 'Blunt' , 250, 0, 10);
 const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'Physical', 'Slash', 200, 100, 5); 
 const godHand = new Weapons('God Hand', 'oneHand', 'Physical', 'Blunt', 200, 0, 15);
-const whirlWind = new Weapons('Whirlwind', 'twoHand', 'Physical', 'Slash', 125, 125, 15);
+const whirlWind = new Weapons('Whirlwind', 'twoHand', 'Physical', 'Slash', 250, 0, 15);
 // Spell Possibilities
 const lavaSpit = new Weapons('Lava Spit', 'oneHand', 'Magic', 'Fire', 0, 250, 10);
 const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'Magic', 'Lightning', 0, 250, 10);
 const magicMissile = new Weapons('Magic Missle', 'oneHand', 'Magic', 'Sorcery', 0, 200, 15);
 const arcticBolt = new Weapons('Arctic Bolt', 'oneHand', 'Magic', 'Frost', 0, 250, 10);
 const oakCrush = new Weapons('Oak Crush', 'oneHand', 'Magic', 'Earth', 0, 275, 10); 
-const handOfGod = new Weapons('Hand of God', 'oneHand', 'Magic', 'Faith', 150, 175, 5); 
-const insanity = new Weapons('Insanity', 'oneHand', 'Magic', 'Spooky', 175, 150, 5);
-const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', 'Wind', 0, 200, 15);
+const handOfGod = new Weapons('Hand of God', 'oneHand', 'Magic', 'Faith', 200, 125, 5); 
+const insanity = new Weapons('Insanity', 'oneHand', 'Magic', 'Spooky', 125, 200, 5);
+const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', 'Wind', 0, 150, 15);
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); 
 const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); 
@@ -330,12 +330,10 @@ function roll() {
   return
 }
 function hideRoll() {
-  clearTimeout(rollTimer);
-  rollTimer = null;
-  if (rollTimer == null) {
+
     rollBtn.style.display = 'none';
     rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
-  }
+
   return
 }
 function noRoll() {
@@ -443,7 +441,7 @@ function dodge() {
       if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
         compDamTot *= 0.9
       }
-      compDamTot *= (1 - ((playerDodge + player.shield.physRes) / 100));
+      compDamTot *= (1 - (playerDodge / 100));
       Math.floor(compDamTot);
       playHealth -= compDamTot;
       textBox.value += 'You nearly dodge yet ' + enemy.name + ' strikes you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage! (Glancing Blow)' + '\n';
@@ -479,9 +477,25 @@ function playerAttack() {
   let physDamRes = enemy.armor.physRes;
   let magDamRes = enemy.armor.magRes;
 
-  if (player.weapon == windFury || player.weapon == magicMissile) {
+  if (player.weapon == windFury) {
     if (Math.floor(Math.random() * 101) > 85) {
-      textBox.value += 'A DEVASTATING Windfury has procced!' + '\n';
+      textBox.value += 'A DEVASTATING storm posseses you with the WINDFURY!' + '\n';
+      playerAttack();
+      playerAttack();
+      playerAttack();
+    }
+  }
+  if (player.weapon == godHand) {
+    if (Math.floor(Math.random() * 101) > 90) {
+      textBox.value += 'You have UNLEASHED the power of the GOD HAND!' + '\n';
+      playerAttack();
+      playerAttack();
+    }
+  }
+
+  if (player.weapon == magicMissile) {
+    if (Math.floor(Math.random() * 101) > 90) {
+      textBox.value += 'You FOCUS and BLAST a series of MAGIC MISSILES!' + '\n';
       playerAttack();
       playerAttack();
     }
@@ -489,12 +503,22 @@ function playerAttack() {
 
   if (player.weapon == godHand || player.weapon == whirlWind) {
     if (Math.floor(Math.random() * 101) > 90) {
-      textBox.value += 'They that Sow the Wind, Shall Reap the Whirlwind' + '\n';
+      textBox.value += enemy.name + 'Reaps the Whirlwind' + '\n';
       playerAttack();
       playerAttack();
       playerAttack();
     }
   }
+
+  if (player.weapon == pugio || player.weapon == spear || player.weapon == gladius) {
+    if (Math.floor(Math.random() * 101) > 90) {
+      textBox.value += 'The INVINCIBLE ROMAN SPIRIT SURGES through you. Praise Jupiter!' + '\n';
+      playerAttack();
+      playerAttack();
+      playerAttack();
+    }
+  }
+
 
   if ((Math.floor(Math.random() * 101) - player.weapon.crit) > 10) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
@@ -1106,7 +1130,6 @@ function randomEnemy() {
   console.log(enemy);
 }
 function init() {
-
 enemy;
 playerChoice = [];
 playerActionChoice = '';
@@ -1135,44 +1158,46 @@ magAttDam;
 rollTimer = null;
 compAttackTimer;
 playAttackTimer;
-
-  playHealth = 3000;
-  initiateEl.style.display = 'none';
-  confirmEl.style.display = 'none';
-  compEl.style.display = 'none';
-  weaponBtns.style.display = 'none';
-  shieldBtns.style.display = 'none';
-  armorBtns.style.display = 'none';
-  actionsEl.style.display = 'none';
-  createEl.style.display = 'inline-block';
-  randomEl.style.display = 'inline-block';
-  duelEl.style.display = 'inline-block';
-  backgroundEl.style.display = 'inline-block';
-  diedEl.style.display = 'none';
-  initiateEl.style.display = 'none';
-  victoryEl.style.display = 'none';
-  onceMoreEl.style.display = 'none';
-  createEl.addEventListener('click', function(e) {
-    confirmChoice = e.target.innerText;
-    textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
-    confirmEl.style.display = 'inline-block';  
-    confirmEl.addEventListener('click', start);  
-  });
-  randomEl.addEventListener('click', function(e) {
-    confirmChoice = e.target.innerText;
-    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
-    confirmEl.style.display = 'inline-block';
-    confirmEl.addEventListener('click', start); 
-  });
+playHealth = 3000;
+initiateEl.style.display = 'none';
+confirmEl.style.display = 'none';
+compEl.style.display = 'none';
+weaponBtns.style.display = 'none';
+shieldBtns.style.display = 'none';
+armorBtns.style.display = 'none';
+actionsEl.style.display = 'none';
+createEl.style.display = 'inline-block';
+randomEl.style.display = 'inline-block';
+duelEl.style.display = 'inline-block';
+backgroundEl.style.display = 'inline-block';
+diedEl.style.display = 'none';
+initiateEl.style.display = 'none';
+victoryEl.style.display = 'none';
+onceMoreEl.style.display = 'none';
+createEl.addEventListener('click', function(e) {
+  confirmChoice = e.target.innerText;
+  textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
+  confirmEl.style.display = 'inline-block';  
+  confirmEl.addEventListener('click', start);  
+});
+randomEl.addEventListener('click', function(e) {
+  confirmChoice = e.target.innerText;
+  textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
+  confirmEl.style.display = 'inline-block';
+  confirmEl.addEventListener('click', start); 
+});
 };
 function start() {
   textBox.value += 'You have chosen to start the duel. Good luck!' + '\n';
   createEl.style.display = 'none';
   randomEl.style.display = 'none';
-  if (confirmChoice == 'Create') {
+  playerActionChoice = '';
+  playerWeaponChoice = '';
+  playerShieldChoice = '';
+  if (confirmChoice === 'Create') {
     textBox.value += 'You have chosen to CREATE your champion.' + '\n';
     playerChoose();
-  } else if (confirmChoice == 'Random') {
+  } else if (confirmChoice === 'Random') {
     textBox.value += 'You have chosen to RANDOMIZE your champion.' + '\n';
     playerRandom();
   } else {
@@ -1209,6 +1234,7 @@ function render() {
   armorBtns.style.display = 'none';
   actionsEl.style.display = 'inline-block';
   initiateEl.style.display = 'none';
+  rollBtn.style.display = 'inline-block';
   randomEnemy();
   textBoxScroll();
   compEl.style.display = 'inline-block';
