@@ -75,7 +75,7 @@ const compHBW = 650;
 const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
-let playHealth = 3500; 
+let playHealth = 4000; 
 let compHealth = 6000; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
@@ -1284,7 +1284,8 @@ magAttDam;
 rollTimer = null;
 compAttackTimer;
 playAttackTimer;
-playHealth = 3500;
+playHealth = 4000;
+compHealth = 6000;
 initiateEl.style.display = 'none';
 confirmEl.style.display = 'none';
 compEl.style.display = 'none';
@@ -1372,15 +1373,8 @@ function render() {
   '\n' + 'Dodge: ' + player.armor.dodge + '%';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  // if (enemy === guts) {
-  //   compHealth = 6000;
-  // }
-  // if (enemy === dorien) {
-  //   compHealth = 5000;
-  // }
-  // if (enemy === daethos) {
-  //   compHealth = 10000;
-  // }
+  compHealth = 6000;
+  playHealth = 4000;
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
   compTimer();
