@@ -417,13 +417,17 @@ td {
 
 }
 
-@media (max-height: 35vh), screen and (orientation: landscape) {
+/* @media (max-height: 35vh), screen and (orientation: landscape) {
     body {
         height: 35vh;
     }
+    #table {
+        height: 25vh;
+    }
 }
+
 @media (max-width: 56.25vh), screen and (orientation: landscape) {
     body {
         width: 56.25vh;
     }
-}
+} */

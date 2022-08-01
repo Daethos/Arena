@@ -75,8 +75,8 @@ const compHBW = 650;
 const compHBH = 30;
 const cX = compHW / 2 - compHBW / 2;
 const cY = compHH / 2 - compHBH / 2;
-let playHealth = 3000; 
-let compHealth = 5000; 
+let playHealth = 3500; 
+let compHealth = 6000; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
 // Weapon Possibilities
@@ -108,15 +108,35 @@ const mediumShield = new Shields('Heater Shield', 10, 10, 2.5);
 const largeShield = new Shields('Scutum', 20, 20, 3.5);
 const greatShield = new Shields('Pavise', 25, 25, 4.5);
 // Opponent Equipment
-const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', 'Pierce', 250, 150, 15); 
+// Dorien
+const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', 'Pierce', 350, 100, 15); 
 const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', 'Spooky', 150, 250, 5);
+const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 5);
+
+// Daethos
 const mindBlast = new Weapons('Mind Blast', 'oneHand', 'Magic', 'Shadow', 0, 500, 25);
 const swDeath = new Weapons('Shadow Word: Death', 'oneHand', 'Magic', 'Shadow', 0, 500, 25); 
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'Physical', 'Slash', 350, 0, 5); 
-const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 300, 50, 10);
-const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 25);
-const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 25);
-const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 50);
+const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 25);
+
+// Guts
+const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'Physical', 'Slash', 400, 0, 5); 
+const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 200, 200, 10);
+const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 5);
+
+// Geralt
+const ironSword = new Weapons('Iron Sword', 'twoHand', 'Physical', 'Slash', 350, 0, 0);
+const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', 'Magic', 0, 350, 0);
+const witcher = new Armors("Witcher's Armor", 'leather-mail', 35, 35, 15);
+
+// Sinaethi
+const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', 'Pierce', 350, 150, 15);
+const fade = new Weapons('Fade', 'oneHand', 'Magic', 'Spooky', 100, 250, 15);
+const fengariou = new Armors("Fengariou", 'leather-mail', 45, 45, 15);
+
+const searous = new Weapons('Searous Shotel', 'oneHand', 'Physical', 'Pierce', 200, 50, 25);
+const torreous = new Weapons('Torreous Shotel', 'oneHand', 'Physcia', 'Pierce', 50, 200, 25);
+const phoenix = new Armors('Phoenix Armor', 'plate-mail', 65, 35, 5);
+
 // Armor Possibilities
 const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 35, 35, 35); 
 const knight = new Armors("Knight's Full Plate", 'plate-mail', 55, 45, 5); 
@@ -139,6 +159,21 @@ const daethos = { // Hidden Boss
   name: 'Daethos, the One Above All',
   weapons: [mindBlast, swDeath],
   armor: hush
+}
+const geralt = {
+  name: 'Geralt of Rivia',
+  weapons: [ironSword, silverSword],
+  armor: witcher
+}
+const eugenes = {
+  name: "Eugenes Spiras the Reaper",
+  weapons: [blacksun, fade],
+  armor: fengariou
+}
+const fierous = {
+  name: 'Fierous Ashfyre the Phoenix',
+  weapons: [searous, torreous],
+  armor: phoenix
 }
 // ---------------------------- CACHED ELEMENT REFERENCES --------------------------------- \\
 // Starting Game Buttons
@@ -362,31 +397,36 @@ function posture() {
   return
 }
 function dodge() {
+
   playerDodge = player.armor.dodge;
   let dodgeAttempt = Math.floor(Math.random() * 101);
   if (player.weapon.grip == 'oneHand') {
       playerDodge += 5;
   } 
-  if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == katana || player.weapon == godHand || player.weapon == windFury) {
+  if (player.weapon == pugio || player.weapon == spear  || player.weapon == katana || player.weapon == windFury) {
     playerDodge += 5;
   } 
   if (player.shield == smallShield) {
     playerDodge += 5;
   }
-  if (player.shield == mediumShield) {
-    playerDodge += 3;
-  }
-  if (Math.floor(Math.random() * 101 < playerDodge))  {
+ 
+  if (dodgeAttempt <= playerDodge)  {
+
     textBox.value += 'You dodged ' + enemy.name + "'s attack!" + '\n';
     playerAttack();
     return
+
   } else {
-    if (Math.floor(Math.random() * 101) > playerDodge) {
+
+    if (dodgeAttempt >= playerDodge + 15) {
+
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
     computerAttack();
     playerAttack();
     return
+
     } else {
+
       let weapon;
     if (Math.floor(Math.random() * 101) > 50) {
       weapon = enemy.weapons[0];
@@ -472,17 +512,19 @@ function initiate() {
 
 function playerAttack() {
 
+  let playerNumber = Math.floor(Math.random() * 101);
   let physAttDam = player.weapon.physDam;
   let magAttDam = player.weapon.magDam;
   let physDamRes = enemy.armor.physRes;
   let magDamRes = enemy.armor.magRes;
+  let playCrit = player.weapon.crit;
 
   if (player.weapon == windFury) {
     if (Math.floor(Math.random() * 101) > 85) {
       textBox.value += 'A DEVASTATING storm posseses you with the WINDFURY!' + '\n';
       playerAttack();
       playerAttack();
-      playerAttack();
+      return
     }
   }
   if (player.weapon == godHand) {
@@ -490,6 +532,7 @@ function playerAttack() {
       textBox.value += 'You have UNLEASHED the power of the GOD HAND!' + '\n';
       playerAttack();
       playerAttack();
+      return
     }
   }
 
@@ -498,29 +541,30 @@ function playerAttack() {
       textBox.value += 'You FOCUS and BLAST a series of MAGIC MISSILES!' + '\n';
       playerAttack();
       playerAttack();
+      return
     }
   }
 
-  if (player.weapon == godHand || player.weapon == whirlWind) {
+  if (player.weapon == whirlWind) {
     if (Math.floor(Math.random() * 101) > 90) {
-      textBox.value += enemy.name + 'Reaps the Whirlwind' + '\n';
+      textBox.value += enemy.name + ' REAPS the WHIRLWIND' + '\n';
       playerAttack();
       playerAttack();
-      playerAttack();
+      return
     }
   }
 
   if (player.weapon == pugio || player.weapon == spear || player.weapon == gladius) {
     if (Math.floor(Math.random() * 101) > 90) {
-      textBox.value += 'The INVINCIBLE ROMAN SPIRIT SURGES through you. Praise Jupiter!' + '\n';
+      textBox.value += 'The Roman Barritus SURGES through you. Praise Jupiter!' + '\n';
       playerAttack();
       playerAttack();
-      playerAttack();
+      return
     }
   }
 
 
-  if ((Math.floor(Math.random() * 101) - player.weapon.crit) > 10) {
+  if ((playerNumber - playCrit) > 7) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = physAttDam + magAttDam;
@@ -561,10 +605,10 @@ function playerAttack() {
     }
     console.log(playDamTot);
     compHealth -= Math.floor(playDamTot);
-    textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' damage!' + '\n';
+    textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType  +  ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
 
-  } else if ((Math.floor(Math.random() * 101) - player.weapon.crit) > 5) {
+  } else if ((playerNumber - playCrit) > 3) {
 
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
@@ -693,7 +737,76 @@ function playerAttack() {
 }
 
 function computerAttack() {
-  if ((Math.floor(Math.random() * 101) - (enemy.weapons[0].crit + enemy.weapons[1].crit) > 10)) {
+
+  let enAttNum = Math.floor(Math.random() * 101);
+  let enemyCrit = enemy.weapons[0].crit + enemy.weapons[1].crit;
+  let superPhysAtt = weapons[0].physDam + weapons[1].physDam;
+  let superMagAtt = weapons[0].magDam + weapons[1].magDam;
+  
+  if (enemy === guts) {
+    if (enAttNum > 80) {
+    textBox.value += 'Guts CURSED Berserker Armor flies him into a RAGE!!' + '\n';
+    computerAttack();
+    computerAttack();
+    return
+    } 
+  }
+  if (enemy === fierous) {
+    if (enAttNum > 90) {
+    textBox.value += 'The Phoenix UNLEASHSES a SCORCHING array of attack!!' + '\n';
+    computerAttack();
+    computerAttack();
+    computerAttack();
+    return
+    } else if (enAttNum > 80) {
+      compDamTot = superPhysAtt + superMagAtt;
+      compDamTot *= 1.35;
+      playHealth -= Math.floor(compDamTot);
+      textBox.value += 'The Phoenix PIERCES through your defenses for ' + compDamTot +  ' PURE damage!!' + '\n'
+      return
+    }
+  }
+  if (enemy === geralt) {
+    if (enAttNum > 90) {
+    textBox.value += 'Geralt traps you with Yrden to unlease another attack!!' + '\n';
+    computerAttack();
+    computerAttack();
+    return
+    } else if (enAttNum > 80) {
+      compDamTot = superPhysAtt + superMagAtt;
+      compDamTot *= 1.15;
+      playHealth -= Math.floor(compDamTot);
+      textBox.value += enemy.name + 'Geralt knocks you back with Aard leaving you defenseless for ' + compDamTot + ' PURE damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
+      return
+      }
+    }
+  if (enemy === eugenes) {
+    if (enAttNum > 80) {
+      compDamTot = superPhysAtt + superMagAtt;
+      compDamTot *= 1.25;
+      playHealth -= Math.floor(compDamTot);
+      textBox.value += enemy.name + 'Sinaethi Spiras Surprises You for ' + compDamTot + ' PURE damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
+      return
+    }
+  }
+  if (enemy === dorien) {
+    if (enAttNum > 90) {
+      textBox.value += 'The Fatal Fox PARALYZES you with Soul Rend, unsheathing his Blood Moon!!' + '\n';
+      computerAttack();
+      computerAttack();
+      return
+    } else if (enAttNum > 80) {
+      compDamTot = superPhysAtt + superMagAtt;
+      compDamTot *= 1.25;
+      playHealth -= Math.floor(compDamTot);
+      textBox.value += 'The Fatal Fox IMPALES you for ' + compDamTot + ' PURE Damage!!' + '\n';
+      return
+    }
+  }
+
+  if ((enAttNum - enemyCrit > 10)) {
     let weapon;
     if (Math.floor(Math.random() * 101) > 50) {
       weapon = enemy.weapons[0];
@@ -752,7 +865,7 @@ function computerAttack() {
       textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
   
- } else if ((Math.floor(Math.random() * 101) - (enemy.weapons[0].crit + enemy.weapons[1].crit) > 5)) {
+ } else if ((enAttNum - enemyCrit > 5)) {
 
     let weapon;
     if (Math.floor(Math.random() * 101) > 50) {
@@ -813,7 +926,9 @@ function computerAttack() {
     playHealth -= Math.floor(compDamTot);
     textBox.value += enemy.name + ' CRITICALLY STRIKES you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
+
   } else {
+
     let weapon1;
     let weapon2;
     weapon1 = enemy.weapons[0];
@@ -1107,22 +1222,33 @@ function randomArmor() {
   }
 }
 function randomEnemy() { 
-  if (Math.floor(Math.random() * 101) > 52) {
+  let enemyNumber = Math.floor(Math.random() * 101);
+  if (enemyNumber > 81) {
     enemy = guts;
     compImg.src = './Img/Guts-Wolf.png';
-    compImg.height = 500;
-    compImg.width = 500;
-  } else if (Math.floor(Math.random() * 101) > 4) {
+    // compImg.height = 500;
+    // compImg.width = 500;
+  } else if (enemyNumber > 62) {
     enemy = dorien;
-    compImg.src = './Img/Dorien.png';
+    compImg.src = './Img/Dorien-custom.png';
     // compImg.height = 650;
     // compImg.width = 200;
     compImg.top = 100;
+  } else if (enemyNumber > 43) {
+    enemy = geralt;
+    compImg.src = './Img/geralt-custom.png';
+
+  } else if (enemyNumber > 24) {
+    enemy = eugenes;
+    compImg.src = './Img/eugenes-custom.png';
+  } else if (enemyNumber > 5) {
+    enemy = fierous;
+    compImg.src = './Img/fierous.png';
   } else {
     enemy = daethos;
     compImg.src = './Img/Daethos.png';
-    compImg.width = 425;
-    compImg.height = 650;
+    // compImg.width = 425;
+    // compImg.height = 650;
     compImg.opacity = 0.75;
   }
   compName.innerText = enemy.name;
@@ -1158,7 +1284,7 @@ magAttDam;
 rollTimer = null;
 compAttackTimer;
 playAttackTimer;
-playHealth = 3000;
+playHealth = 3500;
 initiateEl.style.display = 'none';
 confirmEl.style.display = 'none';
 compEl.style.display = 'none';
@@ -1246,7 +1372,15 @@ function render() {
   '\n' + 'Dodge: ' + player.armor.dodge + '%';
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
-  compHealth = 5000;
+  // if (enemy === guts) {
+  //   compHealth = 6000;
+  // }
+  // if (enemy === dorien) {
+  //   compHealth = 5000;
+  // }
+  // if (enemy === daethos) {
+  //   compHealth = 10000;
+  // }
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
   compTimer();
