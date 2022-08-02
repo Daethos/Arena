@@ -222,7 +222,7 @@ button:focus {
     position: relative;
     display: inline-block;
     margin: 0 auto;
-    top: -1.5vh;
+    top: -3.5vh;
     left: -10vh;
     z-index: 3;
     border: .4vh solid white;
@@ -349,7 +349,7 @@ td {
     text-align: center;
     height: 15.5vh;
     width: 29vh;
-    margin-top: 3.5vh;
+    /* margin-top: 1.5vh; */
     z-index: 5;
     overflow: auto;
 }
@@ -363,9 +363,9 @@ td {
 .icon-imgs {
     position: relative;
     display: flex;
-    margin-top: 8vh;
-    margin-left: -.75vh; 
-    justify-content: space-between;
+    margin-top: 5vh;
+    margin-left: -.15vh; 
+    /* justify-content: space-between; */
     font-size: 0;
     z-index: 1;
     padding: 0;
@@ -376,7 +376,6 @@ td {
     display: flex;
     width: 4.25vh;
     height: 4.5vh;
-
     z-index: 1;
     /* border: .5vh solid white; */
 }
@@ -387,15 +386,16 @@ td {
     text-align: center;
     border-radius: 0.5vh;
     position: relative;
-    display: inline;
-    width: 15.625vh;
+    display: inline-flex;
+    /* width: 15.625vh; */
+    align-items: center;
     /* height: 1vh; */
     z-index: 1;
     font-size: 1vh;
     margin-top: -1vh; 
     margin-bottom: 5vh;
-    margin-left: -15vh;
-    /* border: 0.15vh solid white; */
+    /* margin-left: -14vh; */
+    border: 0.15vh solid white;
     overflow: hidden;
 }
 .weap-div:hover > #weap-tt {
@@ -414,12 +414,12 @@ td {
     cursor: pointer;
     border-radius: 1vh;
 }
-#weap-img {
+/* #weap-img {
     margin-left: 1vh;
 }
 #shield-img {
     margin-left: -1vh;
-}
+} */
 
 /* @media (max-height: 35vh), screen and (orientation: landscape) {
     body {
