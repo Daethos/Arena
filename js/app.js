@@ -379,24 +379,27 @@ function showRoll() {
   clearTimeout(rollTimer);
   rollTimer = null;
 }
-function attack() {
+async function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
   playerAttack();
+  await sleep(1000);
   playerAttack();
+  await sleep(1000);
   computerAttack();
   return
 };
-function posture() {
+async function posture() {
   textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
   playerAttack();
+  await sleep(1000);
   computerAttack();
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
   return
 }
-function dodge() {
+async function dodge() {
 
   playerDodge = player.armor.dodge;
   let dodgeAttempt = Math.floor(Math.random() * 101);
@@ -422,6 +425,7 @@ function dodge() {
 
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
     computerAttack();
+    await sleep(1000);
     playerAttack();
     return
 
@@ -510,7 +514,18 @@ function initiate() {
   }
 }
 
-function playerAttack() {
+function sleep(ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+async function playerAttack() {
+
+  if (playHealth <= 0) {
+    compWin();
+    return
+  }
 
   let playerNumber = Math.floor(Math.random() * 101);
   let physAttDam = player.weapon.physDam;
@@ -522,7 +537,9 @@ function playerAttack() {
   if (player.weapon == windFury) {
     if (Math.floor(Math.random() * 101) > 85) {
       textBox.value += 'A DEVASTATING storm posseses you with the WINDFURY!' + '\n';
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
       playerAttack();
       return
     }
@@ -530,7 +547,9 @@ function playerAttack() {
   if (player.weapon == godHand) {
     if (Math.floor(Math.random() * 101) > 90) {
       textBox.value += 'You have UNLEASHED the power of the GOD HAND!' + '\n';
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
       playerAttack();
       return
     }
@@ -539,7 +558,9 @@ function playerAttack() {
   if (player.weapon == magicMissile) {
     if (Math.floor(Math.random() * 101) > 90) {
       textBox.value += 'You FOCUS and BLAST a series of MAGIC MISSILES!' + '\n';
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
       playerAttack();
       return
     }
@@ -547,9 +568,16 @@ function playerAttack() {
 
   if (player.weapon == whirlWind) {
     if (Math.floor(Math.random() * 101) > 90) {
-      textBox.value += enemy.name + ' REAPS the WHIRLWIND' + '\n';
+      textBox.value += "The Whirlwind wraps its TENDRILS around you, blessing you." + '\n';
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
+      playerAttack();
+      playHealth *= .9;
+      playHealthBar.updateHealth(playHealth);
+      textBox.value += "The Whirlwind HUSH wracks your mind, its sweet AENSERVAESAI tempts..." + '\n';
       return
     }
   }
@@ -557,13 +585,15 @@ function playerAttack() {
   if (player.weapon == pugio || player.weapon == spear || player.weapon == gladius) {
     if (Math.floor(Math.random() * 101) > 90) {
       textBox.value += 'The Roman Barritus SURGES through you. Praise Jupiter!' + '\n';
+      await sleep(1000);
       playerAttack();
+      await sleep(1000);
       playerAttack();
       return
     }
   }
 
-
+  // <------------------------ Basic CRITICAL Attack -------------------------------->
   if ((playerNumber - playCrit) > 7) {
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
@@ -604,9 +634,11 @@ function playerAttack() {
       playDamTot *= 1.1;
     }
     console.log(playDamTot);
-    compHealth -= Math.floor(playDamTot);
+    compHealth -= playDamTot.toFixed(2);
     textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType  +  ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
+
+  // <---------------------- MULTI-STRIKE Attack ---------------------------------->
 
   } else if ((playerNumber - playCrit) > 3) {
 
@@ -663,9 +695,10 @@ function playerAttack() {
 
     Math.floor(playDamTot);
     console.log(playDamTot);
-    compHealth -= playDamTot;
+    compHealth -= playDamTot.toFixed(2);
     textBox.value += 'You CRITICALLY STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
+    await sleep(1000);
 
   } else {
 
@@ -716,15 +749,18 @@ function playerAttack() {
     }
     console.log(playDamTot);
     Math.floor(playDamTot);
-    compHealth -= playDamTot;
+    compHealth -= playDamTot.toFixed(2);
     textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
-    compHealth -= playDamTot;
+    await sleep(1000);
+    compHealth -= playDamTot.toFixed(2);
     textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
-    compHealth -= playDamTot;
+    await sleep(1000);
+    compHealth -= playDamTot.toFixed(2);
     textBox.value += 'You frenzy into a rage and MULTI-STRIKE ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType + ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
+    await sleep(1000);
     textBox.value += 'You attempt to flurry into further strikes!' + '\n';
     playerAttack();
   }
@@ -736,7 +772,12 @@ function playerAttack() {
   return
 }
 
-function computerAttack() {
+async function computerAttack() {
+
+  if (compHealth <= 0) {
+    playWin();
+    return
+  }
 
   let enAttNum = Math.floor(Math.random() * 101);
   let enemyCrit = enemy.weapons[0].crit + enemy.weapons[1].crit;
@@ -744,65 +785,71 @@ function computerAttack() {
   let superMagAtt = weapons[0].magDam + weapons[1].magDam;
   
   if (enemy === guts) {
-    if (enAttNum > 80) {
-    textBox.value += 'Guts CURSED Berserker Armor flies him into a RAGE!!' + '\n';
-    computerAttack();
-    computerAttack();
-    return
+    if (enAttNum > 85) {
+    compDamTot = superPhysAtt + superMagAtt;
+    compDamTot *= 1.25;
+    playHealth -= Math.round(compDamTot).toFixed(2);
+    textBox.value += "Guts's cursed BERSERKER ARMOR sacrifices his life to smash you for " + compDamTot +  ' PURE damage!!' + '\n'
+    compHealth *= 0.95;
+    compHealthBar.updateHealth(compHealth);
+    await sleep(1000);
     } 
   }
   if (enemy === fierous) {
     if (enAttNum > 90) {
     textBox.value += 'The Phoenix UNLEASHSES a SCORCHING array of attack!!' + '\n';
     computerAttack();
+    await sleep(1000);
     computerAttack();
+    await sleep(1000);
     computerAttack();
-    return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.35;
-      playHealth -= Math.floor(compDamTot);
+      playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += 'The Phoenix PIERCES through your defenses for ' + compDamTot +  ' PURE damage!!' + '\n'
-      return
+      await sleep(1000);
     }
   }
   if (enemy === geralt) {
     if (enAttNum > 90) {
     textBox.value += 'Geralt traps you with Yrden to unlease another attack!!' + '\n';
+    await sleep(1000);
     computerAttack();
+    await sleep(1000);
     computerAttack();
-    return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.15;
-      playHealth -= Math.floor(compDamTot);
+      playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += enemy.name + 'Geralt knocks you back with Aard leaving you defenseless for ' + compDamTot + ' PURE damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
-      return
+      await sleep(1000);
       }
     }
   if (enemy === eugenes) {
     if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.25;
-      playHealth -= Math.floor(compDamTot);
+      playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += enemy.name + 'Sinaethi Spiras Surprises You for ' + compDamTot + ' PURE damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
-      return
+      await sleep(1000);
     }
   }
   if (enemy === dorien) {
     if (enAttNum > 90) {
       textBox.value += 'The Fatal Fox PARALYZES you with Soul Rend, unsheathing his Blood Moon!!' + '\n';
+      await sleep(1000);
       computerAttack();
+      await sleep(1000);
       computerAttack();
-      return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.25;
-      playHealth -= Math.floor(compDamTot);
+      playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += 'The Fatal Fox IMPALES you for ' + compDamTot + ' PURE Damage!!' + '\n';
-      return
+      await sleep(1000);
     }
   }
 
@@ -818,6 +865,7 @@ function computerAttack() {
         pad = physAttDam * (1 - (playPhysPos / 100));
         mad = magAttDam * (1 - (playMagPos / 100));
         compDamTot = pad + mad;
+
         if (weapon.damageType == 'Pierce') {
            if (player.armor.type == 'plate-mail') {
             compDamTot *= 0.9;
@@ -861,14 +909,16 @@ function computerAttack() {
       if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
         compDamTot *= 0.9
       }
-      playHealth -= Math.floor(compDamTot);
+      playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += enemy.name + ' attacks you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
+      await sleep(1000);
   
  } else if ((enAttNum - enemyCrit > 5)) {
 
     let weapon;
     if (Math.floor(Math.random() * 101) > 50) {
+
       weapon = enemy.weapons[0];
       } else { 
         weapon = enemy.weapons[1];
@@ -923,9 +973,10 @@ function computerAttack() {
     if (player.weapon.damageType == 'Spooky' || player.weapon.damageType == 'Faith') {
       compDamTot *= 0.9
     }
-    playHealth -= Math.floor(compDamTot);
+    playHealth -= Math.round(compDamTot).toFixed(2);
     textBox.value += enemy.name + ' CRITICALLY STRIKES you with ' + weapon.name + ' for ' + compDamTot + ' ' + weapon.damageType + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
+    await sleep(1000);
 
   } else {
 
@@ -975,12 +1026,14 @@ function computerAttack() {
     }
     compDamTot *= 1.5;
     Math.floor(compDamTot);
-    playHealth -= compDamTot;
+    playHealth -= Math.round(compDamTot).toFixed(2);
     textBox.value += enemy.name + ' CRUSHES you with their ' + weapon1.name + ' and ' + weapon2.name + ' for ' + compDamTot + ' ' + weapon1.damageType + ' and ' + weapon2.damageType + ' damage!' + '\n';
     playHealthBar.updateHealth(playHealth);
+    await sleep(1000);
   }
   if (playHealth <= 0) {
     compWin();
+    return
   }
 }
 // ---------------------------- STARTING GAME FUNCTIONS --------------------------------- \\
@@ -994,6 +1047,8 @@ function chooseWeapon() {
   weaponBtns.addEventListener('click', function(e) {
   textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
   playerWeaponChoice = e.target.innerText;
+  weapTT.innerText = player.weapon.name + '\n' + 'Attack Type: ' + player.weapon.attackType + '\n' +  'Damage Type: ' + player.weapon.damageType +
+  '\n' + 'Damage: ' + (player.weapon.magDam + player.weapon.physDam) + '\n' + 'Crit Chance: ' + player.weapon.crit + '%';
   if (playerWeaponChoice == 'Gladius') {
     playerWeaponChoice = gladius;
     weapImg.src = './Img/gladius.png';
@@ -1073,6 +1128,8 @@ function chooseShield() {
   shieldBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
     playerShieldChoice = e.target.innerText;
+    shieldTT.innerText = player.shield.name + '\n' + 'Physical Defense: ' + player.shield.physRes + '\n' + 'Magical Defense: ' + player.shield.magRes +
+  '\n' + 'Roll Timer: ' + (player.shield.roll * 10) +'s';
     if (playerShieldChoice == 'Parrying Buckler'){
       playerShieldChoice = smallShield;
       shieldImg.src = './Img/buckler.png';
@@ -1098,6 +1155,8 @@ function chooseArmor() {
   armorBtns.addEventListener('click', function(e) {
     textBox.value += 'You have selected the ' + e.target.innerText + '!' + '\n';
     playerArmorChoice = e.target.innerText;
+    armorTT.innerText = player.armor.name + '\n' + 'Physical Defense: ' + player.armor.physRes + '\n' + 'Magical Defense: ' + player.armor.magRes +
+  '\n' + 'Dodge: ' + player.armor.dodge + '%';
     if (playerArmorChoice == 'Celtic Menagerie'){
       playerArmorChoice = celt;
       armorImg.src = './Img/celt-armor.png';
