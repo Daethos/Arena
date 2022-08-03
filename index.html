@@ -20,7 +20,8 @@
         <button id="confirm" class="start-buttons">Confirm</button>
     </div>
     <div id="again">
-        <button id="play-again">Once More?</button>
+        <button id="play-again">Try Again?</button>
+        <button id="continue">Continue?</button>
     </div>
     <div class="hide-buttons">
     <div class="weapons"><h3>Weapons</h3>
@@ -72,8 +73,10 @@
 
     <div id="play">
         <canvas id="player-health"></canvas><br />
-        <!-- <img src="./Img/Elite Knight.png" id="play-img" alt="Player Image"> -->
         <div class="icon-imgs">
+            <div>
+                <img src="./Img/knight-helm.png" id="helm-img" class="armor-acc">
+            </div>
             <div class="weap-div">
                 <img src="./Img/gladius.png" id="weap-img" class="equip-icons" alt="Weap">
                 <span class="tooltip" id="weap-tt">Weapon</span>
@@ -85,6 +88,9 @@
             <div class="shield-div">
                 <img src="./Img/heater-shield.png" id="shield-img" class="equip-icons" alt="Shield">
                 <span class="tooltip" id="shield-tt">Shield</span>
+            </div><br />
+            <div>
+                <img src="./Img/knight-legs.png" id="greaves-img" class="armor-acc">
             </div>
         </div>
         <div class="table">

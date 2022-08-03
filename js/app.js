@@ -187,6 +187,7 @@ const diedEl = document.querySelector('#died');
 const backgroundEl = document.querySelector('#background');
 const victoryEl = document.querySelector('#victory');
 const onceMoreEl = document.querySelector('#play-again');
+const continueEl = document.querySelector('#continue');
 // Equpment Button Elements
 const weaponBtns = document.querySelector('.weapons');
 const armorBtns = document.querySelector('.armors');
@@ -214,6 +215,8 @@ const armorTT = document.querySelector('#armor-tt');
 const weapImg = document.querySelector('#weap-img');
 const shieldImg = document.querySelector('#shield-img');
 const armorImg = document.querySelector('#armor-img');
+const helmImg = document.querySelector('#helm-img');
+const greavesImg = document.querySelector('#greaves-img');
 const playEl = document.querySelector('#play');
 const playImg = document.getElementById('play-img');
 // Computer Elements
@@ -533,6 +536,9 @@ async function playerAttack() {
   let physDamRes = enemy.armor.physRes;
   let magDamRes = enemy.armor.magRes;
   let playCrit = player.weapon.crit;
+  let playDamTot;
+
+  // <---------------------------- SPECIAL WEAPON ATTACKS ------------------------------------- \\
 
   if (player.weapon == windFury) {
     if (Math.floor(Math.random() * 101) > 85) {
@@ -566,6 +572,33 @@ async function playerAttack() {
     }
   }
 
+  if (player.weapon == lavaSpit || player.weapon == lightningSpear) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += "Your fervor ushers forth the favor of your Ancient, using you for their Caer." + '\n';
+      await sleep(1000);
+      playDamTot = 1.5 * (physAttDam + magAttDam);
+      compHealth -= Math.round(playDamTot);
+      compHealthBar.updateHealth(compHealth);
+      playHealth *= .95;
+      playHealthBar.updateHealth(playHealth);
+      return
+  }
+}
+
+  if (player.weapon == oakCrush || player.weapon == arcticBolt) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += "Your calm swirls with the favor of your Ancient, holding you in their Caer." + '\n';
+      await sleep(1000);
+      playDamTot = physAttDam + magAttDam;
+      playDamTot *= 1.25;
+      compHealth -= Math.round(playDamTot);
+      compHealthBar.updateHealth(compHealth);
+      player.armor.magRes *= 1.5;
+      player.armor.physRes *= 1.5;
+      return
+    }
+  }
+
   if (player.weapon == whirlWind) {
     if (Math.floor(Math.random() * 101) > 90) {
       textBox.value += "The Whirlwind wraps its TENDRILS around you, blessing you." + '\n';
@@ -589,6 +622,39 @@ async function playerAttack() {
       playerAttack();
       await sleep(1000);
       playerAttack();
+      return
+    }
+  }
+
+  if (player.weapon == handOfGod) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += "Tendrils of Daethos wrap through your Caer, healing you.'" + '\n';
+      await sleep(1000);
+      playHealth += 250;
+      playHealthBar.updateHealth(playHealth);
+      return
+    }
+  }
+
+  if (player.weapon == insanity) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += "The Hush of Daethos writhes through your Caer, asking you to rein.'" + '\n';
+      await sleep(1000);
+      playDamTot = 2 * (physAttDam + magAttDam);
+      compHealth -= Math.round(playDamTot);
+      compHealthBar.updateHealth(compHealth);
+      playHealth *= .9;
+      playHealthBar.updateHealth(playHealth);
+    }
+  }
+
+  if (player.weapon == warHammer || player.weapon == claymore || player.weapon == battleAxe) {
+    if (Math.floor(Math.random() * 101) > 90) {
+      await sleep(1000);
+      playDamTot = 1.5 * (physAttDam + magAttDam);
+      compHealth -= Math.round(playDamTot);
+      compHealthBar.updateHealth(compHealth);
+      textBox.value += "The strength of pure steel is undeniable, damaging" + enemy.name + ' for ' + playDamTot + ' PURE damage!' + '\n';
       return
     }
   }
@@ -793,6 +859,7 @@ async function computerAttack() {
     compHealth *= 0.95;
     compHealthBar.updateHealth(compHealth);
     await sleep(1000);
+    return
     } 
   }
   if (enemy === fierous) {
@@ -803,12 +870,14 @@ async function computerAttack() {
     computerAttack();
     await sleep(1000);
     computerAttack();
+    return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.35;
       playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += 'The Phoenix PIERCES through your defenses for ' + compDamTot +  ' PURE damage!!' + '\n'
       await sleep(1000);
+      return
     }
   }
   if (enemy === geralt) {
@@ -818,13 +887,15 @@ async function computerAttack() {
     computerAttack();
     await sleep(1000);
     computerAttack();
+    return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.15;
       playHealth -= Math.round(compDamTot).toFixed(2);
-      textBox.value += enemy.name + 'Geralt knocks you back with Aard leaving you defenseless for ' + compDamTot + ' PURE damage!' + '\n';
+      textBox.value += 'Geralt knocks you back with Aard leaving you defenseless for ' + compDamTot + ' PURE damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
       await sleep(1000);
+      return
       }
     }
   if (enemy === eugenes) {
@@ -832,24 +903,27 @@ async function computerAttack() {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.25;
       playHealth -= Math.round(compDamTot).toFixed(2);
-      textBox.value += enemy.name + 'Sinaethi Spiras Surprises You for ' + compDamTot + ' PURE damage!' + '\n';
+      textBox.value += 'The Black Sun surprises yu for ' + compDamTot + ' PURE damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
       await sleep(1000);
+      return
     }
   }
   if (enemy === dorien) {
     if (enAttNum > 90) {
-      textBox.value += 'The Fatal Fox PARALYZES you with Soul Rend, unsheathing his Blood Moon!!' + '\n';
+      textBox.value += 'The Fatal Fox PARALYZES you with his Shatter before multi-attacking!' + '\n';
       await sleep(1000);
       computerAttack();
       await sleep(1000);
       computerAttack();
+      return
     } else if (enAttNum > 80) {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.25;
       playHealth -= Math.round(compDamTot).toFixed(2);
       textBox.value += 'The Fatal Fox IMPALES you for ' + compDamTot + ' PURE Damage!!' + '\n';
       await sleep(1000);
+      return
     }
   }
 
@@ -1160,21 +1234,33 @@ function chooseArmor() {
     if (playerArmorChoice == 'Celtic Menagerie'){
       playerArmorChoice = celt;
       armorImg.src = './Img/celt-armor.png';
+      helmImg.src = './Img/celt-helm.png';
+      greavesImg.src = './Img/celt-legs.png';
     } else if (playerArmorChoice == "Knight's Full Plate") {
       playerArmorChoice = knight;
       armorImg.src = './Img/knight-armor.png';
+      helmImg.src = './Img/knight-helm.png';
+      greavesImg.src = './Img/knight-legs.png';
     } else if (playerArmorChoice == "Legionnaire's Regalia") {
       playerArmorChoice = legionnaire;
       armorImg.src = './Img/legion-armor.png';
+      helmImg.src = './Img/legion-helm.png';
+      greavesImg.src = './Img/legion-legs.png';
     } else if (playerArmorChoice == "Mage's Robes") {
       playerArmorChoice = mage;
-      armorImg.src = './Img/robes.png';
+      armorImg.src = './Img/mage-robes.png';
+      helmImg.src = './Img/mage-helm.png';
+      greavesImg.src = './Img/mage-legs.png';
     } else if (playerArmorChoice == "Poor Knight's Chainmail") {
       playerArmorChoice = poorKnight;
       armorImg.src = './Img/chain-armor.png';
+      helmImg.src = './Img/chain-helm.png';
+      greavesImg.src = './Img/chain-legs.png';
     } else if (playerArmorChoice == "Viking Lamellar") {
       playerArmorChoice = viking;
       armorImg.src = './Img/viking-armor.png';
+      helmImg.src = './Img/viking-helm.png';
+      greavesImg.src = './Img/viking-legs.png';
     }
     player.armor = playerArmorChoice;
     physDefEl.innerText = playerArmorChoice.physRes;
@@ -1268,16 +1354,28 @@ function randomArmor() {
   textBox.value += 'You have randomized and received the ' + player.armor.name + '!' + '\n';
   if (player.armor == celt){
     armorImg.src = './Img/celt-armor.png';
+    helmImg.src = './Img/celt-helm.png';
+    greavesImg.src = './Img/celt-legs.png';
   } else if (player.armor == knight) {
     armorImg.src = './Img/knight-armor.png';
+    helmImg.src = './Img/knight-helm.png';
+    greavesImg.src = './Img/knight-legs.png';
   } else if (player.armor == legionnaire) {
     armorImg.src = './Img/legion-armor.png';
+    helmImg.src = './Img/legion-helm.png';
+    greavesImg.src = './Img/legion-legs.png';
   } else if (player.armor == mage) {
-    armorImg.src = './Img/robes.png';
+    armorImg.src = './Img/mage-robes.png';
+    helmImg.src = './Img/mage-helm.png';
+    greavesImg.src = './Img/mage-legs.png';
   } else if (player.armor == poorKnight) {
     armorImg.src = './Img/chain-armor.png';
+    helmImg.src = './Img/chain-helm.png';
+    greavesImg.src = './Img/chain-legs.png';
   } else if (player.armor == viking) {
     armorImg.src = './Img/viking-armor.png';
+    helmImg.src = './Img/viking-helm.png';
+    greavesImg.src = './Img/viking-legs.png';
   }
 }
 function randomEnemy() { 
@@ -1360,6 +1458,7 @@ diedEl.style.display = 'none';
 initiateEl.style.display = 'none';
 victoryEl.style.display = 'none';
 onceMoreEl.style.display = 'none';
+continueEl.style.display = 'none';
 createEl.addEventListener('click', function(e) {
   confirmChoice = e.target.innerText;
   textBox.value += 'You have chosen to CREATE your champion. Are you sure?' + '\n';
@@ -1396,6 +1495,12 @@ function playWin() {
   onceMoreEl.style.display = 'inline-block';
   compEl.style.display = 'none';
   victoryEl.style.display = 'inline-block';
+  continueEl.style.display = 'inline-block';
+  continueEl.addEventListener('click', function(e) {
+    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
+    confirmEl.style.display = 'inline-block';
+    confirmEl.addEventListener('click', render);
+  })
   stopCompTimer();
   stopTextScroll();
   showRoll();
@@ -1421,6 +1526,9 @@ function render() {
   actionsEl.style.display = 'inline-block';
   initiateEl.style.display = 'none';
   rollBtn.style.display = 'inline-block';
+  victoryEl.style.display = 'none';
+  onceMoreEl.style.display = 'none';
+  continueEl.style.display = 'none';
   randomEnemy();
   textBoxScroll();
   compEl.style.display = 'inline-block';

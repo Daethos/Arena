@@ -267,20 +267,13 @@ button:focus {
     z-index: 5;
 }
 
-#play img {
+/* #play img {
     margin-bottom: 2.916666666666667vh;
     margin-right: 9.375vh;
     border: 0.15vh solid white;
     background-color: black;
-
-}
-/* #play-img {
-    height: 20vh;
-    width: 11vh;
-    background-color: black;
-    margin-top: 2vh;
-    margin-left: -5vh;
 } */
+
 #play h4 {
     color: white;
     width: 19.53125vh;
@@ -364,12 +357,12 @@ td {
     position: relative;
     display: flex;
     margin-top: 5vh;
-    margin-left: -.15vh; 
+    
     /* justify-content: space-between; */
     font-size: 0;
     z-index: 1;
     padding: 0;
-    /* border: 1vh solid white; */
+    /* border: .5vh solid white; */
 }
 .equip-icons {
     position: relative;
@@ -377,7 +370,9 @@ td {
     width: 4.25vh;
     height: 4.5vh;
     z-index: 1;
-    /* border: .5vh solid white; */
+    border: .25vh solid white;
+    background: black;
+    border-radius: 1.5vh;
 }
 .tooltip {
     visibility: hidden;
@@ -387,17 +382,63 @@ td {
     border-radius: 0.5vh;
     position: relative;
     display: inline-flex;
-    /* width: 15.625vh; */
     align-items: center;
-    /* height: 1vh; */
-    z-index: 1;
+    z-index: 5;
     font-size: 1vh;
-    margin-top: -1vh; 
     margin-bottom: 5vh;
-    /* margin-left: -14vh; */
     border: 0.15vh solid white;
-    overflow: hidden;
+    /* overflow: scroll; */
+
 }
+#weap-img {
+    margin-left: -12vh;
+    margin-top: .5vh
+}
+#armor-img {
+    margin-left: -4.25vh;
+    margin-top: .5vh;
+    
+}
+#shield-img {
+    margin-left: 3vh;
+    margin-top: .5vh;
+}
+#helm-img {
+    margin-top: -4.25vh;
+    margin-left: 12.75vh;
+    position: relative;
+    display: flex;
+    width: 4.25vh;
+    height: 4.5vh;
+    z-index: 1;
+    border: .25vh solid white;
+    background: black;
+    border-radius: 1.5vh;
+}
+#greaves-img {
+    margin-top: 5.25vh;
+    margin-left: -11.5vh;
+    position: sticky;
+    display: flex;
+    width: 4.25vh;
+    height: 4.5vh;
+    z-index: 1;
+    border: .25vh solid white;
+    background: black;
+    border-radius: 1.5vh;
+}
+
+#weap-tt {
+    margin-left: -28vh;
+}
+#armor-tt {
+    margin-left: -8.5vh;
+    /* margin-top: -30vh; */
+}
+#shield-tt {
+    margin-left: 1.75vh;
+}
+
 .weap-div:hover > #weap-tt {
     visibility: visible;
     cursor: pointer;
@@ -412,8 +453,11 @@ td {
 }
 #weap-img, #shield-img, #armor-img {
     cursor: pointer;
-    border-radius: 1vh;
 }
+/* .armor-div {
+    position: relative;
+    display: inline-block;
+} */
 /* #weap-img {
     margin-left: 1vh;
 }
