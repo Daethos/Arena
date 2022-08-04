@@ -166,7 +166,7 @@ const geralt = {
   armor: witcher
 }
 const eugenes = {
-  name: "Eugenes Spiras the Reaper",
+  name: "Eugenes the Ma'ier",
   weapons: [blacksun, fade],
   armor: fengariou
 }
@@ -903,7 +903,7 @@ async function computerAttack() {
       compDamTot = superPhysAtt + superMagAtt;
       compDamTot *= 1.25;
       playHealth -= Math.round(compDamTot).toFixed(2);
-      textBox.value += 'The Black Sun surprises yu for ' + compDamTot + ' PURE damage!' + '\n';
+      textBox.value += 'Eugenes tears through you for ' + compDamTot + ' PURE damage!' + '\n';
       playHealthBar.updateHealth(playHealth);
       await sleep(1000);
       return
@@ -1378,23 +1378,36 @@ function randomArmor() {
     greavesImg.src = './Img/viking-legs.png';
   }
 }
+
+function randomArena() {
+  ranArena = Math.floor(Math.random() * 101);
+  if (ranArena > 84) {
+    backgroundEl.src = './Img/GladiatorArena.jpg';
+  } else if (ranArena > 68) {
+    backgroundEl.src = './Img/fantasy-arena-2.png';
+  } else if (ranArena > 51) {
+    backgroundEl.src = './Img/fantasy-arena-1.jpg';
+  } else if (ranArena > 34) {
+    backgroundEl.src = './Img/fantasy-arena-3.jpg';
+  } else if (ranArena > 17) {
+    backgroundEl.src = './Img/fantasy-arena-4.jpg';
+  } else {
+    backgroundEl.src = './Img/fantasy-arena-5.jpg';
+  }
+}
+
 function randomEnemy() { 
   let enemyNumber = Math.floor(Math.random() * 101);
   if (enemyNumber > 81) {
     enemy = guts;
     compImg.src = './Img/Guts-Wolf.png';
-    // compImg.height = 500;
-    // compImg.width = 500;
   } else if (enemyNumber > 62) {
     enemy = dorien;
     compImg.src = './Img/Dorien-custom.png';
-    // compImg.height = 650;
-    // compImg.width = 200;
     compImg.top = 100;
   } else if (enemyNumber > 43) {
     enemy = geralt;
     compImg.src = './Img/geralt-custom.png';
-
   } else if (enemyNumber > 24) {
     enemy = eugenes;
     compImg.src = './Img/eugenes-custom.png';
@@ -1404,8 +1417,6 @@ function randomEnemy() {
   } else {
     enemy = daethos;
     compImg.src = './Img/Daethos.png';
-    // compImg.width = 425;
-    // compImg.height = 650;
     compImg.opacity = 0.75;
   }
   compName.innerText = enemy.name;
@@ -1545,4 +1556,5 @@ function render() {
   playHealthBar.updateHealth(playHealth);
   compHealthBar.updateHealth(compHealth);
   compTimer();
+  randomArena();
 }
