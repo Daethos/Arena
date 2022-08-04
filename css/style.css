@@ -76,16 +76,16 @@ textarea {
     position: relative;
     display: inline-block;
     font-family: monospace;
-    font-size: 1.25vh;
-    bottom: -3vh;
+    font-size: 1.75vh;
+    bottom: 1vh;
     padding: 5px 0 0 0;
-    left: -10vh;
+    left: -17.5vh;
     border: 0.4vh solid white;
     background-color: black;
     color: white;
     text-align: center;
-    width: 58.59375vh;
-    height: 15.5vh;
+    width: 78.59375vh;
+    height: 23vh;
     z-index: 3;
 }
 #background {
@@ -222,11 +222,12 @@ button:focus {
     position: relative;
     display: inline-block;
     margin: 0 auto;
-    top: -3.5vh;
-    left: -10vh;
+    top: -10.5vh;
+    align-items: stretch;
+    left: -17.5vh;
     z-index: 3;
     border: .4vh solid white;
-    width: 58.59375vh;
+    width: 78.59375vh;
     background: black;
 }
 #actions button {
@@ -234,12 +235,12 @@ button:focus {
     background-color: black;
     border: 0.15vh solid white;
     display: float;
-    font-size: 1.25vh;
+    font-size: 2.25vh;
     bottom: 5vh;
-    width: 7.5vh;
+    width: 13.5vh;
     margin-top: .8vh;
-    margin-left: 0.75vh;
-    padding: 1.25vh;
+    margin-left: 1vh;
+    padding: 2.25vh;
 }
 #actions button:focus {
     background-color: green;
@@ -249,17 +250,17 @@ button:focus {
 } */
 
 #play {
-    grid-column-start: 2;
+    grid-column-start: 1;
     grid-column-end: 4;
-    grid-row-start: 5;
+    grid-row-start: 4;
     position: relative;
     display: inline-block;
-    height: 46vh;
-    width: 32vh;
+    height: 56vh;
+    width: 40vh;
     align-items: center;;
     /* margin-bottom: -15vh; */
-    margin-top: -3vh;
-    margin-left: -9.8125vh;
+    margin-top: -.25vh;
+    margin-left: 1.25vh;
     padding: 0;
     border: 0.45vh solid white;
     text-align: center;
@@ -286,10 +287,11 @@ button:focus {
 #comp {
     grid-column-start:4;
     grid-column-end: 6;
-    grid-row-start: 3;
+    grid-row-start: 2;
     position: relative;
     /* top: -70vh; */
-    left: -10vh;
+    top: 1.5vh;
+    left: -3.75vh;
     margin: 0 auto;
     text-align: center;
     z-index: -5;
@@ -318,37 +320,38 @@ th {
     position: relative;
     display: inline-block;
     text-align: center;
-    font-size: 1.40625vh;
+    font-size: 2.50625vh;
 }
 td {
     position: relative;
-    height: 4vh;
-    width: 6.15vh;
+    height: 5vh;
+    width: 9vh;
     border: 0.15vh solid white;
     padding: 0.75vh 0;
+    font-weight: bold;
 }
 
 .stats {
-    width: 6vh;
+    width: 9vh;
 }
 
 #table {
     color: white;
     background-color: black;
     border: 0.15vh solid white;
-    font-size: 0.9vh;
+    font-size: 1.25vh;
     position: relative;
     display: inline-flex;
     text-align: center;
-    height: 15.5vh;
-    width: 29vh;
+    height: 20.5vh;
+    width: 38vh;
     /* margin-top: 1.5vh; */
     z-index: 5;
     overflow: auto;
 }
 
 .stats {
-    font-size: 1.1vh;
+    font-size: 1.9vh;
     font-weight: bold;
     padding: 1vh 0;
 }
@@ -391,7 +394,7 @@ td {
 
 }
 #weap-img {
-    margin-left: -12vh;
+    margin-left: -14.5vh;
     margin-top: .5vh
 }
 #armor-img {
@@ -400,12 +403,12 @@ td {
     
 }
 #shield-img {
-    margin-left: 3vh;
+    margin-left: 6.5vh;
     margin-top: .5vh;
 }
 #helm-img {
     margin-top: -4.25vh;
-    margin-left: 12.75vh;
+    margin-left: 16.75vh;
     position: relative;
     display: flex;
     width: 4.25vh;
@@ -417,7 +420,7 @@ td {
 }
 #greaves-img {
     margin-top: 5.25vh;
-    margin-left: -11.5vh;
+    margin-left: -15vh;
     position: sticky;
     display: flex;
     width: 4.25vh;
