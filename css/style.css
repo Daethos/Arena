@@ -21,14 +21,15 @@ canvas {
     border: 2px solid black;
 }
 #player-health {
-    margin-top: 1vh;
-    height: 1.8vh;
-    width: 25.390625vh;
+    margin-top: .5vh;
+    height: 2.25vh;
+    width: 35.390625vh;
 }
 #computer-health {
     margin-top: -12.5vh;
-    width: 50.78125vh;
-    height: 2.5vh;
+    margin-left: -7.5vh;
+    width: 65.78125vh;
+    height: 3vh;
 }
 h1 {
     grid-column-start:1;
@@ -304,10 +305,11 @@ button:focus {
 }
 
 #comp-name {
-    font-size: 3.75vh;
+    font-size: 5vh;
     font-weight: bold;
-    margin-bottom: 1.25vh;
-    -webkit-text-stroke: 0.25vh white;
+    margin-bottom: 1.75vh;
+    margin-left: -7.5vh;
+    -webkit-text-stroke: 0.15vh white;
     padding: 0;
 }
 

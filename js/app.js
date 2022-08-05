@@ -65,9 +65,9 @@ const playContext = playerHealth.getContext('2d');
 const compContext = computerHealth.getContext('2d');
 const compHW = computerHealth.width = 650;
 const compHH = computerHealth.height = 30;
-const playHW = playerHealth.width = 325;
+const playHW = playerHealth.width = 425;
 const playHH = playerHealth.height = 20;
-const playHBW = 325;
+const playHBW = 425;
 const playHBH = 20;
 const hX = playHW / 2 - playHBW / 2;
 const hY = playHH / 2 - playHBH / 2;
@@ -124,17 +124,17 @@ const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 20
 const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 5);
 
 // Geralt
-const ironSword = new Weapons('Iron Sword', 'twoHand', 'Physical', 'Slash', 350, 0, 0);
-const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', 'Magic', 0, 350, 0);
+const ironSword = new Weapons('Iron Sword', 'twoHand', 'Physical', 'Slash', 350, 0, 5);
+const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', 'Magic', 0, 350, 5);
 const witcher = new Armors("Witcher's Armor", 'leather-mail', 35, 35, 15);
 
 // Sinaethi
-const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', 'Pierce', 350, 150, 15);
-const fade = new Weapons('Fade', 'oneHand', 'Magic', 'Spooky', 100, 250, 15);
+const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', 'Pierce', 350, 150, 10);
+const fade = new Weapons('Fade', 'oneHand', 'Magic', 'Spooky', 100, 300, 10);
 const fengariou = new Armors("Fengariou", 'leather-mail', 45, 45, 15);
 
-const searous = new Weapons('Searous Shotel', 'oneHand', 'Physical', 'Pierce', 200, 50, 25);
-const torreous = new Weapons('Torreous Shotel', 'oneHand', 'Physcia', 'Pierce', 50, 200, 25);
+const searous = new Weapons('Searous Shotel', 'oneHand', 'Physical', 'Pierce', 200, 50, 15);
+const torreous = new Weapons('Torreous Shotel', 'oneHand', 'Physcia', 'Pierce', 50, 200, 15);
 const phoenix = new Armors('Phoenix Armor', 'plate-mail', 65, 35, 5);
 
 // Armor Possibilities
@@ -151,12 +151,12 @@ const dorien = {
   armor: fox
 }
 const guts = {
-  name: 'Guts, the Black Swordsman',
+  name: 'Guts the Black Swordsman',
   weapons: [hunkOfIron, handCannon],
   armor: wolf
 }
 const daethos = { // Hidden Boss
-  name: 'Daethos, the One Above All',
+  name: 'Daethos the One Above',
   weapons: [mindBlast, swDeath],
   armor: hush
 }
@@ -171,7 +171,7 @@ const eugenes = {
   armor: fengariou
 }
 const fierous = {
-  name: 'Fierous Ashfyre the Phoenix',
+  name: 'Fierous Ashfyre',
   weapons: [searous, torreous],
   armor: phoenix
 }
@@ -281,11 +281,7 @@ let magAttDam;
 let rollTimer;
 let compAttackTimer;
 let playAttackTimer;
-// Starting Display Variables
-// weaponBtns.style.display = 'none';
-// armorBtns.style.display = 'none';
-// shieldBtns.style.display = 'none';
-// actionsEl.style.display = 'none';
+
 // <------------------------------- EVENT LISTENERS ---------------------------------------- \\
 attackBtn.addEventListener('click', function(e) {
   playerInput = e.target.innerText;
@@ -385,9 +381,9 @@ function showRoll() {
 async function attack() {
   textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
   playerAttack();
-  await sleep(12);
+  await sleep(1250);
   playerAttack();
-  await sleep(12);
+  await sleep(1250);
   computerAttack();
   return
 };
@@ -396,7 +392,7 @@ async function posture() {
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
   playerAttack();
-  await sleep(12);
+  await sleep(1250);
   computerAttack();
   playPhysPos = player.armor.physRes;
   playMagPos = player.armor.magRes;
@@ -428,7 +424,7 @@ async function dodge() {
 
     textBox.value += 'You did not dodge ' + enemy.name + "'s attack!" + '\n';
     computerAttack();
-    await sleep(125);
+    await sleep(1250);
     playerAttack();
     return
 
@@ -547,6 +543,36 @@ async function playerAttack() {
   let playCrit = player.weapon.crit;
   let playDamTot = player.weapon.physDam + player.weapon.magDam;
 
+  // <-------------------------- PLAYER EQUIPMENT VARIABLES --------------------------------------- \\
+
+  if (player.armor == mage) {
+    magAttDam *= 1.1;
+  }
+
+  if (player.shield == smallShield) {
+    if (player.weapon.grip == 'oneHand') {
+      physAttDam *= 1.1;
+    }
+  }
+
+  if (player.armor == legionnaire) {
+    if (player.weapon == pugio || player.weapon == gladius || player.weapon == spear) {
+      physAttDam *= 1.1;
+    }
+  }
+
+  if (player.armor == celt || player.armor == viking) {
+    if (player.weapon.grip == 'twoHand') {
+      playDamTot *= 1.1;
+    }
+  }
+
+  if (player.armor == knight || player.armor == poorKnight) {
+    if (player.weapon.grip == 'oneHand') {
+      physAttDam *= 1.1;
+    }
+  }
+
   // <---------------------------- SPECIAL WEAPON ATTACKS ------------------------------------- \\
 
   if (player.weapon == windFury) {
@@ -612,7 +638,7 @@ async function playerAttack() {
 
   if (player.weapon == whirlWind) {
     if (Math.floor(Math.random() * 101) > 90) {
-      textBox.value += "The Whirlwind wraps its TENDRILS around you, blessing you." + '\n';
+      textBox.value += "The Whirlwind wraps its TENDRILS around you unleashing a storm of attacks." + '\n';
       await sleep(1250);
       playerAttack();
       await sleep(1250);
@@ -621,7 +647,7 @@ async function playerAttack() {
       playerAttack();
       playHealth *= .92;
       playHealthBar.updateHealth(playHealth);
-      textBox.value += "The Whirlwind's HUSH wracks your mind, tempting you." + '\n';
+      // textBox.value += "The Whirlwind's HUSH wracks your mind, tempting you." + '\n';
       return
     }
   }
@@ -638,7 +664,7 @@ async function playerAttack() {
   }
 
   if (player.weapon == handOfGod) {
-    if (Math.floor(Math.random() * 101) > 85) {
+    if (Math.floor(Math.random() * 101) > 90) {
       heal = playDamTot + player.armor.magRes + player.armor.physRes
       playHealth += heal;
       playHealthBar.updateHealth(playHealth);
@@ -649,7 +675,7 @@ async function playerAttack() {
 
   if (player.weapon == insanity) {
     if (Math.floor(Math.random() * 101) > 85) {
-      textBox.value += "The Hush of Daethos writhes through your Caer, asking you to rein.'" + '\n';
+      // textBox.value += "The Hush of Daethos writhes through your Caer, asking you to rein.'" + '\n';
       await sleep(1250);
       playDamTot *= 2;
       compHealth -= Math.round(playDamTot);
@@ -661,13 +687,13 @@ async function playerAttack() {
     }
   }
 
-  if (player.weapon == warHammer || player.weapon == claymore || player.weapon == battleAxe || player.weapon == halberd) {
+  if (player.weapon == warHammer || player.weapon == claymore || player.weapon == battleAxe || player.weapon == halberd || player.weapon == mace) {
     if (Math.floor(Math.random() * 101) > 90) {
       await sleep(1250);
       playDamTot = 1.5 * (physAttDam + magAttDam);
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "The strength of pure steel is undeniable, damaging " + enemy.name + ' for ' + playDamTot + ' PURE damage!' + '\n';
+      textBox.value += "The strength of pure steel is undeniable, " + enemy.name + ' receives ' + playDamTot + ' ABSOLUTE damage!' + '\n';
       return
     }
   }
@@ -678,99 +704,39 @@ async function playerAttack() {
       playDamTot = 1.5 * (physAttDam + magAttDam);
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "The sharpness of your katana is undeniable, impaling " + enemy.name + ' for ' + playDamTot + ' PURE damage!' + '\n';
+      textBox.value += "The sharpness of your katana is undeniable, impaling " + enemy.name + ' for ' + playDamTot + ' damage!' + '\n';
       return
     }
   }
 
 
-  // <------------------------ Basic CRITICAL Attack --------------------------------> \\
+  // <------------------------------------------- Basic Attack ----------------------------------------------> \\
 
 
   if ((playerNumber - playCrit) > 7) {
+
     physAttDam = physAttDam * (1 - (physDamRes / 100));
     magAttDam = magAttDam * (1 - (magDamRes / 100));
     playDamTot = physAttDam + magAttDam;
 
     if (player.weapon.damageType == 'Pierce') {
       if (enemy.armor.type == 'plate-mail') {
-        playDamTot *= 0.95;
+        playDamTot *= 0.9;
       } else if (enemy.armor.type == 'chain-mail') {
-        playDamTot *= 1.15;
+        playDamTot *= 1.1;
       }
     }
     if (player.weapon.damageType == 'Slash') {
       if (enemy.armor.type == 'chain-mail') {
-        playDamTot *= 0.95;
+        playDamTot *= 0.9;
       } else if (enemy.armor.type == 'leather-cloth') {
-        playDamTot *= 1.15;
+        playDamTot *= 1.1;
       }
     }
     if (player.weapon.damageType == 'Blunt') {
       if (enemy.armor.type == 'leather-mail') {
-        playDamTot *=  0.95;
-      } else if (enemy.armor.type == 'plate-mail') {
-        playDamTot *= 1.15;
-      }
-    }
-    if (player.weapon.attackType == 'Magic') {
-      if (enemy.armor.type == 'leather-cloth') {
-        playDamTot *= 0.95;
-      } else if (enemy.armor.type = 'leather-mail') {
-        playDamTot *= 1.15;
-      }
-    }
-    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
-      playDamTot *= 1.25;
-    }
-    if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
-      playDamTot *= 1.2;
-    }
-    console.log(playDamTot);
-    compHealth -= playDamTot.toFixed(2);
-    textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType  +  ' damage!' + '\n';
-    compHealthBar.updateHealth(compHealth);
-
-
-  // <---------------------- MULTI-STRIKE Attack ----------------------------------> \\
-
-
-  } else if ((playerNumber - playCrit) > 3) {
-
-    physAttDam = physAttDam * (1 - (physDamRes / 100));
-    magAttDam = magAttDam * (1 - (magDamRes / 100));
-    if (player.armor == mage) {
-      magAttDam *= 1.1;
-    }
-    playDamTot = physAttDam + magAttDam;
-
-    if (player.weapon.grip == 'oneHand') {
-      playDamTot = 2 * (physAttDam + magAttDam);
-    }
-    if (player.weapon.grip == 'twoHand') {
-      playDamTot = 2.5 * (physAttDam + magAttDam);
-    }
-    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == godHand || player.weapon == windFury) {
-      playDamTot = 3.5 * (physAttDam + magAttDam);
-    }
-    if (player.weapon.damageType == 'Pierce') {
-        if (enemy.armor.type == 'plate-mail') {
-          playDamTot *= 0.9;
-        } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
-          playDamTot *= 1.1;
-        }
-    }
-    if (player.weapon.damageType == 'Slash') {
-        if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
-          playDamTot *= 0.9;
-        } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
-          playDamTot *= 1.1;
-        }
-    }
-    if (player.weapon.damageType == 'Blunt') {
-      if (enemy.armor.type == 'leather-mail' || enemy.armor.type == 'leather-cloth') {
         playDamTot *=  0.9;
-      } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
+      } else if (enemy.armor.type == 'plate-mail') {
         playDamTot *= 1.1;
       }
     }
@@ -782,10 +748,71 @@ async function playerAttack() {
       }
     }
     if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
-      playDamTot *= 1.15;
+      playDamTot *= 1.2;
     }
     if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
       playDamTot *= 1.1;
+    }
+    console.log(playDamTot);
+    compHealth -= playDamTot.toFixed(2);
+    textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + playDamTot + ' ' + player.weapon.damageType  +  ' damage!' + '\n';
+    compHealthBar.updateHealth(compHealth);
+
+
+  // <--------------------------------- CRITICAL STRIKE ATTACK ----------------------------------> \\
+
+
+  } else if ((playerNumber - playCrit) > 3) {
+
+    physAttDam = physAttDam * (1 - (physDamRes / 100));
+    magAttDam = magAttDam * (1 - (magDamRes / 100));
+    playDamTot = physAttDam + magAttDam;
+
+    if (player.weapon.grip == 'oneHand') {
+      playDamTot = 1.5 * (physAttDam + magAttDam);
+    }
+
+    if (player.weapon.grip == 'twoHand') {
+      playDamTot = 2.25 * (physAttDam + magAttDam);
+    }
+
+    if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe || player.weapon == godHand || player.weapon == windFury) {
+      playDamTot = 3.5 * (physAttDam + magAttDam);
+    }
+
+    if (player.weapon.damageType == 'Pierce') {
+        if (enemy.armor.type == 'plate-mail') {
+          playDamTot *= 0.9;
+        } else if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'leather-cloth') {
+          playDamTot *= 1.15;
+        }
+    }
+    if (player.weapon.damageType == 'Slash') {
+        if (enemy.armor.type == 'chain-mail' || enemy.armor.type == 'plate-mail') {
+          playDamTot *= 0.9;
+        } else if (enemy.armor.type == 'leather-cloth' || enemy.armor.type == 'leather-mail') {
+          playDamTot *= 1.15;
+        }
+    }
+    if (player.weapon.damageType == 'Blunt') {
+      if (enemy.armor.type == 'leather-mail' || enemy.armor.type == 'leather-cloth') {
+        playDamTot *=  0.9;
+      } else if (enemy.armor.type == 'plate-mail' || enemy.armor.type == 'leather-mail') {
+        playDamTot *= 1.15;
+      }
+    }
+    if (player.weapon.attackType == 'Magic') {
+      if (enemy.armor.type == 'leather-cloth') {
+        playDamTot *= 0.9;
+      } else if (enemy.armor.type = 'leather-mail') {
+        playDamTot *= 1.15;
+      }
+    }
+    if (player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Sorcery' || player.weapon.damageType == 'Lightning') {
+      playDamTot *= 1.25;
+    }
+    if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
+      playDamTot *= 1.15;
     }
 
     Math.floor(playDamTot);
@@ -900,6 +927,16 @@ async function computerAttack() {
   let enemyCrit = enemy.weapons[0].crit + enemy.weapons[1].crit;
   let superPhysAtt = weapons[0].physDam + weapons[1].physDam;
   let superMagAtt = weapons[0].magDam + weapons[1].magDam;
+
+  // <-------------------------------- PLAYER EQUIPMENT VARIABLES ---------------------------> \\
+
+  if (player.weapon.attackType == 'Magic') {
+    playMagPos *= 1.1;
+  }
+
+  if (player.weapon.attackType == 'Physical') {
+    playPhysPos *= 1.1;
+  }
   
 
   // <----------------- SPECIAL OPPONENT ATTACKS ----------------------------> \\
@@ -938,9 +975,9 @@ async function computerAttack() {
   if (enemy === geralt) {
     if (enAttNum > 90) {
     textBox.value += 'Geralt traps you with Yrden to unlease another attack!!' + '\n';
-    await sleep(125);
+    await sleep(1250);
     computerAttack();
-    await sleep(125);
+    await sleep(1250);
     computerAttack();
     return
     } else if (enAttNum > 80) {
