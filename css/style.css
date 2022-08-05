@@ -299,8 +299,8 @@ button:focus {
     /* overflow: hidden; */
 }
 #comp img {
-    height: 40vh;
-    width: 39.0625vh;
+    height: 50vh;
+    width: 49.0625vh;
 }
 
 #comp-name {
@@ -370,8 +370,8 @@ td {
 .equip-icons {
     position: relative;
     display: flex;
-    width: 4.25vh;
-    height: 4.5vh;
+    width: 6.25vh;
+    height: 6.5vh;
     z-index: 1;
     border: .25vh solid white;
     background: black;
@@ -387,44 +387,44 @@ td {
     display: inline-flex;
     align-items: center;
     z-index: 5;
-    font-size: 1vh;
+    font-size: 1.25vh;
     margin-bottom: 5vh;
     border: 0.15vh solid white;
     /* overflow: scroll; */
 
 }
 #weap-img {
-    margin-left: -14.5vh;
-    margin-top: .5vh
+    margin-left: -16.5vh;
+    margin-top: 2.5vh
 }
 #armor-img {
-    margin-left: -4.25vh;
-    margin-top: .5vh;
+    margin-left: -6.25vh;
+    margin-top: 2.5vh;
     
 }
 #shield-img {
-    margin-left: 6.5vh;
-    margin-top: .5vh;
+    margin-left: 4.5vh;
+    margin-top: 2.5vh;
 }
 #helm-img {
     margin-top: -4.25vh;
     margin-left: 16.75vh;
     position: relative;
     display: flex;
-    width: 4.25vh;
-    height: 4.5vh;
+    width: 6.25vh;
+    height: 6.5vh;
     z-index: 1;
     border: .25vh solid white;
     background: black;
     border-radius: 1.5vh;
 }
 #greaves-img {
-    margin-top: 5.25vh;
-    margin-left: -15vh;
+    margin-top: 9.25vh;
+    margin-left: -17vh;
     position: sticky;
     display: flex;
-    width: 4.25vh;
-    height: 4.5vh;
+    width: 6.25vh;
+    height: 6.5vh;
     z-index: 1;
     border: .25vh solid white;
     background: black;
