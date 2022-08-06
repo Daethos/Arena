@@ -291,7 +291,7 @@ button:focus {
     grid-row-start: 2;
     position: relative;
     /* top: -70vh; */
-    top: 1.5vh;
+    top: -7.5vh;
     left: -3.75vh;
     margin: 0 auto;
     text-align: center;
@@ -302,6 +302,7 @@ button:focus {
 #comp img {
     height: 50vh;
     width: 49.0625vh;
+    margin-left: -7.5vh;
 }
 
 #comp-name {
