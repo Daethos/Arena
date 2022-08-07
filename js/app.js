@@ -86,6 +86,8 @@ window.addEventListener('resize', () => {
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 });
 
+
+
 // Weapon Possibilities
 const gladius = new Weapons('Gladius', 'oneHand', 'Physical', 'Pierce', 275, 0, 7);
 const pugio = new Weapons('Pugio', 'oneHand', 'Physical', 'Pierce', 225, 0, 10);
