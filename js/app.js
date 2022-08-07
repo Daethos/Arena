@@ -105,12 +105,12 @@ const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', 'Wind', 0, 200, 7)
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); 
 const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); 
-const largeShield = new Shields('Scutum', 20, 20, 3.5);
-const greatShield = new Shields('Pavise', 25, 25, 4.5);
+const largeShield = new Shields('Scutum', 15, 15, 3.5);
+const greatShield = new Shields('Pavise', 20, 20, 4.5);
 // Opponent Equipment
 // Dorien
 const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', 'Pierce', 350, 150, 15); 
-const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', 'Spooky', 150, 250, 10);
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', 'Spooky', 150, 350, 0);
 const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 5);
 
 // Daethos
@@ -119,31 +119,31 @@ const swDeath = new Weapons('Shadow Word: Death', 'oneHand', 'Magic', 'Shadow', 
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 25);
 
 // Guts
-const hunkOfIron = new Weapons('Large Hunk of Iron', 'twoHand', 'Physical', 'Slash', 500, 0, 5); 
-const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 250, 200, 10);
+const hunkOfIron = new Weapons('Dragonslayer', 'twoHand', 'Physical', 'Slash', 500, 0, 5); 
+const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Physical', 'Blunt', 250, 250, 10);
 const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 5);
 
 // Geralt
 const ironSword = new Weapons('Iron Sword', 'twoHand', 'Physical', 'Slash', 400, 0, 5);
-const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', 'Magic', 0, 400, 10);
+const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', 'Magic', 100, 350, 10);
 const witcher = new Armors("Witcher's Armor", 'leather-mail', 35, 45, 15);
 
 // Sinaethi
-const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', 'Pierce', 350, 150, 10);
-const fade = new Weapons('Fade', 'oneHand', 'Magic', 'Spooky', 150, 300, 10);
+const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', 'Pierce', 400, 100, 15);
+const fade = new Weapons('Fade', 'oneHand', 'Magic', 'Spooky', 100, 400, 0);
 const fengariou = new Armors("Fengariou", 'leather-mail', 35, 55, 15);
 
-const searous = new Weapons('Searous Shotel', 'oneHand', 'Physical', 'Pierce', 200, 100, 15);
-const torreous = new Weapons('Torreous Shotel', 'oneHand', 'Physcial', 'Pierce', 100, 200, 15);
+const searous = new Weapons('Searous', 'oneHand', 'Physical', 'Pierce', 200, 100, 12.5);
+const torreous = new Weapons('Torreous', 'oneHand', 'Physcial', 'Pierce', 100, 200, 12.5);
 const phoenix = new Armors('Phoenix Armor', 'plate-mail', 65, 35, 5);
 
 // Armor Possibilities
-const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 35, 35, 35); 
-const knight = new Armors("Knight's Full Plate", 'plate-mail', 55, 45, 5); 
-const mage = new Armors("Mage's Robes", 'leather-cloth', 15, 55, 35); 
-const celt = new Armors("Celtic Menagerie", 'leather-mail', 30, 45, 30); 
-const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 55, 35, 15); 
-const viking = new Armors("Viking's Lamellar", 'leather-mail', 45, 30, 30); 
+const legionnaire = new Armors("Legionnaire's Regalia", 'leather-mail', 30, 30, 30); 
+const knight = new Armors("Knight's Full Plate", 'plate-mail', 50, 40, 5); 
+const mage = new Armors("Mage's Robes", 'leather-cloth', 10, 50, 35); 
+const celt = new Armors("Celtic Menagerie", 'leather-mail', 25, 40, 25); 
+const poorKnight = new Armors("Poor Knight's Chainmail", "chain-mail", 40, 35, 15); 
+const viking = new Armors("Viking's Lamellar", 'leather-mail', 40, 25, 25); 
 // ---------------------------- Opponents --------------------------------- \\
 const dorien = {
   name: 'Prince Dorien Caderyn',
@@ -1698,7 +1698,7 @@ function playWin() {
   victoryEl.style.display = 'inline-block';
   continueEl.style.display = 'inline-block';
   continueEl.addEventListener('click', function(e) {
-    textBox.value += 'You have chosen to RANDOMIZE your champion. Are you sure?' + '\n';
+    textBox.value += 'You have chosen to CONTINUE your champion. Are you sure?' + '\n';
     confirmEl.style.display = 'inline-block';
     confirmEl.addEventListener('click', render);
   })
@@ -1718,7 +1718,12 @@ function compWin() {
   stopTextScroll();
   showRoll();
 }
-function render() {
+async function render() {
+  textBox.value += 'The game is now rendering, good luck!' + '\n';
+  await sleep(1500);
+  player.weapon = player.weapon;
+  player.armor = player.armor;
+  player.shield = player.shield;
   createEl.style.display = 'none';
   confirmEl.style.display = 'none';
   randomEl.style.display = 'none';
