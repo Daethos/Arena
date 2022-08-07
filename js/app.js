@@ -359,7 +359,7 @@ function stopCompTimer() {
 }
 function roll() {
   initiateEl.style.display = 'none';
-  textBox.value += "Phew! Risky. Better not try that again." + '\n';
+  textBox.value += "You roll through " + enemy.name + "'s attack. PHEW! Risky. Better not try that again." + '\n';
   hideRoll();
   playerAttack();
   return
@@ -381,7 +381,7 @@ function showRoll() {
 }
 async function attack() {
   initiateEl.style.display = 'none';
-  textBox.value += 'You have chosen to ATTACK ' + enemy.name + ', good luck!' + '\n';
+  textBox.value += 'You unleash a barrage of attacks at ' + enemy.name + '!' + '\n';
   playerAttack();
   await sleep(1250);
   playerAttack();
@@ -391,7 +391,7 @@ async function attack() {
 };
 async function posture() {
   initiateEl.style.display = 'none';
-  textBox.value += "You have POSTURED like an ABSOLUTE UNIT!" + '\n';
+  textBox.value += "You have POSTURED with your " + player.shield.name + " like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
   playMagPos = player.armor.magRes + player.shield.magRes;
   playerAttack();
@@ -411,7 +411,7 @@ async function dodge() {
   if (player.weapon == pugio || player.weapon == spear || player.weapon == scythe) {
     playerDodge += 5;
   } 
-  if (player.weapon == katana || player.weapon == windFury || player.weapon == whirlWind) {
+  if (player.weapon == katana || player.weapon == windFury || player.weapon == whirlWind || player.weapon == halberd) {
     playerDodge += 3;
   }
   if (player.shield == smallShield) {
@@ -498,7 +498,7 @@ async function dodge() {
       compDamTot *= (1 - (playerDodge / 200));
       Math.floor(compDamTot);
       playHealth -= compDamTot;
-      textBox.value += 'You nearly dodge yet ' + enemy.name + ' strikes you with ' + weapon.name + ' for ' + Math.round(compDamTot) + ' ' + weapon.damageType + ' damage! (Glancing Blow)' + '\n';
+      textBox.value += 'You nearly dodge, yet ' + enemy.name + ' strikes you with ' + weapon.name + ' for ' + Math.round(compDamTot) + ' ' + weapon.damageType + ' damage! (Glancing Blow)' + '\n';
       playHealthBar.updateHealth(playHealth);
       if (playHealth <= 0) {
         compWin();
@@ -563,36 +563,45 @@ async function playerAttack() {
   // <-------------------------- PLAYER EQUIPMENT VARIABLES --------------------------------------- \\
 
   if (player.armor == mage) {
-    magAttDam *= 1.1;
+    if (player.weapon.attackType == 'Magic') {
+      playDamTot *= 1.15;
+      playCrit += 5;
+    }
   }
 
   if (player.shield == smallShield) {
     if (player.weapon.grip == 'oneHand') {
-      physAttDam *= 1.1;
+      playDamTot *= 1.1;
     }
   }
 
   if (player.armor == legionnaire) {
     if (player.weapon == pugio || player.weapon == gladius || player.weapon == spear) {
-      physAttDam *= 1.1;
+      playDamTot *= 1.25;
+      playCrit += 5;
     }
     if (player.weapon.damageType == 'Faith' || player.weapon.damageType == 'Spooky') {
-      playDamTot *= 1.1;
+      playDamTot *= 1.15;
     }
   }
 
   if (player.armor == celt || player.armor == viking) {
     if (player.weapon.grip == 'twoHand') {
-      playDamTot *= 1.1;
+      playDamTot *= 1.15;
+      playCrit += 5;
     }
     if (player.weapon.damageType == 'Frost' || player.weapon.damageType == 'Fire' || player.weapon.damageType == 'Lightning'  || player.weapon.damageType == 'Earth' || player.weapon.damageType == 'Wind') {
-      magAttDam *= 1.1;
+      playDamTot *= 1.05;
     }
   }
 
   if (player.armor == knight || player.armor == poorKnight) {
     if (player.weapon.grip == 'oneHand') {
-      physAttDam *= 1.1;
+      if (player.weapon.attackType == 'Physical') {
+        playDamTot *= 1.15;
+      } else {
+        playDamTot *= 1.05;
+      }
     }
   }
 
@@ -1721,9 +1730,6 @@ function compWin() {
 async function render() {
   textBox.value += 'The game is now rendering, good luck!' + '\n';
   await sleep(1500);
-  player.weapon = player.weapon;
-  player.armor = player.armor;
-  player.shield = player.shield;
   createEl.style.display = 'none';
   confirmEl.style.display = 'none';
   randomEl.style.display = 'none';

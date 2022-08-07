@@ -302,7 +302,7 @@ button:focus {
     height: 55vh;
     width: 27.5vw;
     margin-top: 2.5vh;
-    margin-left: -7.5vw;
+    margin-left: -2.5vw;
 }
 
 #comp-name {
@@ -333,14 +333,14 @@ th {
 td {
     position: relative;
     height: 6.5vh;
-    width: 6vw;
+    width: 5.5vw;
     border: 0.15vh solid white;
     padding: 1.5vh 0;
     font-weight: bold;
 }
 
 .stats {
-    width: 4.5vw;
+    width: 5vw;
 }
 
 #table {
