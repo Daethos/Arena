@@ -79,6 +79,13 @@ let playHealth = 5000;
 let compHealth = 7500; 
 const playHealthBar = new HealthBars(hX, hY, playHBW, playHBH, playHealth, 'green');
 const compHealthBar = new HealthBars(cX, cY, compHBW, compHBH, compHealth, 'green');
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 // Weapon Possibilities
 const gladius = new Weapons('Gladius', 'oneHand', 'Physical', 'Pierce', 275, 0, 7);
 const pugio = new Weapons('Pugio', 'oneHand', 'Physical', 'Pierce', 225, 0, 10);
