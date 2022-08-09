@@ -29,8 +29,8 @@ canvas {
 }
 #computer-health {
     margin-top: -12.5vh;
-    margin-left: -7.5vw;
-    width: 40vw;
+    margin-left: -10vw;
+    width: 45vw;
     height: 3vh;
 }
 h1 {
@@ -293,19 +293,19 @@ button:focus {
     position: relative;
     text-align: center;
     margin-left: 0vw;
+    margin-top: -10vh;
     z-index: -5;
     display: inline-block;
     /* overflow: hidden; */
 }
 #comp img {
-    height: 55vh;
-    width: 27.5vw;
-    margin-top: 2.5vh;
+    height: 75vh;
+    width: 35vw;
     margin-left: -2.5vw;
 }
 
 #comp-name {
-    font-size: 4vh;
+    font-size: 4.5vh;
     font-weight: bold;
     margin-bottom: 2.5vh;
     /* margin-left: -24.5vw; */
