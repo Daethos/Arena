@@ -81,14 +81,14 @@ textarea {
     font-family: monospace;
     font-size: 1.375vh;
     /* font-weight: bold; */
-    margin-top: 2.5vh;
+    margin-top: -2.5vh;
     margin-left: -10vw;
     border: 0.4vh solid white;
     background-color: black;
     color: white;
     text-align: center;
     width: 45vw;
-    height: 20vh;
+    height: 25vh;
     z-index: 3;
 }
 #background {
@@ -223,8 +223,8 @@ button:focus {
     grid-row-start: 7;
     position: relative;
     display: inline-block;
-    margin-top: -5.125vh;
-    height: 8vh;
+    margin-top: -12.125vh;
+    height: 10vh;
     align-items: stretch;
     margin-left: -10vw;
     z-index: 3;
@@ -237,12 +237,12 @@ button:focus {
     background-color: black;
     border: 0.15vh solid white;
     display: float;
-    font-size: 1.75vh;
+    font-size: 2.75vh;
     bottom: 5vh;
-    width: 5vw;
+    width: 6.5vw;
     margin-top: .8vh;
     margin-left: 1vw;
-    padding: 1.5vh;
+    padding: 2vh;
 }
 #actions button:focus {
     background-color: green;
@@ -334,12 +334,14 @@ td {
     height: 6.5vh;
     width: 5.5vw;
     border: 0.15vh solid white;
+    align-items: center;
     padding: 1.5vh 0;
     font-weight: bold;
 }
 
 .stats {
     width: 5vw;
+    padding: 2.5vh 0;
 }
 
 #table {
@@ -364,7 +366,7 @@ td {
 .stats {
     font-size: 1.5vh;
     font-weight: bold;
-    padding: 1vh 0;
+    padding: 2vh 0;
 }
 
 .icon-imgs {
@@ -398,7 +400,7 @@ td {
     display: inline-flex;
     align-items: center;
     z-index: 5;
-    font-size: 1.25vh;
+    font-size: 1.5vh;
     margin-bottom: 5vh;
     border: 0.15vh solid white;
     /* overflow: scroll; */

@@ -408,16 +408,14 @@ function stopCompTimer() {
 function roll() {
   textBox.value += "You roll through " + enemy.name + "'s attack. PHEW! Risky. Better not try that again." + '\n';
   hideRoll();
-  rollBtn.style.display = 'none';
-  rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
+  // rollBtn.style.display = 'none';
+  // rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
   playerAttack();
   return
 }
 function hideRoll() {
-
     rollBtn.style.display = 'none';
     rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
-
   return
 }
 function noRoll() {
@@ -1856,7 +1854,7 @@ compEl.style.display = 'none';
 weaponBtns.style.display = 'none';
 shieldBtns.style.display = 'none';
 armorBtns.style.display = 'none';
-actionsEl.style.display = 'none';
+// actionsEl.style.display = 'none';
 createEl.style.display = 'inline-block';
 randomEl.style.display = 'inline-block';
 duelEl.style.display = 'inline-block';
