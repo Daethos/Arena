@@ -91,28 +91,28 @@ window.addEventListener('resize', () => {
 
 
 // Weapon Possibilities
-const gladius = new Weapons('Gladius', 'oneHand', 'Physical', ['Pierce'], 375, 0, 7);
+const gladius = new Weapons('Gladius', 'oneHand', 'Physical', ['Pierce'], 425, 0, 5);
 const pugio = new Weapons('Pugio', 'oneHand', 'Physical', ['Pierce'], 375, 0, 10);
 const scythe = new Weapons('Scythe', 'oneHand', 'Physical', ['Pierce'], 375, 0, 5);
 const spear = new Weapons('Spear', 'oneHand', 'Physical', ['Pierce'], 375, 0, 7); 
-const katana = new Weapons('Katana', 'oneHand', 'Physical', ['Slash'], 375, 0, 5);
+const katana = new Weapons('Katana', 'oneHand', 'Physical', ['Slash'], 425, 0, 5);
 const halberd = new Weapons('Halberd', 'twoHand', 'Physical', ['Pierce'], 575, 0, 3);
 const claymore = new Weapons('Claymore', 'twoHand', 'Physical', ['Slash'], 575, 0, 3);
 const battleAxe = new Weapons('Battle Axe', 'twoHand', 'Physical', ['Slash'], 575, 0, 3);
 const warHammer = new Weapons('War Hammer', 'twoHand', 'Physical', ['Blunt'], 575, 0, 3);
-const mace = new Weapons('Mace', 'oneHand', 'Physical', ['Blunt'] , 375, 0, 5);
+const mace = new Weapons('Mace', 'oneHand', 'Physical', ['Blunt'] , 425, 0, 5);
 const daiKatana = new Weapons('Dai-Katana', 'twoHand', 'Physical', ['Slash'], 225, 225, 5); 
-const godHand = new Weapons('God Hand', 'oneHand', 'Physical', ['Blunt'], 325, 0, 10);
+const godHand = new Weapons('God Hand', 'oneHand', 'Physical', ['Blunt'], 350, 0, 7);
 const whirlWind = new Weapons('Whirlwind', 'twoHand', 'Physical', ['Slash'], 275, 275, 7);
 // Spell Possibilities
-const lavaSpit = new Weapons('Lava Spit', 'oneHand', 'Magic', ['Fire', 'Blunt'], 0, 475, 10);
-const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'Magic', ['Lightning', 'Pierce'], 0, 475, 10);
-const magicMissile = new Weapons('Magic Missle', 'oneHand', 'Magic', ['Sorcery', 'Blunt'], 0, 325, 7);
-const arcticBolt = new Weapons('Arctic Bolt', 'oneHand', 'Magic', ['Frost', 'Pierce'], 0, 375, 5);
-const oakCrush = new Weapons('Oak Crush', 'oneHand', 'Magic', ['Earth', 'Blunt'], 0, 375, 5); 
-const handOfGod = new Weapons('Hand of God', 'oneHand', 'Magic', ['Faith', 'Slash'], 225, 225, 7); 
-const insanity = new Weapons('Insanity', 'oneHand', 'Magic', ['Spooky', 'Blunt'], 150, 300, 7);
-const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', ['Wind', 'Slash'], 0, 325, 7);
+const lavaSpit = new Weapons('Lava Spit', 'oneHand', 'Magic', ['Fire', 'Blunt'], 0, 525, 10);
+const lightningSpear = new Weapons('Lightning Spear', 'oneHand', 'Magic', ['Lightning', 'Pierce'], 0, 525, 10);
+const magicMissile = new Weapons('Magic Missle', 'oneHand', 'Magic', ['Sorcery', 'Blunt'], 0, 350, 7);
+const arcticBolt = new Weapons('Arctic Bolt', 'oneHand', 'Magic', ['Frost', 'Pierce'], 0, 425, 5);
+const oakCrush = new Weapons('Oak Crush', 'oneHand', 'Magic', ['Earth', 'Blunt'], 0, 425, 5); 
+const handOfGod = new Weapons('Hand of God', 'oneHand', 'Magic', ['Faith', 'Slash'], 200, 225, 7); 
+const insanity = new Weapons('Insanity', 'oneHand', 'Magic', ['Spooky', 'Blunt'], 150, 325, 7);
+const windFury = new Weapons('Wind Fury', 'oneHand', 'Magic', ['Wind', 'Slash'], 0, 350, 7);
 // Shield Possibilties
 const smallShield = new Shields('Parrying Buckler', 5, 5, 1.5); 
 const mediumShield = new Shields('Heater Shield', 10, 10, 2.5); 
@@ -120,39 +120,39 @@ const largeShield = new Shields('Scutum', 15, 15, 3.5);
 const greatShield = new Shields('Pavise', 20, 20, 4.5);
 // Opponent Equipment
 // Dorien
-const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', ['Pierce', 'Spooky'], 400, 200, 10); 
-const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', ['Spooky', 'Blunt'], 200, 400, 0);
-const fox = new Armors('Fatal Fox', 'plate-mail', 55, 45, 5);
+const bloodMoon = new Weapons('Blood Moon', 'twoHand', 'Physical', ['Pierce'], 600, 0, 10); 
+const soulRend = new Weapons('Soul Rend', 'oneHand', 'Magic', ['Spooky', 'Blunt'], 300, 300, 0);
+const fox = new Armors('Fatal Fox', 'plate-mail', 45, 60, 5);
 
 // Daethos
-const mindBlast = new Weapons('Mind Blast', 'oneHand', 'Magic', ['Shadow'], 0, 750, 15);
-const swDeath = new Weapons('Shadow Word: Death', 'oneHand', 'Magic', ['Shadow'], 0, 750, 15); 
+const mindBlast = new Weapons('Mind Blast', 'oneHand', 'Magic', ['Spooky'], 0, 750, 15);
+const swDeath = new Weapons('Shadow Word: Death', 'oneHand', 'Magic', ['Spooky'], 0, 750, 15); 
 const hush = new Armors('Of Hush and Tendril', 'leather-cloth', 65, 65, 25);
 
 // Guts
 const hunkOfIron = new Weapons('Dragonslayer', 'twoHand', 'Physical', ['Slash'], 600, 0, 10); 
 const handCannon = new Weapons('Hand Cannon', 'oneHand', 'Magic', ['Fire', 'Blunt'], 300, 300, 0);
-const wolf = new Armors('Wolf Armor', 'plate-mail', 45, 55, 5);
+const wolf = new Armors('Wolf Armor', 'plate-mail', 60, 45, 5);
 
 // Geralt
 const ironSword = new Weapons('Iron Sword', 'twoHand', 'Physical', ['Slash'], 500, 0, 5);
-const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', ['Magic', 'Slash'], 150, 350, 5);
+const silverSword = new Weapons('Silver Sword', 'twoHand', 'Magic', ['Magic', 'Slash'], 100, 400, 5);
 const witcher = new Armors("Witcher's Armor", 'leather-mail', 35, 45, 15);
 
 // Sinaethi
-const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', ['Pierce', 'Spooky'], 450, 150, 10);
-const fade = new Weapons('Fade', 'oneHand', 'Magic', ['Spooky', 'Slash'], 150, 450, 0);
+const blacksun = new Weapons('Black Sun', 'twoHand', 'Physical', ['Slash', 'Spooky'], 450, 150, 10);
+const fade = new Weapons('Fade', 'oneHand', 'Magic', ['Spooky', 'Pierce'], 150, 450, 0);
 const fengariou = new Armors("Fengariou", 'leather-mail', 35, 55, 15);
 
 // Fierous
 const searous = new Weapons('Searous', 'oneHand', 'Physical', ['Pierce', 'Fire'], 250, 100, 10);
 const torreous = new Weapons('Torreous', 'oneHand', 'Physcial', ['Pierce', 'Fire'], 100, 250, 10);
-const phoenix = new Armors('Phoenix Armor', 'plate-mail', 65, 35, 5);
+const phoenix = new Armors('Phoenix Armor', 'plate-mail', 60, 40, 5);
 
 // Gwyn
 const greatLordGS = new Weapons('Great Lord Greatsword', 'twoHand', 'Physical', ['Slash', 'Fire'], 400, 200, 5);
 const expHand = new Weapons('Explosive Hand', 'oneHand', 'Magic', ['Fire', 'Blunt'], 150, 450, 5);
-const lordSet = new Armors('Great Lord Set', 'leather-mail', 45, 35, 15);
+const lordSet = new Armors('Great Lord Set', 'leather-mail', 45, 45, 15);
 
 // O&S
 const ornstein = new Weapons('Dragonslayer Spear', 'twoHand', 'Physical', ['Pierce', 'Lightning'], 350, 250, 5);
@@ -361,16 +361,19 @@ rollBtn.addEventListener('click', function(e) {
 
 // <------------------------------------- FUNCTIONS --------------------------------------- \\
 init();
+
 const playFrame = function() {
   playContext.clearRect(0, 0, playHW, playHH);
   playHealthBar.show(playContext);
   requestAnimationFrame(playFrame);
 }
+
 const compFrame = function() {
   compContext.clearRect(0, 0, compHW, compHH);
   compHealthBar.show(compContext);
   requestAnimationFrame(compFrame);
 }
+
 playFrame();
 compFrame();
 let startScroll;
@@ -381,16 +384,19 @@ function textBoxScroll() {
   return
   }
 }
+
 function textScroll() {
   areaText += Math.random() + '\n';
   textBox.scrollTop = textBox.scrollHeight;
   return
 }
+
 function stopTextScroll() {
   clearInterval(startScroll);
   startScroll = null;
   return
 }
+
 function compTimer() { 
   if (!compAttackTimer) {
     compAttackTimer = setInterval(computerAttack, 30000);
@@ -398,6 +404,7 @@ function compTimer() {
     return
   }
 }
+
 function stopCompTimer() { 
   clearInterval(compAttackTimer);
   compAttackTimer = null;
@@ -405,6 +412,7 @@ function stopCompTimer() {
   playAttackTimer = null;
   return
 }
+
 function roll() {
   textBox.value += "You roll through " + enemy.name + "'s attack. PHEW! Risky. Better not try that again." + '\n';
   hideRoll();
@@ -413,19 +421,23 @@ function roll() {
   playerAttack();
   return
 }
+
 function hideRoll() {
     rollBtn.style.display = 'none';
     rollTimer = setTimeout(noRoll, (10000 * player.shield.roll));
   return
 }
+
 function noRoll() {
   rollBtn.style.display = 'inline-block';
   return
 }
+
 function showRoll() {
   clearTimeout(rollTimer);
   rollTimer = null;
 }
+
 async function attack() {
   textBox.value += 'You unleash a barrage of attacks at ' + enemy.name + '!' + '\n';
   playerAttack();
@@ -435,6 +447,7 @@ async function attack() {
   computerAttack();
   return
 };
+
 async function posture() {
   textBox.value += "You have POSTURED with your " + player.shield.name + " like an ABSOLUTE UNIT!" + '\n';
   playPhysPos = player.armor.physRes + player.shield.physRes;
@@ -446,7 +459,9 @@ async function posture() {
   playMagPos = player.armor.magRes;
   return
 }
+
 async function dodge() {
+
   playerDodge = player.armor.dodge;
   let dodgeAttempt = Math.floor(Math.random() * 101);
   if (player.weapon.grip == 'oneHand') {
@@ -553,6 +568,7 @@ async function dodge() {
     }
   }
 }
+
 function initiate() {
   textBox.value += 'You have chosen to initiate the COMBAT round. Good luck!' + '\n';
   console.log(playerInput);
@@ -701,30 +717,37 @@ async function playerAttack() {
 
   if (player.weapon == windFury) {
     if (Math.floor(Math.random() * 101) > 92) {
-      textBox.value += 'A DEVASTATING storm posseses you with the Windfury!' + '\n';
+      textBox.value += "Your fervor ushers forth the favor of Ahn've, a devastating storm posseses you with the Windfury!" + '\n';
       await sleep(1250);
       playerAttack();
       await sleep(1250);
       playerAttack();
       await sleep(1250);
       playerAttack();
+      playHealth *= .95;
+      playHealthBar.updateHealth(playHealth);
       return
     }
   }
+
   if (player.weapon == godHand) {
     if (Math.floor(Math.random() * 101) > 92) {
-      textBox.value += 'You have unleashed the power of the GOD HAND!' + '\n';
+      textBox.value += 'Your forver ushes forth the favor of Daethos, have unleashed the power of the GOD HAND!' + '\n';
       await sleep(1250);
       playerAttack();
       await sleep(1250);
       playerAttack();
+      await sleep(1250);
+      playerAttack();
+      playHealth *= .95;
+      playHealthBar.updateHealth(playHealth);
       return
     }
   }
 
   if (player.weapon == magicMissile) {
     if (Math.floor(Math.random() * 101) > 92) {
-      textBox.value += 'Your fervor ushers forth the favor of Cambire, myriad missiles multiply!' + '\n';
+      textBox.value += 'Your fervor ushers forth the favor of Cambire, your magic missiles multiply!' + '\n';
       await sleep(1250);
       playerAttack();
       await sleep(1250);
@@ -746,7 +769,7 @@ async function playerAttack() {
       playDamTot *= 1.75;
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "You scorch " + enemy.name + " for " + Math.round(playDamTot) + " pure fire damage!" + '\n';
+      textBox.value += "You scorch " + enemy.name + " for " + Math.round(playDamTot) + " Pure Fire Damage!" + '\n';
       playHealth *= .95;
       playHealthBar.updateHealth(playHealth);
       player.weapon.physDam *= 1.05;
@@ -756,37 +779,37 @@ async function playerAttack() {
         return
       }
       return
+    }
   }
-}
 
-if (player.weapon == lightningSpear) {
-  if (Math.floor(Math.random() * 101) > 85) {
-    textBox.value += "Your fervor ushers forth the favor of Astra's lightning bursting from you!" + '\n';
-    await sleep(750);
-    playDamTot *= 1.75;
-    compHealth -= Math.round(playDamTot);
-    compHealthBar.updateHealth(compHealth);
-    textBox.value += "You melt " + enemy.name + " for " + Math.round(playDamTot) + " pure lightning damage!" + '\n';
-    playHealth *= .95;
-    playHealthBar.updateHealth(playHealth);
-    player.weapon.physDam *= 1.05;
-    player.weapon.magDam *= 1.05;
-    if (compHealth <= 0) {
-      playWin();
+  if (player.weapon == lightningSpear) {
+    if (Math.floor(Math.random() * 101) > 85) {
+      textBox.value += "Your fervor ushers forth the favor of Astra's lightning bursting from you!" + '\n';
+      await sleep(750);
+      playDamTot *= 1.75;
+      compHealth -= Math.round(playDamTot);
+      compHealthBar.updateHealth(compHealth);
+      textBox.value += "You melt " + enemy.name + " for " + Math.round(playDamTot) + " Pure Lightning Damage!" + '\n';
+      playHealth *= .95;
+      playHealthBar.updateHealth(playHealth);
+      player.weapon.physDam *= 1.05;
+      player.weapon.magDam *= 1.05;
+      if (compHealth <= 0) {
+        playWin();
+        return
+      }
       return
     }
-    return
-}
-}
+  }
 
   if (player.weapon == oakCrush) {
     if (Math.floor(Math.random() * 101) > 85) {
       playDamTot *= 1.5;
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "You crush " + enemy.name + " for " + Math.round(playDamTot) + " pure earth damage!" + '\n';
+      textBox.value += "You crush " + enemy.name + " for " + Math.round(playDamTot) + " Pure Earth Damage!" + '\n';
       player.armor.magRes *= 1.05;
-      player.armor.physRes *= 1.05;
+      player.armor.physRes *= 1.1;
       player.weapon.physDam *= 1.05;
       player.weapon.magDam *= 1.05;
       await sleep(1250);
@@ -804,8 +827,8 @@ if (player.weapon == lightningSpear) {
       playDamTot *= 1.5;
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "You pierce " + enemy.name + " for " + Math.round(playDamTot) + " pure frost damage!" + '\n';
-      player.armor.magRes *= 1.05;
+      textBox.value += "You pierce " + enemy.name + " for " + Math.round(playDamTot) + " Pure Frost Damage!" + '\n';
+      player.armor.magRes *= 1.1;
       player.armor.physRes *= 1.05;
       player.weapon.physDam *= 1.05;
       player.weapon.magDam *= 1.05;
@@ -831,7 +854,6 @@ if (player.weapon == lightningSpear) {
       playHealth *= .95;
       playHealthBar.updateHealth(playHealth);
       return
-      // textBox.value += "The Whirlwind's HUSH wracks your mind, tempting you." + '\n';
     }
   }
 
@@ -865,13 +887,12 @@ if (player.weapon == lightningSpear) {
 
   if (player.weapon == insanity) {
     if (Math.floor(Math.random() * 101) > 85) {
-      // textBox.value += "The Hush of Daethos writhes through your Caer, asking you to rein.'" + '\n';
       playDamTot *= 2.25;
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
       playHealth *= .92;
       playHealthBar.updateHealth(playHealth);
-      textBox.value += "Tendrils of Daethos reach through " + enemy.name + " and writhe within for " + Math.round(playDamTot) + " spooky damage. Your senses are palpably aflame." + '\n';
+      textBox.value += "Tendrils of Daethos reach through " + enemy.name + " and writhe within for " + Math.round(playDamTot) + " Spooky Damage. Your senses are palpably aflame." + '\n';
       await sleep(1250);
       player.weapon.physDam *= 1.05;
       player.weapon.magDam *= 1.05;
@@ -890,13 +911,14 @@ if (player.weapon == lightningSpear) {
       playDamTot *= 1 - (physDamRes / 100);
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "The speed and strength of your steel is undeniable, " + enemy.name + ' receives ' + Math.round(playDamTot) + ' crushing damage!' + '\n';
+      textBox.value += "The Speed and Strength of your Steel is undeniable, " + enemy.name + ' receives ' + Math.round(playDamTot) + ' Crushing Damage!' + '\n';
       player.weapon.physDam *= 1.05;
       player.weapon.magDam *= 1.05;
       if (compHealth <= 0) {
         playWin();
         return
       }
+      return
     }
   }
 
@@ -906,7 +928,7 @@ if (player.weapon == lightningSpear) {
       playDamTot = 1.75 * (physAttDam + magAttDam);
       compHealth -= Math.round(playDamTot);
       compHealthBar.updateHealth(compHealth);
-      textBox.value += "The sharpness of your katana is undeniable, impaling " + enemy.name + ' for ' + Math.round(playDamTot) + ' damage!' + '\n';
+      textBox.value += "The Sharpness of your Katana is undeniable, Impaling " + enemy.name + ' for ' + Math.round(playDamTot) + ' Damage!' + '\n';
       if (compHealth <= 0) {
         playWin();
         return
@@ -982,7 +1004,7 @@ if (player.weapon == lightningSpear) {
     }
     console.log(playDamTot);
     Math.round(playDamTot);
-    compHealth -= playDamTot.toFixed(2);
+    compHealth -= playDamTot;
     textBox.value += 'You attack ' + enemy.name + ' with your ' + player.weapon.name + ' for ' + Math.round(playDamTot) + ' ' + player.weapon.damageType[0]  +  ' damage!' + '\n';
     compHealthBar.updateHealth(compHealth);
 
@@ -1200,10 +1222,11 @@ async function computerAttack() {
   if (enemy === guts) {
     if (enAttNum > 85) {
     compDamTot = superPhysAtt + superMagAtt;
-    compDamTot *= 2.5;
+    compDamTot *= 2.75;
     compDamTot *= 1 - (physDamMit / 100);
     playHealth -= Math.round(compDamTot);
-    textBox.value += "Guts's cursed BERSERKER ARMOR sacrifices his life to smash you for " + Math.round(compDamTot) +  ' steel damage!' + '\n'
+    textBox.value += "Guts's cursed BERSERKER ARMOR sacrifices his life to smash you for " + Math.round(compDamTot) +  ' Heavy Metal Damage!' + '\n'
+    playHealthBar.updateHealth(playHealth);
     compHealth *= 0.95;
     compHealthBar.updateHealth(compHealth);
     await sleep(1250);
@@ -1222,10 +1245,10 @@ async function computerAttack() {
     return
     } else if (enAttNum > 85) {
       compDamTot = superPhysAtt + superMagAtt;
-      compDamTot *= 3.5;
-      compDamTot *= 1 - (fullDamMit / 100);
+      compDamTot *= 2.25;
       playHealth -= Math.round(compDamTot);
-      textBox.value += 'The Phoenix uses his shotels to rip you apart for ' + Math.round(compDamTot) +  ' PURE damage!!' + '\n'
+      textBox.value += 'The Phoenix uses his shotels to rip you apart for ' + Math.round(compDamTot) +  ' Fiery Pierce Damage!!' + '\n'
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       if (playHealth <= 0) {
         compWin();
@@ -1258,19 +1281,8 @@ async function computerAttack() {
       }
     }
   if (enemy === eugenes) {
-    if (enAttNum > 85) {
-      compDamTot = superPhysAtt + superMagAtt;
-      compDamTot *= 1.75;
-      playHealth -= Math.round(compDamTot);
-      textBox.value += 'Eugenes tears through you for ' + Math.round(compDamTot) + ' PURE damage!' + '\n';
-      playHealthBar.updateHealth(playHealth);
-      await sleep(1250);
-      return
-    }
-  }
-  if (enemy === dorien) {
     if (enAttNum > 92) {
-      textBox.value += "Prince Dorien's Caer writhes in your mind as he dashes in with several strikes!" + '\n';
+      textBox.value += "Eugenes's Caer shreds himself through this world before reappearing with his Black Sun in full breadth!" + '\n';
       await sleep(1250);
       computerAttack();
       await sleep(1250);
@@ -1280,9 +1292,30 @@ async function computerAttack() {
       return
     } else if (enAttNum > 85) {
       compDamTot = superPhysAtt + superMagAtt;
-      compDamTot *= 1.75;
+      compDamTot *= 1.5;
+      playHealth -= Math.round(compDamTot);
+      textBox.value += 'Eugenes tears through you for ' + Math.round(compDamTot) + ' PURE damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
+      await sleep(1250);
+      return
+    }
+  }
+  if (enemy === dorien) {
+    if (enAttNum > 92) {
+      textBox.value += "Prince Dorien's Caer writhes in your mind as his Blood Moon poises for several strikes!" + '\n';
+      await sleep(1250);
+      computerAttack();
+      await sleep(1250);
+      computerAttack();
+      await sleep(1250);
+      computerAttack();
+      return
+    } else if (enAttNum > 85) {
+      compDamTot = superPhysAtt + superMagAtt;
+      compDamTot *= 1.5;
       playHealth -= Math.round(compDamTot);
       textBox.value += 'The Fatal Fox IMPALES you for ' + Math.round(compDamTot) + ' Pure Damage!!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1306,6 +1339,7 @@ async function computerAttack() {
       compDamTot *= 1.75;
       playHealth -= Math.round(compDamTot);
       textBox.value += 'The Lord of Cinders IMPALES you for ' + Math.round(compDamTot) + ' Pure Steel Damage!!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1314,6 +1348,7 @@ async function computerAttack() {
       compDamTot *= 1.75;
       playHealth -= Math.round(compDamTot);
       textBox.value += 'The Lord of Cinders grabs you, seeping embers into your body, EXPLODING for ' + Math.round(compDamTot) + ' Pure Fire Damage!!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1326,6 +1361,7 @@ async function computerAttack() {
       compDamTot *= 1 - (playPhysPos / 100);
       playHealth -= Math.round(compDamTot);
       textBox.value += 'Ornstein impales you before unleashing lightning from his Dragonslayer Spear, hurling you to the ground for ' + Math.round(compDamTot) + ' Lightning and Physical Damage!!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1335,6 +1371,7 @@ async function computerAttack() {
       compDamTot *= 1 - (playMagPos / 100);
       playHealth -= Math.round(compDamTot);
       textBox.value += 'Ornstein unleashes a bolt of lightning from his Dragonslayer Spear ' + ' for ' + Math.round(compDamTot) + ' Lightning Damage!!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1370,6 +1407,7 @@ async function computerAttack() {
       compDamTot *= 1 - (playPhysPos / 100);
       playHealth -= Math.round(compDamTot);
       textBox.value += 'Smough charges up and UPPERCUTS you with his Hammer for ' + Math.round(compDamTot) + ' Blunt Damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
@@ -1379,6 +1417,7 @@ async function computerAttack() {
       compDamTot *= 1 - (playMagPos / 100);
       playHealth -= Math.round(compDamTot);
       textBox.value += 'Smough leaps in the air and SMASHES DOWN on you for ' + Math.round(compDamTot) + ' Lightning Damage!' + '\n';
+      playHealthBar.updateHealth(playHealth);
       await sleep(1250);
       return
     }
